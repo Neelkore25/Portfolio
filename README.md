@@ -2,17 +2,6 @@
 
 A modern, responsive personal portfolio website showcasing my academic background, technical skills, and industry training. Built with a clean dark theme, glassmorphism effects, and smooth animations to provide an engaging user experience.
 
-## 📸 Preview
-
-<img src="C:\Users\Neel Kore\OneDrive\Pictures\Screenshots" alt="App Screenshot" width="500">
-
-
-Example:
-
-![Portfolio Preview](assets/portfolio-preview.png)
-
----
-
 ## 🚀 Live Demo
 
 🔗 **Website:** https://your-username.github.io/
@@ -166,8 +155,8 @@ The portfolio is optimized for:
 **Neel Kore**
 
 - GitHub: https://github.com/Neelkore25
-- LinkedIn: *(Add your LinkedIn profile)*
-- Email: *(Add your email)*
+- LinkedIn: https://www.linkedin.com/in/neel-kore-00567231b?utm_source=share_via&utm_content=profile&utm_medium=member_android
+- Email:neelkore25@gmail.com
 
 ---
 
@@ -177,12 +166,3 @@ If you found this project helpful or inspiring, consider giving it a ⭐ on GitH
 
 ---
 
-## 📄 License
-
-This project is licensed under the **MIT License**.
-
-Feel free to fork, customize, and use it for learning purposes.
-
----
-
-### © 2026 Neel Kore. All Rights Reserved.
