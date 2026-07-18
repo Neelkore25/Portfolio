@@ -4,7 +4,8 @@ A modern, responsive personal portfolio website showcasing my academic backgroun
 
 ## 📸 Preview
 
-> Add a screenshot of your portfolio here.
+<img src="C:\Users\Neel Kore\OneDrive\Pictures\Screenshots" alt="App Screenshot" width="500">
+
 
 Example:
 
