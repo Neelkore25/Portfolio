@@ -3,7 +3,7 @@
  * Author: Neel Kore
  * Description: Reads single-source portfolioData object and dynamically populates
  * all portfolio sections. Manages scroll-spy navigation, email clipboard toast,
- * image fallbacks, and mobile drawer toggles.
+ * document downloads, image fallbacks, and mobile drawer toggles.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSkills();
   renderProjects();
   renderCertifications();
+  renderDocuments();
   renderEducation();
   renderContact();
   renderFooter();
@@ -54,7 +55,6 @@ function renderHero() {
   const bioEl = document.getElementById('heroBio');
   const ctaGroupEl = document.getElementById('heroCtas');
   const portraitInnerEl = document.getElementById('portraitInner');
-  const statsRowEl = document.getElementById('heroStatsRow');
 
   if (statusBadgeEl) {
     statusBadgeEl.innerHTML = `<span class="status-dot"></span>${portfolioData.personal.statusBadge}`;
@@ -72,8 +72,8 @@ function renderHero() {
       <a href="${portfolioData.socials.github}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
         <i class="fa-brands fa-github"></i> GitHub
       </a>
-      <a href="${portfolioData.personal.resume}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-        <i class="fa-solid fa-file-arrow-down"></i> Resume
+      <a href="#documents" class="btn btn-secondary">
+        <i class="fa-solid fa-file-arrow-down"></i> Documents & Resume
       </a>
     `;
   }
@@ -83,16 +83,6 @@ function renderHero() {
     portraitInnerEl.innerHTML = `
       <img src="${avatarSrc}" alt="${portfolioData.personal.name}" class="portrait-img" id="portraitImg" onerror="handleImageError(this)">
     `;
-  }
-
-  if (statsRowEl) {
-    statsRowEl.innerHTML = portfolioData.heroStats.map(stat => `
-      <div class="stat-box">
-        <div class="stat-val">${stat.value}</div>
-        <div class="stat-lbl">${stat.label}</div>
-        <div class="stat-sub">${stat.detail}</div>
-      </div>
-    `).join('');
   }
 }
 
@@ -108,6 +98,7 @@ function handleImageError(imgEl) {
       <div class="portrait-fallback">
         <i class="fa-solid fa-user-astronaut"></i>
         <span>${portfolioData.personal.name}</span>
+        <span class="portrait-status-sub">Photo Pending Upload</span>
       </div>
     `;
   } else if (imgEl.classList.contains('cert-preview-img')) {
@@ -254,7 +245,7 @@ function renderCertifications() {
   if (!portfolioData.certifications || portfolioData.certifications.length === 0) {
     certsGrid.innerHTML = `
       <div class="glass-card" style="padding: 32px; grid-column: 1 / -1; text-align: center; color: var(--text-muted);">
-        No certifications listed yet. Add items to portfolioData.certifications in assets/js/data.js.
+        No certifications listed yet. Edit portfolioData.certifications in assets/js/data.js.
       </div>
     `;
     return;
@@ -287,7 +278,65 @@ function renderCertifications() {
 }
 
 /* --------------------------------------------------------------------------
-   8. EDUCATION SECTION RENDERER
+   8. DOCUMENTS & DOWNLOADS SECTION RENDERER (DYNAMIC MULTI-DOC DRIVEN)
+   -------------------------------------------------------------------------- */
+function renderDocuments() {
+  const docsGrid = document.getElementById('docsGrid');
+  if (!docsGrid) return;
+
+  if (!portfolioData.documents || portfolioData.documents.length === 0) {
+    docsGrid.innerHTML = `
+      <div class="glass-card" style="padding: 32px; grid-column: 1 / -1; text-align: center; color: var(--text-muted);">
+        No documents listed. Add items to portfolioData.documents in assets/js/data.js.
+      </div>
+    `;
+    return;
+  }
+
+  docsGrid.innerHTML = portfolioData.documents.map(doc => `
+    <div class="glass-card doc-card">
+      <div class="doc-top">
+        <div class="doc-icon-box">
+          <i class="fa-solid ${doc.icon || 'fa-file-pdf'}"></i>
+        </div>
+        <span class="doc-badge">${doc.badge}</span>
+      </div>
+      <h3 class="doc-title">${doc.title}</h3>
+      <p class="doc-desc">${doc.description}</p>
+      
+      <div class="doc-action">
+        <a href="${doc.filePath}" target="_blank" class="btn btn-secondary doc-download-btn" data-filepath="${doc.filePath}" data-doctitle="${doc.title}">
+          <i class="fa-solid fa-download"></i> View / Download Document
+        </a>
+      </div>
+    </div>
+  `).join('');
+
+  // Attach safe click handler to document download buttons to prevent raw 404 pages
+  document.querySelectorAll('.doc-download-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const path = btn.getAttribute('data-filepath');
+      const title = btn.getAttribute('data-doctitle');
+      
+      // Fetch check to see if document file exists locally
+      fetch(path, { method: 'HEAD' })
+        .then(res => {
+          if (!res.ok) {
+            e.preventDefault();
+            showToast(`ℹ️ "${title}" will be available once uploaded to ${path}`);
+          }
+        })
+        .catch(() => {
+          // If fetch fails, show helpful toast instead of breaking user flow
+          e.preventDefault();
+          showToast(`ℹ️ "${title}" will be available once uploaded to ${path}`);
+        });
+    });
+  });
+}
+
+/* --------------------------------------------------------------------------
+   9. EDUCATION SECTION RENDERER
    -------------------------------------------------------------------------- */
 function renderEducation() {
   const eduContainer = document.getElementById('educationContainer');
@@ -318,7 +367,7 @@ function renderEducation() {
 }
 
 /* --------------------------------------------------------------------------
-   9. CONTACT SECTION RENDERER
+   10. CONTACT SECTION RENDERER
    -------------------------------------------------------------------------- */
 function renderContact() {
   const contactCard = document.getElementById('contactCard');
@@ -350,7 +399,7 @@ function renderContact() {
 }
 
 /* --------------------------------------------------------------------------
-   10. FOOTER RENDERER
+   11. FOOTER RENDERER
    -------------------------------------------------------------------------- */
 function renderFooter() {
   const footerContent = document.getElementById('footerContent');
@@ -370,7 +419,7 @@ function renderFooter() {
 }
 
 /* --------------------------------------------------------------------------
-   11. INTERACTIVE ENGINE & EVENTS
+   12. INTERACTIVE ENGINE & EVENTS
    -------------------------------------------------------------------------- */
 function setupInteractions() {
   // Mobile Nav Drawer Toggle
@@ -424,7 +473,6 @@ function setupInteractions() {
 
   // Email Clipboard Copy Functionality
   const copyBtn = document.getElementById('copyEmailBtn');
-  const toastNotification = document.getElementById('toastNotification');
 
   if (copyBtn) {
     copyBtn.addEventListener('click', () => {
@@ -438,13 +486,14 @@ function setupInteractions() {
         });
     });
   }
+}
 
-  function showToast(message) {
-    if (!toastNotification) return;
-    toastNotification.textContent = message;
-    toastNotification.classList.add('show');
-    setTimeout(() => {
-      toastNotification.classList.remove('show');
-    }, 3000);
-  }
+function showToast(message) {
+  const toastNotification = document.getElementById('toastNotification');
+  if (!toastNotification) return;
+  toastNotification.textContent = message;
+  toastNotification.classList.add('show');
+  setTimeout(() => {
+    toastNotification.classList.remove('show');
+  }, 4000);
 }

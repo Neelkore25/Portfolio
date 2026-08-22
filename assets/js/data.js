@@ -1,8 +1,8 @@
 /**
  * Portfolio Single Source of Truth Data File
  * Author: Neel Kore
- * Description: Contains all editable information for personal details, hero stats,
- * about info, industrial experience, skills, projects, certifications, education, and socials.
+ * Description: Contains all editable information for personal details,
+ * about info, industrial experience, skills, projects, certifications, documents, education, and socials.
  * Modifying arrays here automatically updates the UI without changing any HTML or rendering code.
  */
 
@@ -15,17 +15,9 @@ const portfolioData = {
     statusBadge: "Available for Internships & Opportunities",
     bio: "Computer Engineering student passionate about software development, database systems, and cybersecurity. Experienced in enterprise data backup, RAID storage, and network resilience through hands-on industrial training at Nuclear Power Corporation of India Limited (NPCIL).",
     avatar: "assets/images/profile.jpg",
-    resume: "assets/resume.pdf",
     location: "Maharashtra, India",
     email: "neelkore25@gmail.com"
   },
-
-  heroStats: [
-    { value: "1", label: "Industry Internship", detail: "NPCIL Tarapur" },
-    { value: "15+", label: "GitHub Repositories", detail: "Open Source Projects" },
-    { value: "2028", label: "Graduation Year", detail: "B.Tech Computer Eng." },
-    { value: "100%", label: "Dedication", detail: "Continuous Learning" }
-  ],
 
   about: {
     summary: [
@@ -186,6 +178,32 @@ const portfolioData = {
       description: "Foundational validation in network security protocols, data protection mechanisms, and system integrity.",
       credentialUrl: "",
       imageUrl: ""
+    }
+  ],
+
+  /**
+   * Documents & Downloads List:
+   * Add, edit, or remove document files here. Place actual PDF/DOC files into assets/docs/ folder.
+   * To mark a document as the main resume for the Hero button, set isPrimary: true.
+   */
+  documents: [
+    {
+      id: "doc-resume",
+      title: "Official Resume / CV",
+      description: "Comprehensive engineering resume outlining technical competencies, internship experience, and projects.",
+      icon: "fa-file-pdf",
+      badge: "Primary Resume",
+      filePath: "assets/docs/resume.pdf",
+      isPrimary: true
+    },
+    {
+      id: "doc-npcil-report",
+      title: "NPCIL Industrial Training Report",
+      description: "Complete technical report on enterprise data backup, Commvault systems, and cybersecurity at NPCIL Tarapur.",
+      icon: "fa-file-lines",
+      badge: "Training Report",
+      filePath: "assets/docs/npcil_training_report.pdf",
+      isPrimary: false
     }
   ],
 
