@@ -14,8 +14,8 @@
   <!-- FontAwesome 6 Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
   
-  <!-- Custom Design System Stylesheet -->
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <!-- Custom Design System Stylesheet (with Cache-Buster Parameter) -->
+  <link rel="stylesheet" href="assets/css/styles.css?v=2.0">
 </head>
 <body>
 
@@ -55,7 +55,7 @@
     <section id="hero" class="hero-section">
       <div class="container">
         <div class="hero-grid">
-          <div class="hero-text-content">
+          <div class="hero-text-content reveal">
             <div class="status-badge" id="heroStatusBadge">
               <span class="status-dot"></span> Available for Internships & Opportunities
             </div>
@@ -65,7 +65,7 @@
             <div class="hero-ctas" id="heroCtas"></div>
           </div>
           
-          <div class="hero-portrait-wrapper">
+          <div class="hero-portrait-wrapper reveal">
             <div class="hero-portrait-frame">
               <div class="portrait-inner" id="portraitInner">
                 <!-- Profile Image / Fallback mounted dynamically -->
@@ -77,7 +77,7 @@
     </section>
 
     <!-- 2. ABOUT SECTION (BENTO GRID) -->
-    <section id="about" class="section-padding">
+    <section id="about" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-user"></i> About</span>
@@ -103,7 +103,7 @@
     </section>
 
     <!-- 3. INDUSTRIAL TRAINING / EXPERIENCE SECTION -->
-    <section id="experience" class="section-padding">
+    <section id="experience" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-briefcase"></i> Experience</span>
@@ -116,7 +116,7 @@
     </section>
 
     <!-- 4. TECHNICAL SKILLS SECTION (BENTO GRID) -->
-    <section id="skills" class="section-padding">
+    <section id="skills" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-code"></i> Technical Skills</span>
@@ -129,7 +129,7 @@
     </section>
 
     <!-- 5. FEATURED PROJECTS SECTION -->
-    <section id="projects" class="section-padding">
+    <section id="projects" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-rocket"></i> Projects</span>
@@ -142,7 +142,7 @@
     </section>
 
     <!-- 6. CERTIFICATIONS SECTION -->
-    <section id="certifications" class="section-padding">
+    <section id="certifications" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-certificate"></i> Credentials</span>
@@ -155,7 +155,7 @@
     </section>
 
     <!-- 7. DOCUMENTS & DOWNLOADS SECTION -->
-    <section id="documents" class="section-padding">
+    <section id="documents" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-folder-closed"></i> Documents</span>
@@ -168,7 +168,7 @@
     </section>
 
     <!-- 8. EDUCATION SECTION -->
-    <section id="education" class="section-padding">
+    <section id="education" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-graduation-cap"></i> Education</span>
@@ -181,7 +181,7 @@
     </section>
 
     <!-- 9. CONTACT SECTION -->
-    <section id="contact" class="section-padding">
+    <section id="contact" class="section-padding reveal">
       <div class="container">
         <div class="glass-card contact-card" id="contactCard"></div>
       </div>
@@ -198,11 +198,11 @@
   <!-- Toast Notification element -->
   <div class="toast-notification" id="toastNotification">✓ Action completed!</div>
 
-  <!-- Single Source of Truth Data Script -->
-  <script src="assets/js/data.js"></script>
+  <!-- Single Source of Truth Data Script (with Cache-Buster Parameter) -->
+  <script src="assets/js/data.js?v=2.0"></script>
 
-  <!-- Dynamic Application Script -->
-  <script src="assets/js/app.js"></script>
+  <!-- Dynamic Application Script (with Cache-Buster Parameter) -->
+  <script src="assets/js/app.js?v=2.0"></script>
 
 </body>
 </html>

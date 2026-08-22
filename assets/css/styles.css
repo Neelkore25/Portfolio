@@ -1,35 +1,33 @@
 /* ==========================================================================
-   PORTFOLIO DESIGN SYSTEM & CSS ARCHITECTURE
-   Theme: Deep Charcoal (#08090D), Apple/Vercel/Linear Minimalism, Glassmorphism
-   Typography: Space Grotesk (Headings & Metrics) + Inter (Body & UI)
+   PREMIUM GLASSMORPHIC DESIGN SYSTEM (LINEAR / VERCEL / APPLE MINIMALISM)
+   Author: Neel Kore | Portfolio Redesign
+   Aesthetic: Ultra-Dark Charcoal (#040507), Frosted Glass, Ambient Glows, Scroll Animations
    ========================================================================== */
 
 /* 1. CSS VARIABLES & SYSTEM CONSTANTS */
 :root {
-  /* Color System */
-  --bg-deep: #08090d;
-  --bg-surface: rgba(18, 20, 28, 0.75);
-  --bg-surface-hover: rgba(28, 30, 42, 0.85);
-  --bg-card: rgba(14, 16, 23, 0.7);
-  --bg-card-solid: #0e1017;
+  /* Color Palette */
+  --bg-deep: #040507;
+  --bg-surface: rgba(14, 16, 22, 0.75);
+  --bg-surface-hover: rgba(22, 26, 36, 0.85);
+  --bg-card-solid: #090b10;
   
-  /* Borders & Glass */
-  --border-glass: rgba(255, 255, 255, 0.08);
+  /* Borders & Glass Filters */
+  --border-glass: rgba(255, 255, 255, 0.07);
   --border-glass-hover: rgba(255, 255, 255, 0.18);
   --border-accent: rgba(99, 102, 241, 0.35);
-  --glass-blur: blur(24px);
-  --glass-blur-heavy: blur(32px);
+  --glass-blur: blur(28px);
+  --glass-blur-heavy: blur(40px);
   
   /* Typography Colors */
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
   --text-subtle: #64748b;
   
-  /* Accent System */
+  /* Accents & Linear Glows */
   --accent-primary: #6366f1;
   --accent-secondary: #38bdf8;
-  --accent-glow: rgba(99, 102, 241, 0.15);
-  --accent-glow-subtle: rgba(56, 189, 248, 0.08);
+  --accent-glow: rgba(99, 102, 241, 0.18);
   --live-pulse: #10b981;
 
   /* Typography Families */
@@ -43,13 +41,13 @@
   --radius-xl: 28px;
   --radius-pill: 999px;
   
-  --shadow-glass: 0 16px 40px -10px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.12);
+  --shadow-glass: 0 20px 50px -10px rgba(0, 0, 0, 0.7);
+  --shadow-glow: 0 0 35px rgba(99, 102, 241, 0.14);
   
-  --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* 2. BASE RESETS & SETUP */
+/* 2. BASE RESETS & GLOBAL SETUP */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -72,7 +70,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Ambient Background Glow System */
+/* Ambient Background Radial Glows */
 .bg-glow-container {
   position: fixed;
   top: 0;
@@ -86,23 +84,23 @@ body {
 
 .bg-glow-1 {
   position: absolute;
-  top: -15%;
+  top: -20%;
   left: 50%;
   transform: translateX(-50%);
-  width: 900px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, rgba(56, 189, 248, 0.04) 45%, transparent 70%);
-  filter: blur(80px);
+  width: 1000px;
+  height: 650px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.14) 0%, rgba(56, 189, 248, 0.04) 50%, transparent 75%);
+  filter: blur(90px);
 }
 
 .bg-glow-2 {
   position: absolute;
-  bottom: 10%;
+  bottom: 5%;
   right: -10%;
-  width: 700px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 65%);
-  filter: blur(100px);
+  width: 750px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.09) 0%, transparent 70%);
+  filter: blur(110px);
 }
 
 /* Scrollbar Styling */
@@ -120,7 +118,7 @@ body {
   background: rgba(255, 255, 255, 0.25);
 }
 
-/* 3. REUSABLE COMPONENTS & UTILITIES */
+/* 3. REUSABLE COMPONENTS & GLASS CARDS */
 .container {
   width: min(1140px, 90%);
   margin: 0 auto;
@@ -138,11 +136,39 @@ body {
   overflow: hidden;
 }
 
+/* Spotlight Mouse Hover Effect */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.05), transparent 40%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.glass-card:hover::before {
+  opacity: 1;
+}
+
 .glass-card:hover {
   background: var(--bg-surface-hover);
   border-color: var(--border-glass-hover);
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-glass), var(--shadow-glow);
+}
+
+/* Scroll Reveal Animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .section-header {
@@ -182,7 +208,7 @@ body {
   font-weight: 400;
 }
 
-/* Buttons System */
+/* Button System */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -197,18 +223,28 @@ body {
   cursor: pointer;
   transition: var(--transition-smooth);
   border: 1px solid transparent;
+  position: relative;
+  z-index: 2;
+}
+
+.btn i {
+  transition: transform 0.3s ease;
 }
 
 .btn-primary {
   background: var(--text-main);
-  color: #08090d;
+  color: #040507;
   box-shadow: 0 4px 20px rgba(255, 255, 255, 0.15);
 }
 
 .btn-primary:hover {
   background: #ffffff;
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(255, 255, 255, 0.25);
+  box-shadow: 0 6px 26px rgba(255, 255, 255, 0.25);
+}
+
+.btn-primary:hover i.fa-arrow-down {
+  transform: translateY(3px);
 }
 
 .btn-secondary {
@@ -232,7 +268,7 @@ body {
   font-size: 1.1rem;
 }
 
-/* 4. NAVIGATION BAR */
+/* 4. STICKY COMPACT PILL NAVBAR */
 nav.navbar-sticky {
   position: fixed;
   top: 20px;
@@ -244,12 +280,12 @@ nav.navbar-sticky {
   align-items: center;
   justify-content: space-between;
   z-index: 1000;
-  background: rgba(12, 14, 20, 0.75);
+  background: rgba(10, 12, 18, 0.8);
   backdrop-filter: var(--glass-blur-heavy);
   -webkit-backdrop-filter: var(--glass-blur-heavy);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-pill);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
 .nav-brand {
@@ -268,7 +304,7 @@ nav.navbar-sticky {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 22px;
   list-style: none;
 }
 
@@ -312,11 +348,11 @@ nav.navbar-sticky {
   cursor: pointer;
 }
 
-/* 5. HERO SECTION */
+/* 5. HERO SECTION (REFERENCE MATCHED LAYOUT) */
 .hero-section {
-  padding-top: 150px;
-  padding-bottom: 90px;
-  min-height: 80vh;
+  padding-top: 160px;
+  padding-bottom: 100px;
+  min-height: 85vh;
   display: flex;
   align-items: center;
 }
@@ -359,12 +395,12 @@ nav.navbar-sticky {
 
 .hero-name {
   font-family: var(--font-heading);
-  font-size: 3.75rem;
+  font-size: 3.8rem;
   font-weight: 700;
   line-height: 1.08;
   letter-spacing: -0.03em;
   margin-bottom: 12px;
-  background: linear-gradient(180deg, #ffffff 40%, rgba(255, 255, 255, 0.7) 100%);
+  background: linear-gradient(180deg, #ffffff 40%, rgba(255, 255, 255, 0.75) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -376,6 +412,24 @@ nav.navbar-sticky {
   color: var(--accent-secondary);
   margin-bottom: 20px;
   letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Blinking Cursor Animation */
+.cursor-blink {
+  display: inline-block;
+  width: 2px;
+  height: 1.2em;
+  background: var(--accent-secondary);
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .hero-bio {
@@ -393,7 +447,7 @@ nav.navbar-sticky {
   flex-wrap: wrap;
 }
 
-/* Hero Portrait Frame */
+/* Hero Portrait Frame (Dark Charcoal Glass Card) */
 .hero-portrait-wrapper {
   position: relative;
   display: flex;
@@ -404,12 +458,12 @@ nav.navbar-sticky {
   width: min(340px, 100%);
   aspect-ratio: 4/5;
   border-radius: var(--radius-xl);
-  background: rgba(18, 20, 28, 0.85);
+  background: rgba(14, 16, 24, 0.85);
   backdrop-filter: var(--glass-blur-heavy);
   -webkit-backdrop-filter: var(--glass-blur-heavy);
   border: 1px solid var(--border-glass-hover);
   padding: 12px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(99, 102, 241, 0.1);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 45px rgba(99, 102, 241, 0.12);
   position: relative;
   overflow: hidden;
 }
@@ -419,7 +473,7 @@ nav.navbar-sticky {
   height: 100%;
   border-radius: calc(var(--radius-xl) - 8px);
   overflow: hidden;
-  background: #0d0f17;
+  background: #080a10;
   position: relative;
   display: flex;
   align-items: center;
@@ -431,7 +485,7 @@ nav.navbar-sticky {
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  filter: grayscale(15%) contrast(105%);
+  filter: grayscale(20%) contrast(108%);
   transition: var(--transition-smooth);
 }
 
@@ -453,7 +507,7 @@ nav.navbar-sticky {
 }
 
 .portrait-fallback i {
-  font-size: 4rem;
+  font-size: 4.2rem;
   color: var(--accent-primary);
   opacity: 0.95;
 }
@@ -461,8 +515,8 @@ nav.navbar-sticky {
 .portrait-status-sub {
   font-size: 0.75rem;
   color: var(--text-subtle);
-  background: rgba(255, 255, 255, 0.05);
-  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 4px 12px;
   border-radius: var(--radius-pill);
   border: 1px solid var(--border-glass);
 }
@@ -873,7 +927,7 @@ nav.navbar-sticky {
   width: 100%;
   aspect-ratio: 16/10;
   border-radius: var(--radius-md);
-  background: rgba(10, 12, 18, 0.9);
+  background: rgba(8, 10, 15, 0.9);
   border: 1px solid var(--border-glass);
   overflow: hidden;
   margin-bottom: 20px;
@@ -1093,7 +1147,7 @@ nav.navbar-sticky {
   text-align: center;
   max-width: 800px;
   margin: 0 auto;
-  background: linear-gradient(180deg, rgba(18, 20, 28, 0.9) 0%, rgba(14, 16, 23, 0.95) 100%);
+  background: linear-gradient(180deg, rgba(16, 18, 26, 0.9) 0%, rgba(10, 12, 18, 0.95) 100%);
 }
 
 .contact-title {
@@ -1195,6 +1249,9 @@ footer.footer-minimal {
     gap: 40px;
     text-align: center;
   }
+  .hero-role {
+    justify-content: center;
+  }
   .hero-bio {
     margin-left: auto;
     margin-right: auto;
@@ -1242,7 +1299,7 @@ footer.footer-minimal {
     top: 65px;
     left: 0;
     width: 100%;
-    background: rgba(12, 14, 20, 0.95);
+    background: rgba(10, 12, 18, 0.95);
     backdrop-filter: var(--glass-blur-heavy);
     -webkit-backdrop-filter: var(--glass-blur-heavy);
     border: 1px solid var(--border-glass);

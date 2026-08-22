@@ -2,8 +2,8 @@
  * Portfolio Dynamic Rendering & Interactive Application Engine
  * Author: Neel Kore
  * Description: Reads single-source portfolioData object and dynamically populates
- * all portfolio sections. Manages scroll-spy navigation, email clipboard toast,
- * document downloads, image fallbacks, and mobile drawer toggles.
+ * all portfolio sections. Manages scroll-reveal animations, spotlight cursor tracking,
+ * email clipboard toast, document downloads, image fallbacks, and mobile drawer toggles.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -26,8 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
   renderContact();
   renderFooter();
 
-  // Initialize Interactive Engine
+  // Initialize Interactive Engine & Animations
   setupInteractions();
+  setupScrollReveal();
+  setupCardSpotlight();
 });
 
 /* --------------------------------------------------------------------------
@@ -61,7 +63,9 @@ function renderHero() {
   }
 
   if (nameEl) nameEl.textContent = portfolioData.personal.name;
-  if (roleEl) roleEl.textContent = `${portfolioData.personal.role} | ${portfolioData.personal.subRole}`;
+  if (roleEl) {
+    roleEl.innerHTML = `<span>${portfolioData.personal.role} | ${portfolioData.personal.subRole}</span><span class="cursor-blink"></span>`;
+  }
   if (bioEl) bioEl.textContent = portfolioData.personal.bio;
 
   if (ctaGroupEl) {
@@ -153,7 +157,7 @@ function renderExperience() {
   if (!expContainer) return;
 
   expContainer.innerHTML = portfolioData.experience.map(exp => `
-    <div class="glass-card exp-card">
+    <div class="glass-card exp-card reveal">
       <div class="exp-header">
         <div>
           <h3 class="exp-role">${exp.title}</h3>
@@ -189,7 +193,7 @@ function renderSkills() {
   if (!skillsGrid) return;
 
   skillsGrid.innerHTML = portfolioData.skills.map(group => `
-    <div class="glass-card skill-card">
+    <div class="glass-card skill-card reveal">
       <div class="skill-card-header">
         <i class="fa-solid ${group.icon}"></i>
         <h3>${group.category}</h3>
@@ -209,7 +213,7 @@ function renderProjects() {
   if (!projectsGrid) return;
 
   projectsGrid.innerHTML = portfolioData.projects.map(proj => `
-    <div class="glass-card project-card">
+    <div class="glass-card project-card reveal">
       <div class="project-top">
         <div class="project-icon-box">
           <i class="fa-solid ${proj.icon}"></i>
@@ -236,7 +240,7 @@ function renderProjects() {
 }
 
 /* --------------------------------------------------------------------------
-   7. CERTIFICATIONS SECTION RENDERER (DYNAMIC ARRAY DRIVEN)
+   7. CERTIFICATIONS SECTION RENDERER
    -------------------------------------------------------------------------- */
 function renderCertifications() {
   const certsGrid = document.getElementById('certsGrid');
@@ -263,7 +267,7 @@ function renderCertifications() {
       `;
 
     return `
-      <div class="glass-card cert-card">
+      <div class="glass-card cert-card reveal">
         <div class="cert-preview-box">
           ${imageHtml}
         </div>
@@ -278,7 +282,7 @@ function renderCertifications() {
 }
 
 /* --------------------------------------------------------------------------
-   8. DOCUMENTS & DOWNLOADS SECTION RENDERER (DYNAMIC MULTI-DOC DRIVEN)
+   8. DOCUMENTS & DOWNLOADS SECTION RENDERER
    -------------------------------------------------------------------------- */
 function renderDocuments() {
   const docsGrid = document.getElementById('docsGrid');
@@ -294,7 +298,7 @@ function renderDocuments() {
   }
 
   docsGrid.innerHTML = portfolioData.documents.map(doc => `
-    <div class="glass-card doc-card">
+    <div class="glass-card doc-card reveal">
       <div class="doc-top">
         <div class="doc-icon-box">
           <i class="fa-solid ${doc.icon || 'fa-file-pdf'}"></i>
@@ -318,7 +322,6 @@ function renderDocuments() {
       const path = btn.getAttribute('data-filepath');
       const title = btn.getAttribute('data-doctitle');
       
-      // Fetch check to see if document file exists locally
       fetch(path, { method: 'HEAD' })
         .then(res => {
           if (!res.ok) {
@@ -327,7 +330,6 @@ function renderDocuments() {
           }
         })
         .catch(() => {
-          // If fetch fails, show helpful toast instead of breaking user flow
           e.preventDefault();
           showToast(`ℹ️ "${title}" will be available once uploaded to ${path}`);
         });
@@ -344,7 +346,7 @@ function renderEducation() {
 
   const edu = portfolioData.education;
   eduContainer.innerHTML = `
-    <div class="glass-card edu-card">
+    <div class="glass-card edu-card reveal">
       <div class="edu-header-flex">
         <div>
           <h3 class="edu-degree">${edu.degree} in ${edu.branch}</h3>
@@ -486,6 +488,46 @@ function setupInteractions() {
         });
     });
   }
+}
+
+/* --------------------------------------------------------------------------
+   13. SCROLL REVEAL ANIMATION ENGINE (INTERSECTION OBSERVER)
+   -------------------------------------------------------------------------- */
+function setupScrollReveal() {
+  const revealElements = document.querySelectorAll('.reveal, section.section-padding');
+  
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach(el => observer.observe(el));
+  } else {
+    // Fallback for older browsers
+    revealElements.forEach(el => el.classList.add('active'));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   14. GLASS CARD SPOTLIGHT MOUSE TRACKING
+   -------------------------------------------------------------------------- */
+function setupCardSpotlight() {
+  document.addEventListener('mousemove', (e) => {
+    document.querySelectorAll('.glass-card').forEach(card => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+  });
 }
 
 function showToast(message) {
