@@ -60,7 +60,7 @@ const portfolioData = {
     quickInfo: [
       { label: "Current Status", value: "B.Tech Student (Computer Engineering)" },
       { label: "Institution", value: "St. John College of Eng. & Management" },
-      { label: "Location", value: "Maharashtra, India" },
+      { label: "Location", value: "Palghar, Maharashtra, India" },
       { label: "Primary Interest", value: "Software Eng. & Cybersecurity" },
       { label: "Expected Graduation", value: "May 2028" }
     ]
@@ -141,10 +141,6 @@ const portfolioData = {
     }
   ],
 
-  /**
-   * Certifications list:
-   * Edit, add, or remove entries in this array to automatically update the Certifications section grid.
-   */
   certifications: [
     {
       id: "cert-npcil",
@@ -181,11 +177,6 @@ const portfolioData = {
     }
   ],
 
-  /**
-   * Documents & Downloads List:
-   * Add, edit, or remove document files here. Place actual PDF/DOC files into assets/docs/ folder.
-   * To mark a document as the main resume for the Hero button, set isPrimary: true.
-   */
   documents: [
     {
       id: "doc-resume",
@@ -211,9 +202,8 @@ const portfolioData = {
     degree: "Bachelor of Technology (B.Tech)",
     branch: "Computer Engineering",
     institution: "St. John College of Engineering and Management",
-    location: "Palghar / Thane, Maharashtra",
+    location: "Palghar, Maharashtra",
     duration: "2024 — 2028 (Expected)",
-    status: "Currently Pursuing — Year 2",
     coursework: [
       "Database Management Systems",
       "Operating Systems",

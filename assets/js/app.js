@@ -357,7 +357,6 @@ function renderEducation() {
 
       <div class="edu-meta-tags">
         <div class="edu-meta-pill">Location: <strong>${edu.location}</strong></div>
-        <div class="edu-meta-pill">Status: <strong>${edu.status}</strong></div>
       </div>
 
       <div class="coursework-title">Key Computer Engineering Coursework</div>
@@ -510,7 +509,6 @@ function setupScrollReveal() {
 
     revealElements.forEach(el => observer.observe(el));
   } else {
-    // Fallback for older browsers
     revealElements.forEach(el => el.classList.add('active'));
   }
 }
