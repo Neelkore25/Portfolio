@@ -9,36 +9,45 @@ const portfolioData = {
   personal: {
     name: "Neel Kore",
     logoName: "Neel Kore",
-    role: "Computer Engineering Student",
-    subRole: "Software Developer & Security Enthusiast",
-    statusBadge: "Available for Internships & Opportunities",
-    bio: "Computer Engineering student building modern web applications, software solutions, and secure data systems. Passionate about full-stack development, database architecture, and continuous technical learning.",
+    role: "Cybersecurity & Full Stack Developer",
+    subRole: "Computer Engineering Student @ SJCEM",
+    statusBadge: "Open to Internships & Opportunities",
+    tagline: "Building secure web applications, automation tools, and modern digital experiences.",
+    bio: "Computer Engineering student building performant web applications, software tools, and secure data infrastructure. Passionate about full-stack development (MERN), database architecture, and cybersecurity resilience.",
     avatar: "assets/images/profile.jpg",
     location: "Palghar, Maharashtra, India",
     email: "neelkore25@gmail.com"
   },
 
+  // Action-based recruiter metrics (Bug Fix #7)
   stats: [
-    { number: 2, suffix: "+", label: "Years Engineering Study" },
-    { number: 15, suffix: "+", label: "Projects & Repositories" },
-    { number: 3, suffix: "+", label: "Verified Credentials" }
+    { number: 10, suffix: "+", label: "Projects Built & Deployed" },
+    { number: 5, suffix: "+", label: "Core Credentials & Badges" },
+    { number: 1, suffix: "+", label: "Months Industrial Exposure (NPCIL)" }
   ],
 
   about: {
     summary: [
-      "I am currently pursuing a Bachelor of Technology (B.Tech) in Computer Engineering at St. John College of Engineering and Management.",
-      "My primary interests lie at the intersection of Software Engineering, Full Stack Web Development, Database Management, and Cybersecurity. I enjoy transforming complex requirements into clean, performant, and reliable applications."
+      "I am a Computer Engineering student at St. John College of Engineering and Management (SJCEM), specializing in software development, web applications, and network security concepts.",
+      "My technical journey combines hands-on full-stack development with enterprise data resilience training at Nuclear Power Corporation of India Limited (NPCIL). I focus on writing clean, efficient code while applying security-first principles."
+    ],
+    services: [
+      { icon: "fa-layer-group", title: "Web Development", desc: "Building responsive full-stack web applications using modern JavaScript, HTML5/CSS3, and React." },
+      { icon: "fa-shield-halved", title: "Cybersecurity & Resilience", desc: "Analyzing data protection, air-gapped network security, and enterprise disaster recovery matrices." },
+      { icon: "fa-code-branch", title: "API Development", desc: "Designing RESTful API endpoints, Web Storage integrations, and client-server workflows." },
+      { icon: "fa-gears", title: "Automation & Scripting", desc: "Crafting lightweight developer scripts, task utilities, and workflow automation." },
+      { icon: "fa-linux", title: "Linux Administration", desc: "Navigating Linux environments, basic shell scripting, and server configuration fundamentals." }
     ],
     coreFocus: [
       {
         icon: "fa-code",
         title: "Software Engineering",
-        description: "Building clean, modular, and maintainable software following core OOP and architectural standards."
+        description: "Building clean, modular, and maintainable software following OOP and architectural standards."
       },
       {
         icon: "fa-layer-group",
         title: "Full Stack Web",
-        description: "Developing responsive web applications with modern HTML5, CSS3, JavaScript (ES6+), and MERN stack principles."
+        description: "Developing responsive web applications with HTML5, CSS3, JavaScript (ES6+), and MERN principles."
       },
       {
         icon: "fa-shield-halved",
@@ -48,7 +57,7 @@ const portfolioData = {
       {
         icon: "fa-database",
         title: "Database Architecture",
-        description: "Designing relational databases, writing optimized SQL queries, and maintaining data integrity with PostgreSQL/DBMS."
+        description: "Designing relational databases, writing optimized SQL queries, and maintaining data integrity."
       }
     ],
     quickInfo: [
@@ -76,16 +85,17 @@ const portfolioData = {
     }
   ],
 
+  // Rebalanced proficiency badges (Bug Fix #6)
   skills: [
     {
       category: "Languages",
       icon: "fa-terminal",
       items: [
+        { name: "JavaScript (ES6+)", level: "Advanced" },
+        { name: "SQL", level: "Advanced" },
         { name: "C", level: "Intermediate" },
         { name: "C++", level: "Intermediate" },
-        { name: "Java", level: "Intermediate" },
-        { name: "JavaScript (ES6+)", level: "Advanced" },
-        { name: "SQL", level: "Advanced" }
+        { name: "Java", level: "Intermediate" }
       ]
     },
     {
@@ -94,19 +104,19 @@ const portfolioData = {
       items: [
         { name: "HTML5 / CSS3", level: "Advanced" },
         { name: "JavaScript", level: "Advanced" },
-        { name: "React", level: "Intermediate" },
-        { name: "Node.js & Express", level: "Intermediate" },
-        { name: "Responsive UI/UX", level: "Advanced" }
+        { name: "React", level: "Proficient" },
+        { name: "Node.js & Express", level: "Proficient" },
+        { name: "Responsive UI/UX", level: "Proficient" }
       ]
     },
     {
       category: "CS & Security Fundamentals",
       icon: "fa-brain",
       items: [
-        { name: "Database Systems (DBMS)", level: "Advanced" },
-        { name: "Operating Systems", level: "Intermediate" },
+        { name: "Database Systems (DBMS)", level: "Proficient" },
         { name: "Computer Networks", level: "Intermediate" },
         { name: "Information Security", level: "Intermediate" },
+        { name: "Operating Systems", level: "Intermediate" },
         { name: "Data Structures", level: "Intermediate" }
       ]
     },
@@ -114,13 +124,26 @@ const portfolioData = {
       category: "Tools & Environment",
       icon: "fa-gears",
       items: [
-        { name: "Git & GitHub", level: "Advanced" },
-        { name: "VS Code", level: "Advanced" },
-        { name: "PostgreSQL", level: "Intermediate" },
+        { name: "Git & GitHub", level: "Proficient" },
+        { name: "VS Code", level: "Proficient" },
+        { name: "PostgreSQL", level: "Proficient" },
         { name: "Linux Basics", level: "Intermediate" }
       ]
     }
   ],
+
+  // Featured Project & Grid Projects
+  featuredProject: {
+    id: "finance-risk-featured",
+    category: "web-dev",
+    title: "Finance Risk Analytics Platform",
+    badge: "Featured Analytics Suite",
+    description: "A comprehensive, interactive web analytics suite designed for evaluating financial risk indicators, analyzing portfolio exposure matrices, and presenting dynamic decision-support data visualizations.",
+    tags: ["JavaScript (ES6+)", "HTML5/CSS3", "Financial Risk Modeling", "Data Visualization", "DOM Architecture"],
+    liveUrl: "https://neelkore25.github.io/finance-risk-management/",
+    githubUrl: "https://github.com/Neelkore25/finance-risk-management",
+    icon: "fa-chart-line"
+  },
 
   projects: [
     {
@@ -182,7 +205,7 @@ const portfolioData = {
       badge: "Verified Industrial Training",
       icon: "fa-shield-halved",
       description: "Practical industrial training validation covering data resilience, infrastructure backup, and security protocols.",
-      credentialUrl: "",
+      credentialUrl: "assets/docs/npcil_training_report.pdf",
       imageUrl: "assets/images/certificates/npcil_cert.jpg"
     },
     {
