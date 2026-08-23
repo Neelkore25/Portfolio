@@ -3,8 +3,8 @@
  * Author: Neel Kore
  * Description: Reads single-source portfolioData object and dynamically populates
  * all portfolio sections. Manages theme toggle, animated count-up stats, category filter tabs,
- * vertical timeline, featured project block, compact certification banners, scroll reveal,
- * email toast, and mobile drawer.
+ * scroll-reveal animations, ultra-fast Apple glass cursor ring, email clipboard toast,
+ * document downloads, image fallbacks, and mobile drawer toggles.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -76,8 +76,13 @@ function updateThemeIcon(theme) {
    -------------------------------------------------------------------------- */
 function renderNavigation() {
   const brandEl = document.getElementById('navBrand');
+  const navCtaEl = document.getElementById('navCta');
+  
   if (brandEl) {
     brandEl.textContent = portfolioData.personal.logoName;
+  }
+  if (navCtaEl) {
+    navCtaEl.href = portfolioData.socials.github;
   }
 }
 
@@ -88,7 +93,6 @@ function renderHero() {
   const statusBadgeEl = document.getElementById('heroStatusBadge');
   const nameEl = document.getElementById('heroName');
   const roleEl = document.getElementById('heroRole');
-  const taglineEl = document.getElementById('heroTagline');
   const bioEl = document.getElementById('heroBio');
   const ctaGroupEl = document.getElementById('heroCtas');
   const portraitInnerEl = document.getElementById('portraitInner');
@@ -97,11 +101,9 @@ function renderHero() {
     statusBadgeEl.innerHTML = `<span class="status-dot"></span>${portfolioData.personal.statusBadge}`;
   }
 
-  if (nameEl) nameEl.childNodes[0].textContent = portfolioData.personal.name + ' ';
   if (roleEl) {
-    roleEl.innerHTML = `<span class="highlight-cyan-underline">Cybersecurity</span> & Full Stack Developer`;
+    roleEl.innerHTML = `<span>${portfolioData.personal.role} | ${portfolioData.personal.subRole}</span><span class="cursor-blink"></span>`;
   }
-  if (taglineEl) taglineEl.textContent = portfolioData.personal.tagline;
   if (bioEl) bioEl.textContent = portfolioData.personal.bio;
 
   if (ctaGroupEl) {
@@ -109,8 +111,11 @@ function renderHero() {
       <a href="#documents" class="btn btn-primary">
         <i class="fa-solid fa-file-arrow-down"></i> Download Resume
       </a>
-      <a href="#projects" class="btn btn-secondary">
-        <i class="fa-solid fa-rocket"></i> View Projects
+      <a href="#contact" class="btn btn-secondary">
+        <i class="fa-solid fa-envelope"></i> Contact Me
+      </a>
+      <a href="${portfolioData.socials.github}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" title="GitHub Profile">
+        <i class="fa-brands fa-github"></i>
       </a>
     `;
   }
@@ -146,7 +151,7 @@ function handleImageError(imgEl) {
 }
 
 /* --------------------------------------------------------------------------
-   3. ANIMATED ACTION STATS ROW RENDERER & COUNTER ENGINE
+   3. ANIMATED STATS ROW RENDERER & COUNTER ENGINE
    -------------------------------------------------------------------------- */
 function renderStats() {
   const statsGrid = document.getElementById('statsGrid');
@@ -172,8 +177,8 @@ function setupStatsCounter() {
   const countUp = () => {
     statNumbers.forEach(num => {
       const target = parseInt(num.getAttribute('data-target'), 10);
-      const duration = 1400;
-      const step = Math.ceil(target / (duration / 30)) || 1;
+      const duration = 1600;
+      const step = Math.ceil(target / (duration / 30));
       let current = 0;
 
       const timer = setInterval(() => {
@@ -202,12 +207,11 @@ function setupStatsCounter() {
 }
 
 /* --------------------------------------------------------------------------
-   4. ABOUT SECTION RENDERER (COMPACT SERVICES & QUICK DETAILS - Bug Fix #3)
+   4. ABOUT SECTION RENDERER
    -------------------------------------------------------------------------- */
 function renderAbout() {
   const summaryEl = document.getElementById('aboutSummary');
   const focusGridEl = document.getElementById('aboutFocusGrid');
-  const servicesWrapperEl = document.getElementById('servicesListWrapper');
   const quickInfoEl = document.getElementById('aboutQuickInfo');
 
   if (summaryEl) {
@@ -226,18 +230,6 @@ function renderAbout() {
     `).join('');
   }
 
-  if (servicesWrapperEl && portfolioData.about.services) {
-    servicesWrapperEl.innerHTML = portfolioData.about.services.map(svc => `
-      <div class="service-item-compact">
-        <i class="fa-solid ${svc.icon} service-icon"></i>
-        <div>
-          <h4 class="service-title">${svc.title}</h4>
-          <p class="service-desc">${svc.desc}</p>
-        </div>
-      </div>
-    `).join('');
-  }
-
   if (quickInfoEl) {
     quickInfoEl.innerHTML = portfolioData.about.quickInfo.map(info => `
       <li class="quick-info-item">
@@ -249,46 +241,43 @@ function renderAbout() {
 }
 
 /* --------------------------------------------------------------------------
-   5. EXPERIENCE SECTION RENDERER (VERTICAL TIMELINE LAYOUT)
+   5. EXPERIENCE SECTION RENDERER
    -------------------------------------------------------------------------- */
 function renderExperience() {
   const expContainer = document.getElementById('experienceContainer');
   if (!expContainer) return;
 
   expContainer.innerHTML = portfolioData.experience.map(exp => `
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="glass-card exp-card">
-        <div class="exp-header">
-          <div>
-            <h3 class="exp-role">${exp.title}</h3>
-            <div class="exp-company">${exp.company}</div>
-          </div>
-          <div class="exp-badge-group">
-            <span class="exp-pill">${exp.duration}</span>
-            <span class="exp-location"><i class="fa-solid fa-location-dot"></i> ${exp.location}</span>
-          </div>
+    <div class="glass-card exp-card reveal">
+      <div class="exp-header">
+        <div>
+          <h3 class="exp-role">${exp.title}</h3>
+          <div class="exp-company">${exp.company}</div>
         </div>
-        <div class="exp-project-name">
-          <i class="fa-solid fa-folder-open"></i> ${exp.projectTitle}
+        <div class="exp-badge-group">
+          <span class="exp-pill">${exp.duration}</span>
+          <span class="exp-location"><i class="fa-solid fa-location-dot"></i> ${exp.location}</span>
         </div>
-        <p class="exp-description">${exp.description}</p>
+      </div>
+      <div class="exp-project-name">
+        <i class="fa-solid fa-folder-open"></i> ${exp.projectTitle}
+      </div>
+      <p class="exp-description">${exp.description}</p>
 
-        <div class="exp-highlights-title">Key Engineering Achievements</div>
-        <ul class="exp-highlights-list">
-          ${exp.highlights.map(h => `<li>${h}</li>`).join('')}
-        </ul>
+      <div class="exp-highlights-title">Key Engineering Highlights & Learnings</div>
+      <ul class="exp-highlights-list">
+        ${exp.highlights.map(h => `<li>${h}</li>`).join('')}
+      </ul>
 
-        <div class="exp-tags-wrapper">
-          ${exp.skills.map(skill => `<span class="tech-tag">${skill}</span>`).join('')}
-        </div>
+      <div class="exp-tags-wrapper">
+        ${exp.skills.map(skill => `<span class="tech-tag">${skill}</span>`).join('')}
       </div>
     </div>
   `).join('');
 }
 
 /* --------------------------------------------------------------------------
-   6. SKILLS SECTION RENDERER (REBALANCED PROFICIENCY - Bug Fix #6)
+   6. SKILLS SECTION RENDERER (WITH PROFICIENCY LEVEL BADGES)
    -------------------------------------------------------------------------- */
 function renderSkills() {
   const skillsGrid = document.getElementById('skillsGrid');
@@ -304,7 +293,7 @@ function renderSkills() {
         ${group.items.map(item => `
           <div class="skill-pill-box">
             <span class="skill-pill-name">${item.name || item}</span>
-            ${item.level ? `<span class="skill-badge-level level-${item.level.toLowerCase()}">${item.level}</span>` : ''}
+            ${item.level ? `<span class="skill-badge-level">${item.level}</span>` : ''}
           </div>
         `).join('')}
       </div>
@@ -313,65 +302,37 @@ function renderSkills() {
 }
 
 /* --------------------------------------------------------------------------
-   7. FEATURED PROJECTS RENDERER (FEATURED BLOCK + GRID TABS)
+   7. FEATURED PROJECTS RENDERER & INTERACTIVE CATEGORY FILTERING
    -------------------------------------------------------------------------- */
 function renderProjects() {
-  const featuredBlock = document.getElementById('featuredProjectBlock');
   const projectsGrid = document.getElementById('projectsGrid');
+  if (!projectsGrid) return;
 
-  if (featuredBlock && portfolioData.featuredProject) {
-    const fp = portfolioData.featuredProject;
-    featuredBlock.innerHTML = `
-      <div class="featured-project-inner">
-        <div class="featured-badge-row">
-          <span class="featured-badge"><i class="fa-solid fa-star"></i> ${fp.badge}</span>
+  projectsGrid.innerHTML = portfolioData.projects.map(proj => `
+    <div class="glass-card project-card reveal" data-category="${proj.category || 'all'}">
+      <div class="project-top">
+        <div class="project-icon-box">
+          <i class="fa-solid ${proj.icon}"></i>
         </div>
-        <h3 class="featured-title">${fp.title}</h3>
-        <p class="featured-desc">${fp.description}</p>
-
-        <div class="featured-tags">
-          ${fp.tags.map(t => `<span class="tech-tag">${t}</span>`).join('')}
-        </div>
-
-        <div class="featured-actions">
-          <a href="${fp.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
-          </a>
-          <a href="${fp.githubUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-            <i class="fa-brands fa-github"></i> View Source
-          </a>
-        </div>
+        <span class="project-badge">${proj.badge}</span>
       </div>
-    `;
-  }
-
-  if (projectsGrid) {
-    projectsGrid.innerHTML = portfolioData.projects.map(proj => `
-      <div class="glass-card project-card reveal" data-category="${proj.category || 'all'}">
-        <div class="project-top">
-          <div class="project-icon-box">
-            <i class="fa-solid ${proj.icon}"></i>
-          </div>
-          <span class="project-badge">${proj.badge}</span>
-        </div>
-        <h3 class="project-title">${proj.title}</h3>
-        <p class="project-desc">${proj.description}</p>
-        
-        <div class="project-tags">
-          ${proj.tags.map(t => `<span class="tech-tag">${t}</span>`).join('')}
-        </div>
-
-        <div class="project-actions">
-          <a href="${proj.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i> View Project
-          </a>
-          <a href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" title="View Source Code">
-            <i class="fa-brands fa-github"></i>
-          </a>
-        </div>
+      <h3 class="project-title">${proj.title}</h3>
+      <p class="project-desc">${proj.description}</p>
+      
+      <div class="project-tags">
+        ${proj.tags.map(t => `<span class="tech-tag">${t}</span>`).join('')}
       </div>
-    `).join('');
-  }
+
+      <div class="project-actions">
+        <a href="${proj.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> View Project
+        </a>
+        <a href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" title="View Source Code">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </div>
+    </div>
+  `).join('');
 }
 
 function setupProjectFilters() {
@@ -403,35 +364,36 @@ function setupProjectFilters() {
 }
 
 /* --------------------------------------------------------------------------
-   8. CERTIFICATIONS RENDERER (COMPACT CARDS - Bug Fix #2)
+   8. CERTIFICATIONS SECTION RENDERER
    -------------------------------------------------------------------------- */
 function renderCertifications() {
   const certsGrid = document.getElementById('certsGrid');
   if (!certsGrid) return;
 
-  certsGrid.innerHTML = portfolioData.certifications.map(cert => `
-    <div class="glass-card cert-card-compact reveal">
-      <div class="cert-header-compact">
-        <div class="cert-icon-badge">
+  certsGrid.innerHTML = portfolioData.certifications.map(cert => {
+    const hasImage = cert.imageUrl && cert.imageUrl.trim() !== "";
+    const imageHtml = hasImage 
+      ? `<img src="${cert.imageUrl}" alt="${cert.title}" class="cert-preview-img" onerror="handleImageError(this)">`
+      : `
+        <div class="cert-preview-placeholder">
           <i class="fa-solid ${cert.icon || 'fa-award'}"></i>
+          <span>${cert.badge}</span>
+        </div>
+      `;
+
+    return `
+      <div class="glass-card cert-card reveal">
+        <div class="cert-preview-box">
+          ${imageHtml}
         </div>
         <span class="cert-badge">${cert.badge}</span>
+        <h3 class="cert-title">${cert.title}</h3>
+        <div class="cert-issuer"><i class="fa-solid fa-building-columns"></i> ${cert.issuer}</div>
+        <div class="cert-date">${cert.date}</div>
+        <p class="cert-desc">${cert.description}</p>
       </div>
-
-      <h3 class="cert-title">${cert.title}</h3>
-      <div class="cert-issuer"><i class="fa-solid fa-building-columns"></i> ${cert.issuer}</div>
-      <div class="cert-date">${cert.date}</div>
-      <p class="cert-desc">${cert.description}</p>
-      
-      ${cert.credentialUrl ? `
-        <div class="cert-action">
-          <a href="${cert.credentialUrl}" target="_blank" class="btn btn-secondary cert-verify-btn">
-            <i class="fa-solid fa-certificate"></i> Verify Credential
-          </a>
-        </div>
-      ` : ''}
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
 /* --------------------------------------------------------------------------
@@ -511,7 +473,7 @@ function renderEducation() {
 }
 
 /* --------------------------------------------------------------------------
-   11. CONTACT SECTION RENDERER & FORM HANDLING (Bug Fix #9)
+   11. CONTACT SECTION RENDERER & DIRECT INBOX EMAIL SUBMISSION
    -------------------------------------------------------------------------- */
 function renderContact() {
   const contactCard = document.getElementById('contactCard');
@@ -541,7 +503,7 @@ function renderContact() {
         <i class="fa-solid fa-user-graduate info-icon"></i>
         <div>
           <span class="info-label">Academic Status</span>
-          <span class="info-value">B.Tech Computer Engineering Student</span>
+          <span class="info-value">B.Tech Computer Engineering</span>
         </div>
       </div>
     </div>
@@ -578,13 +540,16 @@ function setupContactForm() {
     const subject = document.getElementById('contactSubject').value;
     const message = document.getElementById('contactMessage').value;
 
+    // Check if user has set their Web3Forms key
     if (accessKey === 'YOUR_FREE_ACCESS_KEY' || !accessKey) {
+      // Fallback: Open mailto link directly in user's email client
       const mailtoUrl = `mailto:${portfolioData.socials.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
       window.location.href = mailtoUrl;
-      showToast(`Thanks ${name}! Opening email client...`);
+      showToast(`Opening your email client to send to ${portfolioData.socials.email}...`);
       return;
     }
 
+    // Submit via Web3Forms API asynchronously
     submitBtn.disabled = true;
     submitBtn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Sending...`;
 
@@ -603,17 +568,17 @@ function setupContactForm() {
 
       const data = await response.json();
       if (data.success) {
-        // Warm human success message (Bug Fix #9)
-        showToast(`Thanks ${name}! I'll get back to you within 24 hours.`);
+        showToast(`✓ Thank you ${name}! Your message has been sent to Neel's inbox.`);
         form.reset();
       } else {
         throw new Error(data.message || 'Submission failed');
       }
     } catch (err) {
       console.error('Contact Form Error:', err);
+      // Fallback to mailto
       const mailtoUrl = `mailto:${portfolioData.socials.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
       window.location.href = mailtoUrl;
-      showToast(`Thanks ${name}! Opening email client...`);
+      showToast(`Opening email client to send to ${portfolioData.socials.email}...`);
     } finally {
       submitBtn.disabled = false;
       submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Send Message`;
@@ -630,7 +595,7 @@ function renderFooter() {
 
   footerContent.innerHTML = `
     <div class="footer-copy">
-      Designed & Built by <strong>${portfolioData.personal.name}</strong>. © ${new Date().getFullYear()}
+      © ${new Date().getFullYear()} ${portfolioData.personal.name}. All rights reserved.
     </div>
     <div class="footer-socials">
       <a href="${portfolioData.socials.github}" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fa-brands fa-github"></i></a>
@@ -731,7 +696,7 @@ function setupScrollReveal() {
 }
 
 /* --------------------------------------------------------------------------
-   15. ULTRA-FAST APPLE GLASS MOUSE CURSOR RING ENGINE (Bug Fix #1)
+   15. ULTRA-FAST APPLE GLASS MOUSE CURSOR RING ENGINE
    -------------------------------------------------------------------------- */
 function setupCustomCursor() {
   if (window.innerWidth <= 768) return;
@@ -752,11 +717,6 @@ function setupCustomCursor() {
   document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    cursor.style.opacity = '1';
-  });
-
-  document.addEventListener('mouseleave', () => {
-    cursor.style.opacity = '0';
   });
 
   document.addEventListener('mousedown', () => cursor.classList.add('clicking'));

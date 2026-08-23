@@ -3,41 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neel Kore | Cybersecurity & Full Stack Developer Portfolio</title>
-  <meta name="description" content="Personal portfolio of Neel Kore, Computer Engineering student skilled in full-stack web development (MERN) and cybersecurity resilience.">
-  <meta name="keywords" content="Neel Kore, Computer Engineering, Cybersecurity, Full Stack Developer, MERN, React, Node.js, Web Development, Portfolio">
-  <meta name="author" content="Neel Kore">
-
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://neelkore25.github.io/Portfolio/">
-  <meta property="og:title" content="Neel Kore | Cybersecurity & Full Stack Developer">
-  <meta property="og:description" content="Computer Engineering student building secure web applications, automation tools, and modern digital experiences.">
-  <meta property="og:image" content="https://neelkore25.github.io/Portfolio/assets/images/profile.jpg">
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Neel Kore | Cybersecurity & Full Stack Developer">
-  <meta name="twitter:description" content="Computer Engineering student building secure web applications, automation tools, and modern digital experiences.">
-  <meta name="twitter:image" content="https://neelkore25.github.io/Portfolio/assets/images/profile.jpg">
-
-  <!-- Structured Data / Person Schema -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Neel Kore",
-    "jobTitle": "Cybersecurity & Full Stack Developer",
-    "url": "https://neelkore25.github.io/Portfolio/",
-    "sameAs": [
-      "https://github.com/Neelkore25",
-      "https://www.linkedin.com/in/neel-kore-00567231b",
-      "https://www.instagram.com/neel_kore"
-    ],
-    "almaMater": "St. John College of Engineering and Management"
-  }
-  </script>
-
+  <title>Neel Kore | Personal Portfolio</title>
+  <meta name="description" content="Personal portfolio of Neel Kore, Computer Engineering Student passionate about Software Engineering, Full Stack Web Development, and Cybersecurity.">
+  
   <!-- Google Fonts: Space Grotesk & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,17 +15,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
   
   <!-- Custom Design System Stylesheet (with Cache-Buster Parameter) -->
-  <link rel="stylesheet" href="assets/css/styles.css?v=13.0">
+  <link rel="stylesheet" href="assets/css/styles.css?v=11.0">
 </head>
 <body>
 
-  <!-- Ambient Background Glows -->
+  <!-- Ambient Glowing Background Effect -->
   <div class="bg-glow-container">
     <div class="bg-glow-1"></div>
     <div class="bg-glow-2"></div>
   </div>
 
-  <!-- Vertical Floating Social Rail (Desktop - ONLY GitHub link, no navbar duplicate - PDF Ref Page 1-2) -->
+  <!-- Vertical Floating Social Icon Rail (Desktop) -->
   <aside class="social-rail-vertical" aria-label="Social Media Connections">
     <a href="https://github.com/Neelkore25" target="_blank" rel="noopener noreferrer" title="GitHub Profile">
       <i class="fa-brands fa-github"></i>
@@ -71,7 +39,7 @@
     <div class="social-rail-line"></div>
   </aside>
 
-  <!-- Sticky Compact Pill Navigation Bar (6 Links Max - PDF Ref Page 29-32) -->
+  <!-- Sticky Compact Pill Navigation Bar -->
   <nav class="navbar-sticky">
     <a href="#hero" class="nav-brand" id="navBrand">Neel Kore</a>
     
@@ -82,9 +50,12 @@
     <ul class="nav-links" id="navLinks">
       <li><a href="#hero" class="active">Home</a></li>
       <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#projects">Projects</a></li>
-      <li><a href="#certifications">Credentials</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#documents">Documents</a></li>
+      <li><a href="#education">Education</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
 
@@ -92,73 +63,44 @@
       <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Light or Dark Mode" title="Toggle Theme">
         <i class="fa-solid fa-moon"></i>
       </button>
-      <!-- Resume CTA replacing duplicate GitHub button -->
-      <a href="#documents" class="btn btn-primary nav-cta">
-        <i class="fa-solid fa-file-arrow-down"></i> Resume
+      <a href="https://github.com/Neelkore25" target="_blank" rel="noopener noreferrer" class="btn btn-primary nav-cta" id="navCta">
+        <i class="fa-brands fa-github"></i> GitHub
       </a>
     </div>
   </nav>
 
   <main>
-    <!-- 1. HERO SECTION (PDF Ref Page 24-28, 33-37) -->
+    <!-- 1. HERO SECTION (DOMINANT NAME HIERARCHY) -->
     <section id="hero" class="hero-section">
       <div class="container">
         <div class="hero-grid">
           <div class="hero-text-content reveal">
-            <!-- Open to Internships Badge -->
+            <!-- Priority 1: Dominant Name Typography -->
+            <h1 class="hero-name" id="heroName">Neel Kore</h1>
+            
+            <!-- Priority 2: Role & Specialization -->
+            <div class="hero-role" id="heroRole">Computer Engineering Student</div>
+            
+            <!-- Priority 3: Status Badge -->
             <div class="status-badge" id="heroStatusBadge">
-              <span class="status-dot"></span> Open to Internships & Engineering Roles
-            </div>
-
-            <!-- Oversized Name Heading with Hand-Drawn SVG Arrow -->
-            <div class="hero-heading-wrapper">
-              <h1 class="hero-name" id="heroName">Neel Kore</h1>
-              <!-- Hand-drawn SVG doodle arrow -->
-              <svg class="hero-doodle-arrow" width="48" height="48" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 15 Q 25 5, 38 22 T 42 38 M 32 35 L 42 38 L 40 28" stroke="#00d4ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <span class="status-dot"></span> Available for Internships & Opportunities
             </div>
             
-            <!-- Subtitle with Animated Cyan Underline on Cybersecurity -->
-            <div class="hero-role" id="heroRole">
-              <span class="highlight-cyan-underline">Cybersecurity</span> & Full Stack Developer
-            </div>
-
-            <!-- Short Professional Tagline -->
-            <p class="hero-tagline" id="heroTagline">
-              Building secure web applications, automation tools, and modern digital experiences.
-            </p>
-            
-            <!-- Bio Summary -->
+            <!-- Priority 4: Bio Summary -->
             <p class="hero-bio" id="heroBio"></p>
             
-            <!-- Action Buttons -->
-            <div class="hero-ctas" id="heroCtas">
-              <a href="#documents" class="btn btn-primary">
-                <i class="fa-solid fa-file-arrow-down"></i> Download Resume
-              </a>
-              <a href="#projects" class="btn btn-secondary">
-                <i class="fa-solid fa-rocket"></i> View Projects
-              </a>
-            </div>
-
-            <!-- Hero Tech Stack Pill Row (PDF Ref Page 33 & 35) -->
-            <div class="hero-tech-pills" id="heroTechPills">
-              <span class="tech-pill"><i class="fa-brands fa-js"></i> JavaScript</span>
-              <span class="tech-pill"><i class="fa-brands fa-react"></i> React</span>
-              <span class="tech-pill"><i class="fa-brands fa-node-js"></i> Node.js</span>
-              <span class="tech-pill"><i class="fa-solid fa-database"></i> SQL / DBMS</span>
-              <span class="tech-pill"><i class="fa-solid fa-shield-halved"></i> Cybersecurity</span>
-            </div>
+            <!-- Priority 5: Action Buttons -->
+            <div class="hero-ctas" id="heroCtas"></div>
           </div>
           
-          <!-- Hero Right Visual: Circular Profile Image with Peeking Geometric Square -->
           <div class="hero-portrait-wrapper reveal">
-            <div class="portrait-shape-square"></div>
-            <div class="portrait-cyan-glow-ring"></div>
+            <!-- Rotated Geometric Backdrop Shape Peeking Behind -->
+            <div class="portrait-shape-backdrop"></div>
+            
+            <!-- Circular Sleek Floating Portrait Frame -->
             <div class="hero-portrait-frame">
               <div class="portrait-inner" id="portraitInner">
-                <!-- Profile image mounted dynamically -->
+                <!-- Profile Image mounted dynamically -->
               </div>
             </div>
           </div>
@@ -166,7 +108,7 @@
       </div>
     </section>
 
-    <!-- 2. ANIMATED ACTION STATS ROW (Bug Fix #7) -->
+    <!-- 2. ANIMATED STATS ROW SECTION -->
     <section id="stats" class="stats-section reveal">
       <div class="container">
         <div class="stats-grid" id="statsGrid">
@@ -175,80 +117,75 @@
       </div>
     </section>
 
-    <!-- 3. ABOUT SECTION (COMPACT GLASS CARD - Bug Fix #3) -->
+    <!-- 3. ABOUT SECTION (TWO-COLUMN BENTO) -->
     <section id="about" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-user"></i> About</span>
-          <h2 class="section-heading">Background & Core Services</h2>
-          <p class="section-subtitle">Computer Engineering student at SJCEM bridging full-stack development with cybersecurity resilience.</p>
+          <h2 class="section-heading">Background & Focus</h2>
+          <p class="section-subtitle">An overview of my engineering background, core focus areas, and career goals.</p>
         </div>
 
         <div class="about-bento">
-          <!-- Left Column: Bio & Core Focus -->
+          <!-- Left Column: Bio & Focus Areas -->
           <div class="glass-card bento-card">
             <h3 class="bento-card-title"><i class="fa-solid fa-address-card"></i> Profile Summary</h3>
             <div class="about-summary" id="aboutSummary"></div>
             
-            <h3 class="bento-card-title" style="margin-top: 32px;"><i class="fa-solid fa-compass"></i> Technical Capabilities</h3>
+            <h3 class="bento-card-title" style="margin-top: 32px;"><i class="fa-solid fa-compass"></i> Core Technical Focus</h3>
             <div class="focus-grid" id="aboutFocusGrid"></div>
           </div>
 
-          <!-- Right Column: Compact Services List Card (No Oversized Empty Boxes) -->
+          <!-- Right Column: Glass Visual Card & Quick Details -->
           <div class="glass-card bento-card visual-card-accent">
-            <h3 class="bento-card-title"><i class="fa-solid fa-list-check"></i> Services & Technical Competencies</h3>
-            <div class="services-list-wrapper" id="servicesListWrapper">
-              <!-- Dynamically populated -->
+            <div class="visual-card-banner">
+              <i class="fa-solid fa-terminal visual-banner-icon"></i>
+              <div class="visual-banner-text">Full-Stack & Security Architecture</div>
             </div>
             
-            <h3 class="bento-card-title" style="margin-top: 28px;"><i class="fa-solid fa-circle-info"></i> Quick Details</h3>
+            <h3 class="bento-card-title"><i class="fa-solid fa-circle-info"></i> Quick Details</h3>
             <ul class="quick-info-list" id="aboutQuickInfo"></ul>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 4. EXPERIENCE SECTION (VERTICAL TIMELINE - PDF Ref Page 11-14) -->
+    <!-- 4. INDUSTRIAL TRAINING / EXPERIENCE SECTION -->
     <section id="experience" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-briefcase"></i> Experience</span>
-          <h2 class="section-heading">Industrial Training Timeline</h2>
-          <p class="section-subtitle">Real-world technical exposure at Nuclear Power Corporation of India Limited (NPCIL).</p>
+          <h2 class="section-heading">Industrial Training</h2>
+          <p class="section-subtitle">Practical engineering exposure within enterprise-grade infrastructure facilities.</p>
         </div>
 
-        <div class="experience-timeline" id="experienceContainer"></div>
+        <div id="experienceContainer"></div>
       </div>
     </section>
 
-    <!-- 5. TECHNICAL SKILLS SECTION (REBALANCED PROFICIENCY - Bug Fix #6) -->
+    <!-- 5. TECHNICAL SKILLS SECTION (WITH PROFICIENCY LEVEL BADGES) -->
     <section id="skills" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-code"></i> Technical Skills</span>
           <h2 class="section-heading">Skills & Proficiency</h2>
-          <p class="section-subtitle">Languages, web frameworks, database engines, and security concepts I work with daily.</p>
+          <p class="section-subtitle">Categorized breakdown of programming languages, web technologies, and security concepts.</p>
         </div>
 
         <div class="skills-bento-grid" id="skillsGrid"></div>
       </div>
     </section>
 
-    <!-- 6. FEATURED PROJECTS SECTION (PDF Ref Page 15-23) -->
+    <!-- 6. FEATURED PROJECTS SECTION (WITH WORKING TABS FILTER) -->
     <section id="projects" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-rocket"></i> Projects</span>
-          <h2 class="section-heading">Featured Engineering Projects</h2>
-          <p class="section-subtitle">Hand-crafted web applications, risk analytics tools, and interactive catalogs.</p>
+          <h2 class="section-heading">Featured Projects</h2>
+          <p class="section-subtitle">Web applications, analytics platforms, and security studies built with clean software architecture.</p>
         </div>
 
-        <!-- Large Featured Project Block -->
-        <div class="featured-project-card glass-card" id="featuredProjectBlock">
-          <!-- Rendered dynamically -->
-        </div>
-
-        <!-- Category Filter Tabs -->
+        <!-- Filter Tabs -->
         <div class="project-filter-tabs" id="projectFilterTabs">
           <button class="filter-tab active" data-filter="all">All Projects</button>
           <button class="filter-tab" data-filter="web-dev">Web Dev</button>
@@ -260,13 +197,13 @@
       </div>
     </section>
 
-    <!-- 7. CREDENTIALS & CERTIFICATIONS (PDF Ref Page 8-10) -->
+    <!-- 7. CERTIFICATIONS SECTION -->
     <section id="certifications" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-certificate"></i> Credentials</span>
-          <h2 class="section-heading">Certifications & Validations</h2>
-          <p class="section-subtitle">Verified industrial training certificates, academic validations, and technical documents.</p>
+          <h2 class="section-heading">Certifications</h2>
+          <p class="section-subtitle">Verified industrial training credentials and academic skill validations.</p>
         </div>
 
         <div class="certs-grid" id="certsGrid"></div>
@@ -278,7 +215,7 @@
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-folder-closed"></i> Documents</span>
-          <h2 class="section-heading">Verified Documents</h2>
+          <h2 class="section-heading">Documents & Reports</h2>
           <p class="section-subtitle">Access and download verified engineering resumes and technical documentation.</p>
         </div>
 
@@ -299,13 +236,13 @@
       </div>
     </section>
 
-    <!-- 10. CONTACT SECTION (PDF Ref Page 3-7) -->
+    <!-- 10. CONTACT SECTION WITH DIRECT EMAIL INTEGRATION -->
     <section id="contact" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-envelope"></i> Get In Touch</span>
           <h2 class="section-heading">Let's Build Together</h2>
-          <p class="section-subtitle">Have a project in mind or looking for an engineering intern? Drop a message below.</p>
+          <p class="section-subtitle">Send a direct message below — it will be delivered directly to my inbox.</p>
         </div>
 
         <div class="contact-grid">
@@ -315,7 +252,7 @@
             
             <form action="https://api.web3forms.com/submit" method="POST" id="portfolioContactForm" class="contact-form">
               <input type="hidden" name="access_key" id="web3formsKey" value="YOUR_FREE_ACCESS_KEY">
-              <input type="hidden" name="subject" value="New Portfolio Message (Neel Kore)">
+              <input type="hidden" name="subject" value="New Message from Portfolio Website (Neel Kore)">
               <input type="hidden" name="from_name" value="Portfolio Contact Form">
 
               <div class="form-row">
@@ -359,13 +296,13 @@
   </footer>
 
   <!-- Toast Notification element -->
-  <div class="toast-notification" id="toastNotification">✓ Thanks! I'll get back to you within 24 hours.</div>
+  <div class="toast-notification" id="toastNotification">✓ Action completed!</div>
 
   <!-- Single Source of Truth Data Script (with Cache-Buster Parameter) -->
-  <script src="assets/js/data.js?v=13.0"></script>
+  <script src="assets/js/data.js?v=11.0"></script>
 
   <!-- Dynamic Application Script (with Cache-Buster Parameter) -->
-  <script src="assets/js/app.js?v=13.0"></script>
+  <script src="assets/js/app.js?v=11.0"></script>
 
 </body>
 </html>
