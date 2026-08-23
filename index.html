@@ -9,13 +9,13 @@
   <!-- Google Fonts: Space Grotesk & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- FontAwesome 6 Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
   
   <!-- Custom Design System Stylesheet (with Cache-Buster Parameter) -->
-  <link rel="stylesheet" href="assets/css/styles.css?v=10.0">
+  <link rel="stylesheet" href="assets/css/styles.css?v=11.0">
 </head>
 <body>
 
@@ -70,32 +70,26 @@
   </nav>
 
   <main>
-    <!-- 1. HERO SECTION -->
+    <!-- 1. HERO SECTION (DOMINANT NAME HIERARCHY) -->
     <section id="hero" class="hero-section">
       <div class="container">
         <div class="hero-grid">
           <div class="hero-text-content reveal">
+            <!-- Priority 1: Dominant Name Typography -->
+            <h1 class="hero-name" id="heroName">Neel Kore</h1>
+            
+            <!-- Priority 2: Role & Specialization -->
+            <div class="hero-role" id="heroRole">Computer Engineering Student</div>
+            
+            <!-- Priority 3: Status Badge -->
             <div class="status-badge" id="heroStatusBadge">
               <span class="status-dot"></span> Available for Internships & Opportunities
             </div>
             
-            <h1 class="hero-name" id="heroName">
-              Neel Kore
-              <!-- Hand-drawn SVG Accent Spark Doodle -->
-              <svg class="hero-doodle-spark" width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="url(#sparkGradient)"/>
-                <defs>
-                  <linearGradient id="sparkGradient" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#38bdf8"/>
-                    <stop offset="1" stop-color="#6366f1"/>
-                  </linearGradient>
-                </defs>
-              </svg>
-            </h1>
-            
-            <div class="hero-role" id="heroRole">Computer Engineering Student</div>
+            <!-- Priority 4: Bio Summary -->
             <p class="hero-bio" id="heroBio"></p>
             
+            <!-- Priority 5: Action Buttons -->
             <div class="hero-ctas" id="heroCtas"></div>
           </div>
           
@@ -103,7 +97,7 @@
             <!-- Rotated Geometric Backdrop Shape Peeking Behind -->
             <div class="portrait-shape-backdrop"></div>
             
-            <!-- Circular / Sleek Glowing Gradient Frame -->
+            <!-- Circular Sleek Floating Portrait Frame -->
             <div class="hero-portrait-frame">
               <div class="portrait-inner" id="portraitInner">
                 <!-- Profile Image mounted dynamically -->
@@ -252,12 +246,11 @@
         </div>
 
         <div class="contact-grid">
-          <!-- Glassmorphic Contact Form (Configured for Web3Forms / Formspree) -->
+          <!-- Glassmorphic Contact Form -->
           <div class="glass-card contact-form-card">
             <h3 class="contact-card-heading"><i class="fa-solid fa-paper-plane"></i> Send a Message</h3>
             
             <form action="https://api.web3forms.com/submit" method="POST" id="portfolioContactForm" class="contact-form">
-              <!-- Web3Forms Free Access Key (Replace with your free key from web3forms.com) -->
               <input type="hidden" name="access_key" id="web3formsKey" value="YOUR_FREE_ACCESS_KEY">
               <input type="hidden" name="subject" value="New Message from Portfolio Website (Neel Kore)">
               <input type="hidden" name="from_name" value="Portfolio Contact Form">
@@ -306,10 +299,10 @@
   <div class="toast-notification" id="toastNotification">✓ Action completed!</div>
 
   <!-- Single Source of Truth Data Script (with Cache-Buster Parameter) -->
-  <script src="assets/js/data.js?v=10.0"></script>
+  <script src="assets/js/data.js?v=11.0"></script>
 
   <!-- Dynamic Application Script (with Cache-Buster Parameter) -->
-  <script src="assets/js/app.js?v=10.0"></script>
+  <script src="assets/js/app.js?v=11.0"></script>
 
 </body>
 </html>
