@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
   
   <!-- Custom Design System Stylesheet (with Cache-Buster Parameter) -->
-  <link rel="stylesheet" href="assets/css/styles.css?v=8.0">
+  <link rel="stylesheet" href="assets/css/styles.css?v=9.0">
 </head>
 <body>
 
@@ -24,6 +24,20 @@
     <div class="bg-glow-1"></div>
     <div class="bg-glow-2"></div>
   </div>
+
+  <!-- Vertical Floating Social Icon Rail (Desktop) -->
+  <aside class="social-rail-vertical" aria-label="Social Media Connections">
+    <a href="https://github.com/Neelkore25" target="_blank" rel="noopener noreferrer" title="GitHub Profile">
+      <i class="fa-brands fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/neel-kore-00567231b?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" title="LinkedIn Profile">
+      <i class="fa-brands fa-linkedin-in"></i>
+    </a>
+    <a href="https://www.instagram.com/neel_kore?utm_source=qr&igsh=cjZsZW5ydGdid3N6" target="_blank" rel="noopener noreferrer" title="Instagram Profile">
+      <i class="fa-brands fa-instagram"></i>
+    </a>
+    <div class="social-rail-line"></div>
+  </aside>
 
   <!-- Sticky Compact Pill Navigation Bar -->
   <nav class="navbar-sticky">
@@ -45,9 +59,14 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
 
-    <a href="https://github.com/Neelkore25" target="_blank" rel="noopener noreferrer" class="btn btn-primary nav-cta" id="navCta">
-      <i class="fa-brands fa-github"></i> GitHub
-    </a>
+    <div class="nav-right-group">
+      <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Light or Dark Mode" title="Toggle Theme">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+      <a href="https://github.com/Neelkore25" target="_blank" rel="noopener noreferrer" class="btn btn-primary nav-cta" id="navCta">
+        <i class="fa-brands fa-github"></i> GitHub
+      </a>
+    </div>
   </nav>
 
   <main>
@@ -59,13 +78,32 @@
             <div class="status-badge" id="heroStatusBadge">
               <span class="status-dot"></span> Available for Internships & Opportunities
             </div>
-            <h1 class="hero-name" id="heroName">Neel Kore</h1>
+            
+            <h1 class="hero-name" id="heroName">
+              Neel Kore
+              <!-- Hand-drawn SVG Accent Spark Doodle -->
+              <svg class="hero-doodle-spark" width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="url(#sparkGradient)"/>
+                <defs>
+                  <linearGradient id="sparkGradient" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#38bdf8"/>
+                    <stop offset="1" stop-color="#6366f1"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </h1>
+            
             <div class="hero-role" id="heroRole">Computer Engineering Student</div>
             <p class="hero-bio" id="heroBio"></p>
+            
             <div class="hero-ctas" id="heroCtas"></div>
           </div>
           
           <div class="hero-portrait-wrapper reveal">
+            <!-- Rotated Geometric Backdrop Shape Peeking Behind -->
+            <div class="portrait-shape-backdrop"></div>
+            
+            <!-- Circular / Sleek Glowing Gradient Frame -->
             <div class="hero-portrait-frame">
               <div class="portrait-inner" id="portraitInner">
                 <!-- Profile Image mounted dynamically -->
@@ -76,7 +114,16 @@
       </div>
     </section>
 
-    <!-- 2. ABOUT SECTION (BENTO GRID) -->
+    <!-- 2. ANIMATED STATS ROW SECTION -->
+    <section id="stats" class="stats-section reveal">
+      <div class="container">
+        <div class="stats-grid" id="statsGrid">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. ABOUT SECTION (TWO-COLUMN BENTO) -->
     <section id="about" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
@@ -86,6 +133,7 @@
         </div>
 
         <div class="about-bento">
+          <!-- Left Column: Bio & Focus Areas -->
           <div class="glass-card bento-card">
             <h3 class="bento-card-title"><i class="fa-solid fa-address-card"></i> Profile Summary</h3>
             <div class="about-summary" id="aboutSummary"></div>
@@ -94,7 +142,13 @@
             <div class="focus-grid" id="aboutFocusGrid"></div>
           </div>
 
-          <div class="glass-card bento-card">
+          <!-- Right Column: Glass Visual Card & Quick Details -->
+          <div class="glass-card bento-card visual-card-accent">
+            <div class="visual-card-banner">
+              <i class="fa-solid fa-terminal visual-banner-icon"></i>
+              <div class="visual-banner-text">Full-Stack & Security Architecture</div>
+            </div>
+            
             <h3 class="bento-card-title"><i class="fa-solid fa-circle-info"></i> Quick Details</h3>
             <ul class="quick-info-list" id="aboutQuickInfo"></ul>
           </div>
@@ -102,7 +156,7 @@
       </div>
     </section>
 
-    <!-- 3. INDUSTRIAL TRAINING / EXPERIENCE SECTION -->
+    <!-- 4. INDUSTRIAL TRAINING / EXPERIENCE SECTION -->
     <section id="experience" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
@@ -115,12 +169,12 @@
       </div>
     </section>
 
-    <!-- 4. TECHNICAL SKILLS SECTION (BENTO GRID) -->
+    <!-- 5. TECHNICAL SKILLS SECTION (WITH PROFICIENCY LEVEL BADGES) -->
     <section id="skills" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-code"></i> Technical Skills</span>
-          <h2 class="section-heading">Skills & Stack</h2>
+          <h2 class="section-heading">Skills & Proficiency</h2>
           <p class="section-subtitle">Categorized breakdown of programming languages, web technologies, and security concepts.</p>
         </div>
 
@@ -128,20 +182,28 @@
       </div>
     </section>
 
-    <!-- 5. FEATURED PROJECTS SECTION -->
+    <!-- 6. FEATURED PROJECTS SECTION (WITH WORKING TABS FILTER) -->
     <section id="projects" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-rocket"></i> Projects</span>
           <h2 class="section-heading">Featured Projects</h2>
-          <p class="section-subtitle">Web applications and analytics platforms built with clean software engineering practices.</p>
+          <p class="section-subtitle">Web applications, analytics platforms, and security studies built with clean software architecture.</p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="project-filter-tabs" id="projectFilterTabs">
+          <button class="filter-tab active" data-filter="all">All Projects</button>
+          <button class="filter-tab" data-filter="web-dev">Web Dev</button>
+          <button class="filter-tab" data-filter="security">Security</button>
+          <button class="filter-tab" data-filter="tools">Tools</button>
         </div>
 
         <div class="projects-grid" id="projectsGrid"></div>
       </div>
     </section>
 
-    <!-- 6. CERTIFICATIONS SECTION -->
+    <!-- 7. CERTIFICATIONS SECTION -->
     <section id="certifications" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
@@ -154,7 +216,7 @@
       </div>
     </section>
 
-    <!-- 7. DOCUMENTS & DOWNLOADS SECTION -->
+    <!-- 8. DOCUMENTS & DOWNLOADS SECTION -->
     <section id="documents" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
@@ -167,7 +229,7 @@
       </div>
     </section>
 
-    <!-- 8. EDUCATION SECTION -->
+    <!-- 9. EDUCATION SECTION -->
     <section id="education" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
@@ -180,10 +242,49 @@
       </div>
     </section>
 
-    <!-- 9. CONTACT SECTION -->
+    <!-- 10. CONTACT SECTION WITH FORM & CARD -->
     <section id="contact" class="section-padding reveal">
       <div class="container">
-        <div class="glass-card contact-card" id="contactCard"></div>
+        <div class="section-header">
+          <span class="section-badge"><i class="fa-solid fa-envelope"></i> Get In Touch</span>
+          <h2 class="section-heading">Let's Build Together</h2>
+          <p class="section-subtitle">Feel free to reach out for software engineering opportunities, technical inquiries, or collaborations.</p>
+        </div>
+
+        <div class="contact-grid">
+          <!-- Glassmorphic Contact Form -->
+          <div class="glass-card contact-form-card">
+            <h3 class="contact-card-heading"><i class="fa-solid fa-paper-plane"></i> Send a Message</h3>
+            <form id="portfolioContactForm" class="contact-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="contactName">Your Name</label>
+                  <input type="text" id="contactName" name="name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                  <label for="contactEmail">Your Email</label>
+                  <input type="email" id="contactEmail" name="email" placeholder="john@example.com" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="contactSubject">Subject</label>
+                <input type="text" id="contactSubject" name="subject" placeholder="Project Inquiry / Internship Opportunity" required>
+              </div>
+              <div class="form-group">
+                <label for="contactMessage">Message</label>
+                <textarea id="contactMessage" name="message" rows="5" placeholder="Hi Neel, I would like to discuss..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary contact-submit-btn">
+                <i class="fa-solid fa-paper-plane"></i> Send Message
+              </button>
+            </form>
+          </div>
+
+          <!-- Adjacent Contact Details Card -->
+          <div class="glass-card contact-info-card" id="contactCard">
+            <!-- Dynamically loaded -->
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -199,10 +300,10 @@
   <div class="toast-notification" id="toastNotification">✓ Action completed!</div>
 
   <!-- Single Source of Truth Data Script (with Cache-Buster Parameter) -->
-  <script src="assets/js/data.js?v=8.0"></script>
+  <script src="assets/js/data.js?v=9.0"></script>
 
   <!-- Dynamic Application Script (with Cache-Buster Parameter) -->
-  <script src="assets/js/app.js?v=8.0"></script>
+  <script src="assets/js/app.js?v=9.0"></script>
 
 </body>
 </html>

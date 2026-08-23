@@ -2,8 +2,9 @@
  * Portfolio Dynamic Rendering & Interactive Application Engine
  * Author: Neel Kore
  * Description: Reads single-source portfolioData object and dynamically populates
- * all portfolio sections. Manages scroll-reveal animations, ultra-fast Apple glass cursor ring,
- * email clipboard toast, document downloads, image fallbacks, and mobile drawer toggles.
+ * all portfolio sections. Manages theme toggle, animated count-up stats, category filter tabs,
+ * scroll-reveal animations, ultra-fast Apple glass cursor ring, email clipboard toast,
+ * document downloads, image fallbacks, and mobile drawer toggles.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -13,9 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
+  // Initialize Theme (Dark/Light mode)
+  initTheme();
+
   // Execute Section Renderers
   renderNavigation();
   renderHero();
+  renderStats();
   renderAbout();
   renderExperience();
   renderSkills();
@@ -28,9 +33,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize Interactive Engine & Animations
   setupInteractions();
+  setupProjectFilters();
   setupScrollReveal();
+  setupStatsCounter();
   setupCustomCursor();
+  setupContactForm();
 });
+
+/* --------------------------------------------------------------------------
+   0. THEME TOGGLE ENGINE (LIGHT / DARK MODE)
+   -------------------------------------------------------------------------- */
+function initTheme() {
+  const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon(savedTheme);
+
+  const themeBtn = document.getElementById('themeToggleBtn');
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('portfolio-theme', newTheme);
+      updateThemeIcon(newTheme);
+      showToast(`Switched to ${newTheme.toUpperCase()} theme`);
+    });
+  }
+}
+
+function updateThemeIcon(theme) {
+  const icon = document.querySelector('#themeToggleBtn i');
+  if (!icon) return;
+  if (theme === 'light') {
+    icon.className = 'fa-solid fa-sun';
+  } else {
+    icon.className = 'fa-solid fa-moon';
+  }
+}
 
 /* --------------------------------------------------------------------------
    1. NAVIGATION RENDERER
@@ -62,7 +101,6 @@ function renderHero() {
     statusBadgeEl.innerHTML = `<span class="status-dot"></span>${portfolioData.personal.statusBadge}`;
   }
 
-  if (nameEl) nameEl.textContent = portfolioData.personal.name;
   if (roleEl) {
     roleEl.innerHTML = `<span>${portfolioData.personal.role} | ${portfolioData.personal.subRole}</span><span class="cursor-blink"></span>`;
   }
@@ -70,14 +108,14 @@ function renderHero() {
 
   if (ctaGroupEl) {
     ctaGroupEl.innerHTML = `
-      <a href="#projects" class="btn btn-primary">
-        <i class="fa-solid fa-arrow-down"></i> View Projects
+      <a href="#documents" class="btn btn-primary">
+        <i class="fa-solid fa-file-arrow-down"></i> Download Resume
       </a>
-      <a href="${portfolioData.socials.github}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-        <i class="fa-brands fa-github"></i> GitHub
+      <a href="#contact" class="btn btn-secondary">
+        <i class="fa-solid fa-envelope"></i> Contact Me
       </a>
-      <a href="#documents" class="btn btn-secondary">
-        <i class="fa-solid fa-file-arrow-down"></i> Documents & Resume
+      <a href="${portfolioData.socials.github}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" title="GitHub Profile">
+        <i class="fa-brands fa-github"></i>
       </a>
     `;
   }
@@ -90,9 +128,6 @@ function renderHero() {
   }
 }
 
-/**
- * Image Fallback Handler for profile photo or certificates
- */
 function handleImageError(imgEl) {
   const parent = imgEl.parentElement;
   if (!parent) return;
@@ -116,7 +151,63 @@ function handleImageError(imgEl) {
 }
 
 /* --------------------------------------------------------------------------
-   3. ABOUT SECTION RENDERER
+   3. ANIMATED STATS ROW RENDERER & COUNTER ENGINE
+   -------------------------------------------------------------------------- */
+function renderStats() {
+  const statsGrid = document.getElementById('statsGrid');
+  if (!statsGrid || !portfolioData.stats) return;
+
+  statsGrid.innerHTML = portfolioData.stats.map(stat => `
+    <div class="stat-card glass-card">
+      <div class="stat-number-wrapper">
+        <span class="stat-number" data-target="${stat.number}">0</span>
+        <span class="stat-suffix">${stat.suffix}</span>
+      </div>
+      <div class="stat-label">${stat.label}</div>
+    </div>
+  `).join('');
+}
+
+function setupStatsCounter() {
+  const statNumbers = document.querySelectorAll('.stat-number');
+  if (statNumbers.length === 0) return;
+
+  let counted = false;
+
+  const countUp = () => {
+    statNumbers.forEach(num => {
+      const target = parseInt(num.getAttribute('data-target'), 10);
+      const duration = 1600;
+      const step = Math.ceil(target / (duration / 30));
+      let current = 0;
+
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+          num.textContent = target;
+          clearInterval(timer);
+        } else {
+          num.textContent = current;
+        }
+      }, 30);
+    });
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !counted) {
+        countUp();
+        counted = true;
+      }
+    });
+  }, { threshold: 0.5 });
+
+  const statsSection = document.getElementById('stats');
+  if (statsSection) observer.observe(statsSection);
+}
+
+/* --------------------------------------------------------------------------
+   4. ABOUT SECTION RENDERER
    -------------------------------------------------------------------------- */
 function renderAbout() {
   const summaryEl = document.getElementById('aboutSummary');
@@ -150,7 +241,7 @@ function renderAbout() {
 }
 
 /* --------------------------------------------------------------------------
-   4. EXPERIENCE SECTION RENDERER
+   5. EXPERIENCE SECTION RENDERER
    -------------------------------------------------------------------------- */
 function renderExperience() {
   const expContainer = document.getElementById('experienceContainer');
@@ -186,7 +277,7 @@ function renderExperience() {
 }
 
 /* --------------------------------------------------------------------------
-   5. SKILLS SECTION RENDERER
+   6. SKILLS SECTION RENDERER (WITH PROFICIENCY LEVEL BADGES)
    -------------------------------------------------------------------------- */
 function renderSkills() {
   const skillsGrid = document.getElementById('skillsGrid');
@@ -199,21 +290,26 @@ function renderSkills() {
         <h3>${group.category}</h3>
       </div>
       <div class="skill-tags-flex">
-        ${group.items.map(item => `<span class="skill-pill">${item}</span>`).join('')}
+        ${group.items.map(item => `
+          <div class="skill-pill-box">
+            <span class="skill-pill-name">${item.name || item}</span>
+            ${item.level ? `<span class="skill-badge-level">${item.level}</span>` : ''}
+          </div>
+        `).join('')}
       </div>
     </div>
   `).join('');
 }
 
 /* --------------------------------------------------------------------------
-   6. FEATURED PROJECTS RENDERER
+   7. FEATURED PROJECTS RENDERER & INTERACTIVE CATEGORY FILTERING
    -------------------------------------------------------------------------- */
 function renderProjects() {
   const projectsGrid = document.getElementById('projectsGrid');
   if (!projectsGrid) return;
 
   projectsGrid.innerHTML = portfolioData.projects.map(proj => `
-    <div class="glass-card project-card reveal">
+    <div class="glass-card project-card reveal" data-category="${proj.category || 'all'}">
       <div class="project-top">
         <div class="project-icon-box">
           <i class="fa-solid ${proj.icon}"></i>
@@ -229,7 +325,7 @@ function renderProjects() {
 
       <div class="project-actions">
         <a href="${proj.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-          <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> View Project
         </a>
         <a href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" title="View Source Code">
           <i class="fa-brands fa-github"></i>
@@ -239,21 +335,40 @@ function renderProjects() {
   `).join('');
 }
 
+function setupProjectFilters() {
+  const filterTabs = document.querySelectorAll('.filter-tab');
+  const projectCards = document.querySelectorAll('.project-card');
+
+  if (filterTabs.length === 0) return;
+
+  filterTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      filterTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      const filterValue = tab.getAttribute('data-filter');
+
+      projectCards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        if (filterValue === 'all' || cardCategory === filterValue) {
+          card.style.display = 'flex';
+          setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 50);
+        } else {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(20px)';
+          setTimeout(() => { card.style.display = 'none'; }, 300);
+        }
+      });
+    });
+  });
+}
+
 /* --------------------------------------------------------------------------
-   7. CERTIFICATIONS SECTION RENDERER
+   8. CERTIFICATIONS SECTION RENDERER
    -------------------------------------------------------------------------- */
 function renderCertifications() {
   const certsGrid = document.getElementById('certsGrid');
   if (!certsGrid) return;
-
-  if (!portfolioData.certifications || portfolioData.certifications.length === 0) {
-    certsGrid.innerHTML = `
-      <div class="glass-card" style="padding: 32px; grid-column: 1 / -1; text-align: center; color: var(--text-muted);">
-        No certifications listed yet. Edit portfolioData.certifications in assets/js/data.js.
-      </div>
-    `;
-    return;
-  }
 
   certsGrid.innerHTML = portfolioData.certifications.map(cert => {
     const hasImage = cert.imageUrl && cert.imageUrl.trim() !== "";
@@ -282,20 +397,11 @@ function renderCertifications() {
 }
 
 /* --------------------------------------------------------------------------
-   8. DOCUMENTS & DOWNLOADS SECTION RENDERER
+   9. DOCUMENTS SECTION RENDERER
    -------------------------------------------------------------------------- */
 function renderDocuments() {
   const docsGrid = document.getElementById('docsGrid');
   if (!docsGrid) return;
-
-  if (!portfolioData.documents || portfolioData.documents.length === 0) {
-    docsGrid.innerHTML = `
-      <div class="glass-card" style="padding: 32px; grid-column: 1 / -1; text-align: center; color: var(--text-muted);">
-        No documents listed. Add items to portfolioData.documents in assets/js/data.js.
-      </div>
-    `;
-    return;
-  }
 
   docsGrid.innerHTML = portfolioData.documents.map(doc => `
     <div class="glass-card doc-card reveal">
@@ -316,7 +422,6 @@ function renderDocuments() {
     </div>
   `).join('');
 
-  // Attach safe click handler to document download buttons to prevent raw 404 pages
   document.querySelectorAll('.doc-download-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const path = btn.getAttribute('data-filepath');
@@ -338,7 +443,7 @@ function renderDocuments() {
 }
 
 /* --------------------------------------------------------------------------
-   9. EDUCATION SECTION RENDERER
+   10. EDUCATION SECTION RENDERER
    -------------------------------------------------------------------------- */
 function renderEducation() {
   const eduContainer = document.getElementById('educationContainer');
@@ -368,39 +473,72 @@ function renderEducation() {
 }
 
 /* --------------------------------------------------------------------------
-   10. CONTACT SECTION RENDERER
+   11. CONTACT SECTION RENDERER & FORM HANDLING
    -------------------------------------------------------------------------- */
 function renderContact() {
   const contactCard = document.getElementById('contactCard');
   if (!contactCard) return;
 
   contactCard.innerHTML = `
-    <h2 class="contact-title">Let's Build Together</h2>
-    <p class="contact-text">
-      I am open to software engineering internships, technical collaborations, and exploring full-stack & cybersecurity opportunities.
-    </p>
-    <div class="contact-buttons-row">
+    <h3 class="contact-card-heading"><i class="fa-solid fa-address-book"></i> Direct Contact Info</h3>
+    
+    <div class="contact-info-list">
+      <div class="contact-info-row">
+        <i class="fa-solid fa-envelope info-icon"></i>
+        <div>
+          <span class="info-label">Email Address</span>
+          <a href="mailto:${portfolioData.socials.email}" class="info-value">${portfolioData.socials.email}</a>
+        </div>
+      </div>
+      
+      <div class="contact-info-row">
+        <i class="fa-solid fa-location-dot info-icon"></i>
+        <div>
+          <span class="info-label">Location</span>
+          <span class="info-value">${portfolioData.personal.location}</span>
+        </div>
+      </div>
+
+      <div class="contact-info-row">
+        <i class="fa-solid fa-user-graduate info-label"></i>
+        <div>
+          <span class="info-label">Status</span>
+          <span class="info-value">B.Tech Computer Engineering Student</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-social-row">
       <button class="btn btn-primary copy-email-btn" id="copyEmailBtn">
         <i class="fa-solid fa-copy"></i> Copy Email
       </button>
-      <a href="mailto:${portfolioData.socials.email}" class="btn btn-secondary">
-        <i class="fa-solid fa-envelope"></i> Send Email
-      </a>
       <a href="${portfolioData.socials.linkedin}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" title="LinkedIn Profile">
         <i class="fa-brands fa-linkedin-in"></i>
       </a>
-      <a href="${portfolioData.socials.instagram}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" title="Instagram Profile">
-        <i class="fa-brands fa-instagram"></i>
-      </a>
       <a href="${portfolioData.socials.github}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" title="GitHub Profile">
         <i class="fa-brands fa-github"></i>
+      </a>
+      <a href="${portfolioData.socials.instagram}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" title="Instagram Profile">
+        <i class="fa-brands fa-instagram"></i>
       </a>
     </div>
   `;
 }
 
+function setupContactForm() {
+  const form = document.getElementById('portfolioContactForm');
+  if (!form) return;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('contactName').value;
+    showToast(`✓ Thank you ${name}! Your message has been prepared.`);
+    form.reset();
+  });
+}
+
 /* --------------------------------------------------------------------------
-   11. FOOTER RENDERER
+   12. FOOTER RENDERER
    -------------------------------------------------------------------------- */
 function renderFooter() {
   const footerContent = document.getElementById('footerContent');
@@ -420,10 +558,9 @@ function renderFooter() {
 }
 
 /* --------------------------------------------------------------------------
-   12. INTERACTIVE ENGINE & EVENTS
+   13. INTERACTIVE ENGINE & EVENTS
    -------------------------------------------------------------------------- */
 function setupInteractions() {
-  // Mobile Nav Drawer Toggle
   const mobileToggle = document.getElementById('mobileNavToggle');
   const navLinks = document.getElementById('navLinks');
 
@@ -449,7 +586,6 @@ function setupInteractions() {
     });
   }
 
-  // Active Navigation Scroll-Spy
   const sections = document.querySelectorAll('section[id]');
   window.addEventListener('scroll', () => {
     let currentSectionId = '';
@@ -471,9 +607,7 @@ function setupInteractions() {
     }
   });
 
-  // Email Clipboard Copy Functionality
   const copyBtn = document.getElementById('copyEmailBtn');
-
   if (copyBtn) {
     copyBtn.addEventListener('click', () => {
       navigator.clipboard.writeText(portfolioData.socials.email)
@@ -489,7 +623,7 @@ function setupInteractions() {
 }
 
 /* --------------------------------------------------------------------------
-   13. SCROLL REVEAL ANIMATION ENGINE (INTERSECTION OBSERVER)
+   14. SCROLL REVEAL ANIMATION ENGINE (INTERSECTION OBSERVER)
    -------------------------------------------------------------------------- */
 function setupScrollReveal() {
   const revealElements = document.querySelectorAll('.reveal, section.section-padding');
@@ -513,7 +647,7 @@ function setupScrollReveal() {
 }
 
 /* --------------------------------------------------------------------------
-   14. ULTRA-FAST APPLE GLASS MOUSE CURSOR RING ENGINE
+   15. ULTRA-FAST APPLE GLASS MOUSE CURSOR RING ENGINE
    -------------------------------------------------------------------------- */
 function setupCustomCursor() {
   if (window.innerWidth <= 768) return;
@@ -539,13 +673,12 @@ function setupCustomCursor() {
   document.addEventListener('mousedown', () => cursor.classList.add('clicking'));
   document.addEventListener('mouseup', () => cursor.classList.remove('clicking'));
 
-  const hoverables = 'a, button, .glass-card, .btn, .tech-tag, .skill-pill, .focus-item';
+  const hoverables = 'a, button, .glass-card, .btn, .tech-tag, .skill-pill-box, .focus-item, .filter-tab';
   document.querySelectorAll(hoverables).forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
   });
 
-  // Ultra-fast responsiveness (lerp factor 0.85 for near-instant cursor tracking)
   function renderCursor() {
     cursorX += (mouseX - cursorX) * 0.85;
     cursorY += (mouseY - cursorY) * 0.85;
