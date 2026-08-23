@@ -1,8 +1,7 @@
 /**
  * Portfolio Single Source of Truth Data File
  * Author: Neel Kore
- * Description: Contains all editable information for personal details,
- * about info, industrial experience, skills, projects, certifications, documents, education, and socials.
+ * Description: Contains streamlined, recruiter-optimized content for Neel Kore's portfolio.
  * Modifying arrays here automatically updates the UI without changing any HTML or rendering code.
  */
 
@@ -11,9 +10,9 @@ const portfolioData = {
     name: "Neel Kore",
     logoName: "Neel",
     role: "Computer Engineering Student",
-    subRole: "Full Stack Developer & Security Enthusiast",
+    subRole: "Software Developer & Security Enthusiast",
     statusBadge: "Available for Internships & Opportunities",
-    bio: "Computer Engineering student passionate about software development, database systems, and cybersecurity. Experienced in enterprise data backup, RAID storage, and network resilience through hands-on industrial training at Nuclear Power Corporation of India Limited (NPCIL).",
+    bio: "Computer Engineering student building modern web applications, software solutions, and secure data systems. Passionate about full-stack development, database architecture, and continuous technical learning.",
     avatar: "assets/images/profile.jpg",
     location: "Maharashtra, India",
     email: "neelkore25@gmail.com"
@@ -22,66 +21,52 @@ const portfolioData = {
   about: {
     summary: [
       "I am currently pursuing a Bachelor of Technology (B.Tech) in Computer Engineering at St. John College of Engineering and Management.",
-      "My core engineering focus spans Software Engineering, Full Stack Web Development (MERN), Database Management Systems, Cybersecurity, and Networking.",
-      "I excel at solving structured technical problems, understanding system-level security architecture, and building performant, modern web applications."
+      "My primary interests lie at the intersection of Software Engineering, Full Stack Web Development, Database Management, and Cybersecurity. I enjoy transforming complex requirements into clean, performant, and reliable applications."
     ],
     coreFocus: [
       {
         icon: "fa-code",
         title: "Software Engineering",
-        description: "Designing modular, clean, and maintainable software applications following SOLID principles and best practices."
+        description: "Building clean, modular, and maintainable software following core OOP and architectural standards."
       },
       {
         icon: "fa-layer-group",
-        title: "MERN & Web Stack",
-        description: "Building responsive modern web applications using modern JavaScript (ES6+), HTML5, CSS3, and Node/React ecosystems."
+        title: "Full Stack Web",
+        description: "Developing responsive web applications with modern HTML5, CSS3, JavaScript (ES6+), and MERN stack principles."
       },
       {
         icon: "fa-shield-halved",
-        title: "Cybersecurity & Resiliency",
-        description: "Enterprise data backup systems, air-gapped infrastructure, Commvault software, RAID configurations, and disaster recovery."
+        title: "Cybersecurity & Resilience",
+        description: "Understanding network security, enterprise backup systems, disaster recovery, and infrastructure safety."
       },
       {
         icon: "fa-database",
-        title: "Database Systems",
-        description: "Relational database design, PostgreSQL, SQL query optimization, ER modeling, and data integrity."
-      },
-      {
-        icon: "fa-network-wired",
-        title: "Computer Networks",
-        description: "Understanding network protocols, TCP/IP stack, secure data transmission, and server infrastructure."
-      },
-      {
-        icon: "fa-lightbulb",
-        title: "Problem Solving",
-        description: "Algorithmic thinking, data structures, and continuous adoption of modern development tools."
+        title: "Database Architecture",
+        description: "Designing relational databases, writing optimized SQL queries, and maintaining data integrity with PostgreSQL/DBMS."
       }
     ],
     quickInfo: [
-      { label: "Current Status", value: "B.Tech Student (Computer Engineering)" },
-      { label: "Institution", value: "St. John College of Eng. & Management" },
+      { label: "Degree", value: "B.Tech Computer Engineering" },
+      { label: "Institution", value: "St. John College of Engineering & Management" },
       { label: "Location", value: "Palghar, Maharashtra, India" },
-      { label: "Primary Interest", value: "Software Eng. & Cybersecurity" },
       { label: "Expected Graduation", value: "May 2028" }
     ]
   },
 
   experience: [
     {
-      title: "Project Trainee — Industrial Exposure",
+      title: "Project Trainee",
       company: "Nuclear Power Corporation of India Limited (NPCIL)",
-      location: "Tarapur, Maharashtra Site",
-      duration: "1 Month",
-      projectTitle: "Study of Data Backup and Cyber Security",
-      description: "Completed practical industrial training at Nuclear Power Corporation of India Limited (NPCIL), Tarapur Site. Gained direct exposure to enterprise-grade backup infrastructure, disaster recovery protocols, and cybersecurity practices implemented in critical nuclear power plant environments.",
+      location: "Tarapur, Maharashtra",
+      duration: "1 Month Industrial Exposure",
+      projectTitle: "Enterprise Data Backup & Cybersecurity Study",
+      description: "Completed practical industrial training at NPCIL Tarapur. Gained direct insight into enterprise data backup systems, cybersecurity protocols, and disaster recovery planning implemented in critical infrastructure environments.",
       highlights: [
-        "Studied enterprise data backup architectures incorporating Commvault software, RAID storage arrays, and physical LTO tape automation.",
-        "Visited secure site server facilities and observed enterprise backup operations functioning within air-gapped, highly protected networks.",
-        "Gained deep understanding of cybersecurity posture, disaster recovery matrices, and business continuity for critical infrastructure.",
-        "Observed strict nuclear safety protocols, security compliance frameworks, and administrative access governance.",
-        "Documented comprehensive technical learnings in a formal project report submitted to NPCIL department mentors."
+        "Studied enterprise data resilience architectures, automated storage redundancy, and backup system operations.",
+        "Observed secure server infrastructure functioning within air-gapped, high-security network environments.",
+        "Analyzed disaster recovery matrices, business continuity planning, and strict facility security protocols."
       ],
-      skills: ["Commvault", "RAID Arrays", "LTO Tape Systems", "Air-Gapped Networks", "Cybersecurity", "Disaster Recovery", "Data Resilience"]
+      skills: ["Enterprise Backup", "Cybersecurity", "Disaster Recovery", "Infrastructure Resilience", "Data Security"]
     }
   ],
 
@@ -92,19 +77,19 @@ const portfolioData = {
       items: ["C", "C++", "Java", "JavaScript (ES6+)", "SQL"]
     },
     {
-      category: "Frameworks & Web Stack",
+      category: "Web & Stack",
       icon: "fa-laptop-code",
-      items: ["HTML5", "CSS3", "JavaScript", "React", "Node.js Basics", "Express.js Basics", "Responsive Design", "DOM API"]
+      items: ["HTML5", "CSS3", "JavaScript", "React", "Node.js Basics", "Express.js Basics", "Responsive Design"]
     },
     {
       category: "CS & Security Fundamentals",
       icon: "fa-brain",
-      items: ["Database Management (DBMS)", "Operating Systems", "Computer Networks", "Information Security", "Data Structures & Algorithms", "Disaster Recovery"]
+      items: ["Database Systems (DBMS)", "Operating Systems", "Computer Networks", "Information Security", "Data Structures"]
     },
     {
-      category: "Developer Tools & Systems",
+      category: "Tools & Environment",
       icon: "fa-gears",
-      items: ["Git", "GitHub", "VS Code", "PostgreSQL", "Commvault Systems", "RAID Configurations", "Linux Fundamentals"]
+      items: ["Git", "GitHub", "VS Code", "PostgreSQL", "Linux Fundamentals"]
     }
   ],
 
@@ -112,9 +97,9 @@ const portfolioData = {
     {
       id: "finance-risk",
       title: "Finance Risk Analytics Platform",
-      badge: "Featured Analytics",
-      description: "A comprehensive web-based platform designed for evaluating financial risk indicators, analyzing portfolio exposure, and presenting interactive metrics for risk mitigation.",
-      tags: ["JavaScript", "HTML5/CSS3", "Financial Analytics", "Data Visualization", "UI/UX"],
+      badge: "Analytics Suite",
+      description: "An interactive web platform designed for evaluating financial risk indicators, analyzing portfolio exposure, and presenting decision-support analytics.",
+      tags: ["JavaScript", "HTML5/CSS3", "Financial Analytics", "Data Visualization"],
       liveUrl: "https://neelkore25.github.io/finance-risk-management/",
       githubUrl: "https://github.com/Neelkore25/finance-risk-management",
       icon: "fa-chart-line"
@@ -122,9 +107,9 @@ const portfolioData = {
     {
       id: "smart-todo",
       title: "Smart-Todo Productivity Suite",
-      badge: "Productivity Suite",
-      description: "An intuitive, feature-packed task management application featuring smart task categorizations, priority matrices, persistent web storage, and seamless workflow organization.",
-      tags: ["JavaScript", "Web Storage API", "DOM Architecture", "Productivity Design"],
+      badge: "Productivity App",
+      description: "A streamlined task management suite featuring smart task categories, priority tracking, persistent storage, and clean workflow tools.",
+      tags: ["JavaScript", "Web Storage API", "DOM Architecture", "Productivity UI"],
       liveUrl: "https://neelkore25.github.io/smart-todo/",
       githubUrl: "https://github.com/Neelkore25/smart-todo",
       icon: "fa-list-check"
@@ -132,9 +117,9 @@ const portfolioData = {
     {
       id: "scent-atlas",
       title: "The Scent Atlas",
-      badge: "Web Application",
-      description: "An interactive visual fragrance discovery engine and sensory catalog, allowing users to explore olfactory notes, fragrance families, and detailed scent profiles.",
-      tags: ["JavaScript", "Interactive UI", "CSS Animations", "Catalog System"],
+      badge: "Visual Catalog",
+      description: "An interactive fragrance discovery catalog allowing users to explore scent notes, fragrance families, and detailed sensory profiles.",
+      tags: ["JavaScript", "Interactive UI", "CSS Animations", "Catalog Architecture"],
       liveUrl: "https://neelkore25.github.io/scent-atlas/",
       githubUrl: "https://github.com/Neelkore25/scent-atlas",
       icon: "fa-compass"
@@ -144,12 +129,12 @@ const portfolioData = {
   certifications: [
     {
       id: "cert-npcil",
-      title: "Industrial Training — Data Backup & Cybersecurity",
+      title: "Industrial Training — Enterprise Data Backup & Cybersecurity",
       issuer: "Nuclear Power Corporation of India Limited (NPCIL)",
       date: "Tarapur Site, Maharashtra",
-      badge: "Verified NPCIL",
+      badge: "Verified Industrial Training",
       icon: "fa-shield-halved",
-      description: "Practical training certificate covering Commvault, RAID arrays, LTO tape, and air-gapped security infrastructure.",
+      description: "Practical industrial training validation covering data resilience, infrastructure backup, and security protocols.",
       credentialUrl: "",
       imageUrl: "assets/images/certificates/npcil_cert.jpg"
     },
@@ -157,21 +142,21 @@ const portfolioData = {
       id: "cert-dbms",
       title: "Database Management Systems & SQL",
       issuer: "St. John College of Engineering & Management",
-      date: "Academic Coursework",
+      date: "Academic Domain Skill",
       badge: "Core Engineering",
       icon: "fa-database",
-      description: "Comprehensive coursework in relational database design, SQL querying, indexing, and schema normalization.",
+      description: "Comprehensive validation in relational database design, SQL querying, indexing, and schema normalization.",
       credentialUrl: "",
       imageUrl: ""
     },
     {
       id: "cert-security",
-      title: "Information Security & Networking Fundamentals",
+      title: "Information Security & Computer Networks",
       issuer: "Technical Exposure",
       date: "Verified Domain Skill",
       badge: "Security Focus",
       icon: "fa-network-wired",
-      description: "Foundational validation in network security protocols, data protection mechanisms, and system integrity.",
+      description: "Foundational training in network protocols, data protection, and system security fundamentals.",
       credentialUrl: "",
       imageUrl: ""
     }
@@ -190,9 +175,9 @@ const portfolioData = {
     {
       id: "doc-npcil-report",
       title: "NPCIL Industrial Training Report",
-      description: "Complete technical report on enterprise data backup, Commvault systems, and cybersecurity at NPCIL Tarapur.",
+      description: "Technical project report on enterprise data backup and cybersecurity at NPCIL Tarapur.",
       icon: "fa-file-lines",
-      badge: "Training Report",
+      badge: "Project Report",
       filePath: "assets/docs/npcil_training_report.pdf",
       isPrimary: false
     }
@@ -209,10 +194,10 @@ const portfolioData = {
       "Operating Systems",
       "Computer Networks",
       "Object-Oriented Programming (OOP)",
-      "Software Engineering Principles",
+      "Software Engineering",
       "Data Structures & Algorithms",
-      "Information Security Fundamentals",
-      "Web Technologies & Architectures"
+      "Information Security",
+      "Web Technologies"
     ]
   },
 
