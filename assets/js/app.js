@@ -40,7 +40,7 @@ function renderNavigation() {
   const navCtaEl = document.getElementById('navCta');
   
   if (brandEl) {
-    brandEl.innerHTML = `${portfolioData.personal.logoName}<span>.</span>`;
+    brandEl.textContent = portfolioData.personal.logoName;
   }
   if (navCtaEl) {
     navCtaEl.href = portfolioData.socials.github;

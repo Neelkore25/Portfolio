@@ -8,7 +8,7 @@
 const portfolioData = {
   personal: {
     name: "Neel Kore",
-    logoName: "Neel",
+    logoName: "Neel Kore",
     role: "Computer Engineering Student",
     subRole: "Software Developer & Security Enthusiast",
     statusBadge: "Available for Internships & Opportunities",
