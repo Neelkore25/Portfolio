@@ -473,7 +473,7 @@ function renderEducation() {
 }
 
 /* --------------------------------------------------------------------------
-   11. CONTACT SECTION RENDERER & FORM HANDLING
+   11. CONTACT SECTION RENDERER & DIRECT INBOX EMAIL SUBMISSION
    -------------------------------------------------------------------------- */
 function renderContact() {
   const contactCard = document.getElementById('contactCard');
@@ -486,7 +486,7 @@ function renderContact() {
       <div class="contact-info-row">
         <i class="fa-solid fa-envelope info-icon"></i>
         <div>
-          <span class="info-label">Email Address</span>
+          <span class="info-label">Direct Inbox</span>
           <a href="mailto:${portfolioData.socials.email}" class="info-value">${portfolioData.socials.email}</a>
         </div>
       </div>
@@ -500,17 +500,17 @@ function renderContact() {
       </div>
 
       <div class="contact-info-row">
-        <i class="fa-solid fa-user-graduate info-label"></i>
+        <i class="fa-solid fa-user-graduate info-icon"></i>
         <div>
-          <span class="info-label">Status</span>
-          <span class="info-value">B.Tech Computer Engineering Student</span>
+          <span class="info-label">Academic Status</span>
+          <span class="info-value">B.Tech Computer Engineering</span>
         </div>
       </div>
     </div>
 
     <div class="contact-social-row">
       <button class="btn btn-primary copy-email-btn" id="copyEmailBtn">
-        <i class="fa-solid fa-copy"></i> Copy Email
+        <i class="fa-solid fa-copy"></i> Copy Email Address
       </button>
       <a href="${portfolioData.socials.linkedin}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" title="LinkedIn Profile">
         <i class="fa-brands fa-linkedin-in"></i>
@@ -527,13 +527,62 @@ function renderContact() {
 
 function setupContactForm() {
   const form = document.getElementById('portfolioContactForm');
-  if (!form) return;
+  const submitBtn = document.getElementById('contactSubmitBtn');
+  if (!form || !submitBtn) return;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const accessKeyEl = document.getElementById('web3formsKey');
+    const accessKey = accessKeyEl ? accessKeyEl.value : '';
+
     const name = document.getElementById('contactName').value;
-    showToast(`✓ Thank you ${name}! Your message has been prepared.`);
-    form.reset();
+    const email = document.getElementById('contactEmail').value;
+    const subject = document.getElementById('contactSubject').value;
+    const message = document.getElementById('contactMessage').value;
+
+    // Check if user has set their Web3Forms key
+    if (accessKey === 'YOUR_FREE_ACCESS_KEY' || !accessKey) {
+      // Fallback: Open mailto link directly in user's email client
+      const mailtoUrl = `mailto:${portfolioData.socials.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+      window.location.href = mailtoUrl;
+      showToast(`Opening your email client to send to ${portfolioData.socials.email}...`);
+      return;
+    }
+
+    // Submit via Web3Forms API asynchronously
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Sending...`;
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: name,
+          email: email,
+          subject: `Portfolio Message: ${subject}`,
+          message: message
+        })
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        showToast(`✓ Thank you ${name}! Your message has been sent to Neel's inbox.`);
+        form.reset();
+      } else {
+        throw new Error(data.message || 'Submission failed');
+      }
+    } catch (err) {
+      console.error('Contact Form Error:', err);
+      // Fallback to mailto
+      const mailtoUrl = `mailto:${portfolioData.socials.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+      window.location.href = mailtoUrl;
+      showToast(`Opening email client to send to ${portfolioData.socials.email}...`);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Send Message`;
+    }
   });
 }
 
