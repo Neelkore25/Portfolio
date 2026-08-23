@@ -1,7 +1,7 @@
 /* ==========================================================================
    PREMIUM GLASSMORPHIC DESIGN SYSTEM (LINEAR / VERCEL / APPLE MINIMALISM)
    Author: Neel Kore | Portfolio Redesign
-   Aesthetic: Ultra-Dark Charcoal (#040507), Frosted Glass, Ambient Glows, Scroll Animations
+   Aesthetic: Ultra-Dark Charcoal (#040507), Frosted Glass, Ambient Glows, Custom Cursor
    ========================================================================== */
 
 /* 1. CSS VARIABLES & SYSTEM CONSTANTS */
@@ -70,6 +70,50 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* CUSTOM INTERACTIVE MOUSE CURSOR RING */
+.cursor-ring {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 999999;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1.5px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 0 18px rgba(99, 102, 241, 0.4);
+  transform: translate(-50%, -50%);
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              height 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.25s ease, 
+              background 0.25s ease,
+              box-shadow 0.25s ease;
+  will-change: transform;
+}
+
+.cursor-ring.clicking {
+  transform: translate(-50%, -50%) scale(0.75) !important;
+  border-color: var(--accent-secondary);
+  background: rgba(56, 189, 248, 0.2);
+}
+
+.cursor-ring.hovering {
+  width: 48px;
+  height: 48px;
+  border-color: var(--accent-primary);
+  background: rgba(99, 102, 241, 0.12);
+  box-shadow: 0 0 26px rgba(99, 102, 241, 0.55);
+}
+
+@media (max-width: 768px) {
+  .cursor-ring {
+    display: none !important;
+  }
+}
+
 /* Ambient Background Radial Glows */
 .bg-glow-container {
   position: fixed;
@@ -134,22 +178,6 @@ body {
   transition: var(--transition-smooth);
   position: relative;
   overflow: hidden;
-}
-
-/* Spotlight Mouse Hover Effect */
-.glass-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.05), transparent 40%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.glass-card:hover::before {
-  opacity: 1;
 }
 
 .glass-card:hover {
@@ -348,7 +376,7 @@ nav.navbar-sticky {
   cursor: pointer;
 }
 
-/* 5. HERO SECTION (REFERENCE MATCHED LAYOUT) */
+/* 5. HERO SECTION (DARK CHARCOAL FROSTED PORTRAIT FRAME) */
 .hero-section {
   padding-top: 160px;
   padding-bottom: 100px;
@@ -447,7 +475,7 @@ nav.navbar-sticky {
   flex-wrap: wrap;
 }
 
-/* Hero Portrait Frame (Dark Charcoal Glass Card) */
+/* Hero Portrait Frame (Color-Graded & Merged with Theme) */
 .hero-portrait-wrapper {
   position: relative;
   display: flex;
@@ -463,7 +491,7 @@ nav.navbar-sticky {
   -webkit-backdrop-filter: var(--glass-blur-heavy);
   border: 1px solid var(--border-glass-hover);
   padding: 12px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 45px rgba(99, 102, 241, 0.12);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 45px rgba(99, 102, 241, 0.16);
   position: relative;
   overflow: hidden;
 }
@@ -484,13 +512,13 @@ nav.navbar-sticky {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
-  filter: grayscale(20%) contrast(108%);
-  transition: var(--transition-smooth);
+  object-position: center 15%;
+  filter: grayscale(10%) contrast(106%) brightness(96%);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-portrait-frame:hover .portrait-img {
-  filter: grayscale(0%) contrast(100%);
+  filter: grayscale(0%) contrast(102%) brightness(100%);
   transform: scale(1.03);
 }
 

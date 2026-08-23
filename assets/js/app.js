@@ -2,7 +2,7 @@
  * Portfolio Dynamic Rendering & Interactive Application Engine
  * Author: Neel Kore
  * Description: Reads single-source portfolioData object and dynamically populates
- * all portfolio sections. Manages scroll-reveal animations, spotlight cursor tracking,
+ * all portfolio sections. Manages scroll-reveal animations, custom mouse cursor ring,
  * email clipboard toast, document downloads, image fallbacks, and mobile drawer toggles.
  */
 
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize Interactive Engine & Animations
   setupInteractions();
   setupScrollReveal();
-  setupCardSpotlight();
+  setupCustomCursor();
 });
 
 /* --------------------------------------------------------------------------
@@ -437,7 +437,6 @@ function setupInteractions() {
       }
     });
 
-    // Close menu when link clicked
     navLinks.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         navLinks.classList.remove('active');
@@ -514,18 +513,48 @@ function setupScrollReveal() {
 }
 
 /* --------------------------------------------------------------------------
-   14. GLASS CARD SPOTLIGHT MOUSE TRACKING
+   14. CUSTOM INTERACTIVE MOUSE CURSOR RING FOLLOWING ENGINE
    -------------------------------------------------------------------------- */
-function setupCardSpotlight() {
+function setupCustomCursor() {
+  // Mobile devices check
+  if (window.innerWidth <= 768) return;
+
+  let cursor = document.getElementById('cursorRing');
+  if (!cursor) {
+    cursor = document.createElement('div');
+    cursor.id = 'cursorRing';
+    cursor.className = 'cursor-ring';
+    document.body.appendChild(cursor);
+  }
+
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let cursorX = mouseX;
+  let cursorY = mouseY;
+
   document.addEventListener('mousemove', (e) => {
-    document.querySelectorAll('.glass-card').forEach(card => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
-    });
+    mouseX = e.clientX;
+    mouseY = e.clientY;
   });
+
+  document.addEventListener('mousedown', () => cursor.classList.add('clicking'));
+  document.addEventListener('mouseup', () => cursor.classList.remove('clicking'));
+
+  // Attach hover scaling to interactive elements
+  const hoverables = 'a, button, .glass-card, .btn, .tech-tag, .skill-pill, .focus-item';
+  document.querySelectorAll(hoverables).forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+  });
+
+  // Smooth lerp animation loop
+  function renderCursor() {
+    cursorX += (mouseX - cursorX) * 0.2;
+    cursorY += (mouseY - cursorY) * 0.2;
+    cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+    requestAnimationFrame(renderCursor);
+  }
+  requestAnimationFrame(renderCursor);
 }
 
 function showToast(message) {
