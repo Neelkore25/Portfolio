@@ -70,7 +70,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* CUSTOM INTERACTIVE MOUSE CURSOR RING (COMPACT, APPLE GLASS, ULTRA-FAST) */
+/* CUSTOM INTERACTIVE MOUSE CURSOR RING (ULTRA-TRANSPARENT, COMPACT, FAST) */
 .cursor-ring {
   width: 20px;
   height: 20px;
@@ -80,11 +80,11 @@ body {
   left: 0;
   pointer-events: none;
   z-index: 999999;
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  border: 1px solid rgba(255, 255, 255, 0.65);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
   transform: translate(-50%, -50%);
   transition: width 0.15s ease, 
               height 0.15s ease, 
@@ -97,15 +97,15 @@ body {
 .cursor-ring.clicking {
   transform: translate(-50%, -50%) scale(0.7) !important;
   border-color: var(--accent-secondary);
-  background: rgba(56, 189, 248, 0.18);
+  background: rgba(56, 189, 248, 0.12);
 }
 
 .cursor-ring.hovering {
   width: 32px;
   height: 32px;
-  border-color: rgba(255, 255, 255, 0.9);
-  background: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 0 16px rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.25);
 }
 
 @media (max-width: 768px) {
