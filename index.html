@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Neel Kore | Computer Engineering Student & Developer</title>
-  <meta name="description" content="Personal developer portfolio of Neel Kore, Computer Engineering Student specializing in Full-Stack Web Development, Software Engineering, and Cybersecurity.">
+  <meta name="description" content="Developer portfolio of Neel Kore, Computer Engineering Student specializing in Full-Stack Web Development, Software Engineering, and Cybersecurity.">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/images/profile.jpg">
+  <link rel="icon" type="image/jpeg" href="assets/images/profile.jpg">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Neel Kore | Computer Engineering Student & Developer">
-  <meta property="og:description" content="Personal portfolio of Neel Kore showcasing full-stack web applications, software engineering projects, and cybersecurity studies.">
+  <meta property="og:description" content="Portfolio of Neel Kore showcasing full-stack web applications, software engineering projects, and cybersecurity studies.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://neelkore25.github.io/Portfolio/">
 
@@ -23,21 +23,17 @@
   <!-- FontAwesome 6 Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
   
-  <!-- Custom Design System Stylesheet -->
-  <link rel="stylesheet" href="assets/css/styles.css?v=14.0">
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="assets/css/styles.css?v=15.0">
 </head>
 <body>
 
-  <!-- Top Scroll Progress Bar -->
-  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
-
-  <!-- Ambient Backdrop Gradient Glow (Clean, Tasteful Backdrop — NO Particles) -->
+  <!-- Ambient Backdrop Glow (Clean, Soft, Visually Quiet — NO Particles) -->
   <div class="bg-glow-container" aria-hidden="true">
     <div class="bg-glow-aurora-top"></div>
-    <div class="bg-glow-aurora-bottom"></div>
   </div>
 
-  <!-- HEADER & NAVIGATION WITH RESUME BUTTON ON RIGHT -->
+  <!-- HEADER & MINIMAL NAVIGATION -->
   <header class="navbar-wrapper">
     <nav class="navbar-sticky" aria-label="Main Navigation">
       <a href="#hero" class="nav-brand" id="navBrand">Neel Kore</a>
@@ -52,7 +48,6 @@
         <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#experience">Experience</a></li>
-        <li><a href="#certifications">Certifications</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
 
@@ -60,9 +55,6 @@
         <a href="assets/docs/resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary nav-resume-btn">
           <i class="fa-solid fa-file-arrow-down"></i> Resume
         </a>
-        <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Theme" title="Toggle Theme">
-          <i class="fa-solid fa-moon"></i>
-        </button>
       </div>
     </nav>
   </header>
@@ -73,15 +65,15 @@
       <div class="container">
         <div class="hero-grid">
           <div class="hero-text-content reveal">
-            <h1 class="hero-name" id="heroName">NEEL KORE</h1>
+            <div class="status-badge" id="heroStatusBadge">
+              <span class="status-dot"></span> Open to internships & opportunities
+            </div>
+
+            <h1 class="hero-name" id="heroName">Neel Kore</h1>
             <div class="hero-role" id="heroRole">Computer Engineering Student & Developer</div>
             
-            <div class="status-badge" id="heroStatusBadge">
-              <span class="status-dot"></span> Available for Internships & Opportunities
-            </div>
-            
             <p class="hero-bio" id="heroBio">
-              Computer Engineering student building modern full-stack web applications, software solutions, and secure data systems. Interested in web development, database architecture, and cybersecurity resilience.
+              Building practical software, full-stack applications, and secure systems.
             </p>
             
             <div class="hero-ctas">
@@ -101,7 +93,7 @@
             <div class="portrait-glow-ring"></div>
             <div class="hero-portrait-frame">
               <div class="portrait-inner" id="portraitInner">
-                <img src="assets/images/profile.jpg" alt="Neel Kore" class="portrait-img" id="portraitImg" onerror="handleImageError(this)">
+                <img src="assets/images/profile.jpg" alt="Neel Kore" class="portrait-img" id="portraitImg">
               </div>
             </div>
           </div>
@@ -114,31 +106,24 @@
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-user"></i> About Me</span>
-          <h2 class="section-heading">Engineering Background & Focus</h2>
+          <h2 class="section-heading">Background & Focus</h2>
         </div>
 
         <div class="about-grid">
           <div class="about-card glass-card">
-            <h3 class="about-card-title"><i class="fa-solid fa-address-card"></i> Profile Summary</h3>
-            <p class="about-intro-text">
-              I am pursuing a B.Tech in Computer Engineering at St. John College of Engineering and Management (Palghar, Maharashtra). My passion centers on building practical web software, understanding system architectures, and applying core computer science principles to build reliable applications.
+            <h3 class="about-card-title"><i class="fa-solid fa-address-card"></i> Overview</h3>
+            <p class="about-intro-text" id="aboutSummary">
+              I am pursuing a B.Tech in Computer Engineering at St. John College of Engineering and Management. My technical focus centers on software engineering, full-stack web development, database architecture, and cybersecurity resilience.
             </p>
-            
-            <div class="about-interest-tags">
-              <span class="interest-tag"><i class="fa-solid fa-code"></i> Software Engineering</span>
-              <span class="interest-tag"><i class="fa-solid fa-layer-group"></i> Full-Stack Web (MERN)</span>
-              <span class="interest-tag"><i class="fa-solid fa-database"></i> Database Architecture</span>
-              <span class="interest-tag"><i class="fa-solid fa-shield-halved"></i> Cybersecurity</span>
-            </div>
           </div>
 
           <div class="about-card glass-card">
-            <h3 class="about-card-title"><i class="fa-solid fa-graduation-cap"></i> Academic Profile</h3>
+            <h3 class="about-card-title"><i class="fa-solid fa-graduation-cap"></i> Education Summary</h3>
             <ul class="quick-info-list" id="aboutQuickInfo">
               <li class="quick-info-item"><span class="info-lbl">Degree</span><span class="info-val">B.Tech Computer Engineering</span></li>
-              <li class="quick-info-item"><span class="info-lbl">Institution</span><span class="info-val">St. John College of Eng. & Management</span></li>
-              <li class="quick-info-item"><span class="info-lbl">Location</span><span class="info-val">Palghar, Maharashtra, India</span></li>
-              <li class="quick-info-item"><span class="info-lbl">Graduation</span><span class="info-val">May 2028 (Expected)</span></li>
+              <li class="quick-info-item"><span class="info-lbl">College</span><span class="info-val">St. John College of Engineering and Management</span></li>
+              <li class="quick-info-item"><span class="info-lbl">Location</span><span class="info-val">Palghar, Maharashtra</span></li>
+              <li class="quick-info-item"><span class="info-lbl">Graduation</span><span class="info-val">Expected May 2028</span></li>
             </ul>
           </div>
         </div>
@@ -149,29 +134,21 @@
     <section id="skills" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
-          <span class="section-badge"><i class="fa-solid fa-code"></i> Technical Skills</span>
-          <h2 class="section-heading">Categorized Skills</h2>
+          <span class="section-badge"><i class="fa-solid fa-code"></i> Skills</span>
+          <h2 class="section-heading">Technical Technologies</h2>
         </div>
 
         <div class="skills-grid" id="skillsGrid"></div>
       </div>
     </section>
 
-    <!-- 4. PROJECTS SECTION -->
+    <!-- 4. FEATURED PROJECTS SECTION -->
     <section id="projects" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-rocket"></i> Projects</span>
           <h2 class="section-heading">Featured Projects</h2>
-          <p class="section-subtitle">Key software and web applications built with modern tools and clean architecture.</p>
-        </div>
-
-        <!-- Filter Tabs -->
-        <div class="project-filter-tabs" id="projectFilterTabs" role="tablist">
-          <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">All</button>
-          <button class="filter-tab" data-filter="web-dev" role="tab" aria-selected="false">Web Dev</button>
-          <button class="filter-tab" data-filter="security" role="tab" aria-selected="false">Security</button>
-          <button class="filter-tab" data-filter="tools" role="tab" aria-selected="false">Tools</button>
+          <p class="section-subtitle">Practical software and web applications built with modern tools and clean architecture.</p>
         </div>
 
         <div class="projects-grid" id="projectsGrid"></div>
@@ -183,7 +160,7 @@
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-briefcase"></i> Experience</span>
-          <h2 class="section-heading">Practical Exposure</h2>
+          <h2 class="section-heading">Industrial Exposure</h2>
         </div>
 
         <div class="compact-timeline-container" id="experienceContainer"></div>
@@ -194,8 +171,8 @@
     <section id="certifications" class="section-padding reveal">
       <div class="container">
         <div class="section-header">
-          <span class="section-badge"><i class="fa-solid fa-certificate"></i> Credentials</span>
-          <h2 class="section-heading">Verified Certifications</h2>
+          <span class="section-badge"><i class="fa-solid fa-certificate"></i> Verified Credentials</span>
+          <h2 class="section-heading">Certifications</h2>
         </div>
 
         <div class="certs-grid" id="certsGrid"></div>
@@ -207,7 +184,7 @@
       <div class="container">
         <div class="section-header">
           <span class="section-badge"><i class="fa-solid fa-graduation-cap"></i> Education</span>
-          <h2 class="section-heading">Academic Journey</h2>
+          <h2 class="section-heading">Academic Profile</h2>
         </div>
 
         <div id="educationContainer"></div>
@@ -217,71 +194,39 @@
     <!-- 8. CONTACT SECTION -->
     <section id="contact" class="section-padding reveal">
       <div class="container">
-        <div class="section-header">
-          <span class="section-badge"><i class="fa-solid fa-envelope"></i> Contact</span>
-          <h2 class="section-heading">Let's build something useful.</h2>
-          <p class="section-subtitle">Reach out for internships, project inquiries, or engineering discussions.</p>
-        </div>
-
-        <div class="contact-grid">
-          <!-- Form Panel -->
-          <div class="glass-card contact-form-card">
-            <div class="contact-glow-orb" aria-hidden="true"></div>
-
-            <form action="https://api.web3forms.com/submit" method="POST" id="portfolioContactForm" class="contact-form-minimal">
-              <input type="hidden" name="access_key" id="web3formsKey" value="YOUR_FREE_ACCESS_KEY">
-              <input type="hidden" name="subject" value="New Portfolio Inquiry (Neel Kore)">
-              <input type="hidden" name="from_name" value="Portfolio Contact Form">
-
-              <div class="form-row-underline">
-                <div class="form-group-underline">
-                  <input type="text" id="contactName" name="name" class="input-underline" placeholder="Name" required>
-                  <label for="contactName" class="label-underline">Name</label>
-                </div>
-                <div class="form-group-underline">
-                  <input type="email" id="contactEmail" name="email" class="input-underline" placeholder="Email" required>
-                  <label for="contactEmail" class="label-underline">Email</label>
-                </div>
-              </div>
-
-              <div class="form-group-underline">
-                <input type="text" id="contactSubject" name="user_subject" class="input-underline" placeholder="Subject" required>
-                <label for="contactSubject" class="label-underline">Subject</label>
-              </div>
-
-              <div class="form-group-underline">
-                <textarea id="contactMessage" name="message" class="input-underline textarea-underline" rows="3" placeholder="Message" required></textarea>
-                <label for="contactMessage" class="label-underline">Message</label>
-              </div>
-
-              <button type="submit" class="btn btn-primary contact-submit-btn" id="contactSubmitBtn">
-                <i class="fa-solid fa-paper-plane"></i> Send Message
-              </button>
-            </form>
+        <div class="contact-cta-wrapper glass-card">
+          <span class="section-badge"><i class="fa-solid fa-paper-plane"></i> Get In Touch</span>
+          <h2 class="contact-cta-heading">Let's build something useful.</h2>
+          <p class="contact-cta-subtitle">Open to internships, projects, and engineering opportunities.</p>
+          
+          <div class="contact-buttons-group">
+            <a href="mailto:neelkore25@gmail.com" class="btn btn-primary">
+              <i class="fa-solid fa-envelope"></i> Email Neel
+            </a>
+            <a href="https://github.com/Neelkore25" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+              <i class="fa-brands fa-github"></i> GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/neel-kore-00567231b?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+              <i class="fa-brands fa-linkedin-in"></i> LinkedIn
+            </a>
           </div>
-
-          <!-- Direct Info & Social Links Panel -->
-          <div class="glass-card contact-info-card" id="contactCard"></div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- FOOTER -->
+  <!-- 9. FOOTER -->
   <footer class="footer-minimal">
     <div class="container">
       <div class="footer-content" id="footerContent"></div>
     </div>
   </footer>
 
-  <!-- Toast Notification -->
-  <div class="toast-notification" id="toastNotification" role="status" aria-live="polite">✓ Action Completed</div>
+  <!-- Single Source of Truth Data -->
+  <script src="assets/js/data.js?v=15.0"></script>
 
-  <!-- Data Script -->
-  <script src="assets/js/data.js?v=14.0"></script>
-
-  <!-- App Script -->
-  <script src="assets/js/app.js?v=14.0"></script>
+  <!-- App Rendering Engine -->
+  <script src="assets/js/app.js?v=15.0"></script>
 
 </body>
 </html>
