@@ -1,6 +1,6 @@
 /* ==========================================================================
    NEEL KORE — PERSONAL DEVELOPER PORTFOLIO
-   Design Direction: PDF-Inspired Compact, Human-Designed & Balanced Portfolio
+   Design Direction: Premium Dark UI, Clean Typography, Subtle Glow Accents
    Palette: Background (#07090D), Secondary (#0D1118), Surface (#121722)
    Accents: Cyan (#22D3EE), Violet (#8B5CF6)
    ========================================================================== */
@@ -58,7 +58,7 @@
   --shadow-card: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
 }
 
-/* 2. GLOBAL RESETS & FAST APPLE GLASS MOUSE CURSOR RING */
+/* 2. GLOBAL RESETS & FAST MOUSE CURSOR RING */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -128,7 +128,7 @@ body {
   }
 }
 
-/* Top Progress Bar */
+/* Scroll Progress Bar */
 .scroll-progress-bar {
   position: fixed;
   top: 0;
@@ -139,7 +139,7 @@ body {
   z-index: 99999;
 }
 
-/* Backdrop Glow */
+/* Ambient Radial Glow (NO PARTICLES, Clean Background) */
 .bg-glow-container {
   position: fixed;
   top: 0;
@@ -151,7 +151,7 @@ body {
   overflow: hidden;
 }
 
-.bg-glow-aurora {
+.bg-glow-aurora-top {
   position: absolute;
   top: -10%;
   left: 50%;
@@ -160,6 +160,16 @@ body {
   height: 450px;
   background: radial-gradient(circle, rgba(34, 211, 238, 0.1) 0%, rgba(139, 92, 246, 0.05) 50%, transparent 75%);
   filter: blur(90px);
+}
+
+.bg-glow-aurora-bottom {
+  position: absolute;
+  bottom: 5%;
+  right: -5%;
+  width: min(600px, 100vw);
+  height: 400px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.07) 0%, transparent 70%);
+  filter: blur(100px);
 }
 
 /* Scrollbar */
@@ -204,6 +214,13 @@ body {
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--text-main);
+}
+
+.section-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 8px auto 0;
 }
 
 .glass-card {
@@ -290,7 +307,7 @@ header.navbar-wrapper {
 
 nav.navbar-sticky {
   pointer-events: auto;
-  width: min(960px, 92%);
+  width: min(1000px, 92%);
   padding: 8px 20px;
   display: flex;
   align-items: center;
@@ -337,6 +354,13 @@ nav.navbar-sticky {
 .nav-right-group {
   display: flex;
   align-items: center;
+  gap: 10px;
+}
+
+.nav-resume-btn {
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  min-height: 34px;
 }
 
 .theme-toggle-btn {
@@ -384,7 +408,7 @@ nav.navbar-sticky {
 .hero-name {
   font-family: var(--font-heading);
   font-size: 2.8rem;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1.15;
   letter-spacing: -0.02em;
   color: var(--text-main);
@@ -540,17 +564,33 @@ nav.navbar-sticky {
   gap: 10px;
 }
 
-.about-card-title i {
-  color: var(--accent-cyan);
-}
+.about-card-title i { color: var(--accent-cyan); }
 
-.about-summary p {
+.about-intro-text {
   color: var(--text-muted);
   font-size: 0.95rem;
   line-height: 1.65;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 }
-.about-summary p:last-child { margin-bottom: 0; }
+
+.about-interest-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.interest-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem;
+  color: var(--text-main);
+}
+.interest-tag i { color: var(--accent-cyan); }
 
 .quick-info-list {
   list-style: none;
@@ -856,7 +896,7 @@ nav.navbar-sticky {
   padding: 8px 14px;
 }
 
-/* 10. CERTIFICATIONS & DOCUMENTS */
+/* 10. CERTIFICATIONS */
 .certs-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -928,67 +968,6 @@ nav.navbar-sticky {
   line-height: 1.5;
   margin-top: auto;
 }
-
-.docs-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-.doc-card {
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.doc-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-
-.doc-icon-box {
-  width: 42px;
-  height: 42px;
-  border-radius: var(--radius-md);
-  background: rgba(34, 211, 238, 0.1);
-  border: 1px solid var(--border-accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent-cyan);
-  font-size: 1.15rem;
-}
-
-.doc-badge {
-  padding: 3px 10px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-pill);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  font-weight: 600;
-}
-
-.doc-title {
-  font-family: var(--font-heading);
-  font-size: 1.15rem;
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: var(--text-main);
-}
-
-.doc-desc {
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  line-height: 1.55;
-  margin-bottom: 20px;
-  flex-grow: 1;
-}
-
-.doc-action .btn { width: 100%; }
 
 /* 11. EDUCATION SECTION */
 .edu-card { padding: 28px; }
@@ -1246,6 +1225,7 @@ footer.footer-minimal {
   header.navbar-wrapper { top: 10px; }
   nav.navbar-sticky { width: 100%; padding: 6px 14px; }
   .mobile-nav-toggle { display: block; }
+  .nav-resume-btn { display: none; }
 
   .nav-links {
     position: fixed;
