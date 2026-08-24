@@ -1,7 +1,7 @@
 /**
  * Neel Kore Personal Developer Portfolio Engine
  * Author: Neel Kore
- * Specification: PDF-Inspired Compact & Balanced Architecture
+ * Specification: PDF-Inspired Compact & Balanced Architecture with Fast Custom Cursor
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,10 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
   renderContact();
   renderFooter();
 
-  // Interactive Mechanics
+  // Interactive Mechanics & Custom Cursor
   setupInteractions();
   setupProjectFilters();
   setupScrollReveal();
+  setupCustomCursor();
   setupContactForm();
 });
 
@@ -513,7 +514,49 @@ function renderFooter() {
 }
 
 /* --------------------------------------------------------------------------
-   12. INTERACTION MECHANICS & REVEAL
+   12. ULTRA-FAST APPLE GLASS MOUSE HOVER CURSOR RING ENGINE
+   -------------------------------------------------------------------------- */
+function setupCustomCursor() {
+  if (window.innerWidth <= 768) return;
+
+  let cursor = document.getElementById('cursorRing');
+  if (!cursor) {
+    cursor = document.createElement('div');
+    cursor.id = 'cursorRing';
+    cursor.className = 'cursor-ring';
+    document.body.appendChild(cursor);
+  }
+
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let cursorX = mouseX;
+  let cursorY = mouseY;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  document.addEventListener('mousedown', () => cursor.classList.add('clicking'));
+  document.addEventListener('mouseup', () => cursor.classList.remove('clicking'));
+
+  const hoverables = 'a, button, .glass-card, .btn, .tech-tag, .skill-pill-box, .filter-tab, .social-btn-pill';
+  document.querySelectorAll(hoverables).forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+  });
+
+  function renderCursor() {
+    cursorX += (mouseX - cursorX) * 0.85;
+    cursorY += (mouseY - cursorY) * 0.85;
+    cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+    requestAnimationFrame(renderCursor);
+  }
+  requestAnimationFrame(renderCursor);
+}
+
+/* --------------------------------------------------------------------------
+   13. INTERACTION MECHANICS & REVEAL
    -------------------------------------------------------------------------- */
 function setupInteractions() {
   const mobileToggle = document.getElementById('mobileNavToggle');
