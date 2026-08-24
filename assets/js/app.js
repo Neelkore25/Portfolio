@@ -1,24 +1,24 @@
 /**
- * Portfolio Dynamic Rendering & Interactive Application Engine
+ * Neel Kore Personal Developer Portfolio Engine
  * Author: Neel Kore
- * Specification: Obsidian Aurora Design System & Vertical Timeline SVG Animation
+ * Specification: PDF-Inspired Compact & Balanced Architecture
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   if (typeof portfolioData === 'undefined') {
-    console.error('Error: portfolioData is not loaded. Please ensure assets/js/data.js is linked prior to app.js');
+    console.error('Error: portfolioData is not loaded. Please link data.js prior to app.js');
     return;
   }
 
-  // Initialize Theme & Scroll Progress
+  // Theme & Progress
   initTheme();
   setupScrollProgress();
 
-  // Execute Section Renderers
+  // Renderers
   renderNavigation();
   renderHero();
   renderAbout();
-  renderExperienceTimeline();
+  renderExperience();
   renderSkills();
   renderProjects();
   renderCertifications();
@@ -27,17 +27,15 @@ document.addEventListener('DOMContentLoaded', () => {
   renderContact();
   renderFooter();
 
-  // Initialize Interactive Engine & Animations
+  // Interactive Mechanics
   setupInteractions();
   setupProjectFilters();
   setupScrollReveal();
-  setupTimelineSvgAnimation();
-  setupCustomCursor();
   setupContactForm();
 });
 
 /* --------------------------------------------------------------------------
-   0. THEME TOGGLE ENGINE & SCROLL PROGRESS BAR
+   0. THEME & SCROLL PROGRESS
    -------------------------------------------------------------------------- */
 function initTheme() {
   const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
@@ -80,13 +78,11 @@ function setupScrollProgress() {
    -------------------------------------------------------------------------- */
 function renderNavigation() {
   const brandEl = document.getElementById('navBrand');
-  if (brandEl) {
-    brandEl.textContent = portfolioData.personal.logoName;
-  }
+  if (brandEl) brandEl.textContent = portfolioData.personal.logoName;
 }
 
 /* --------------------------------------------------------------------------
-   2. HERO SECTION & CONSOLIDATED SOCIAL SYSTEM
+   2. HERO RENDERER & CONSOLIDATED SOCIAL SYSTEM
    -------------------------------------------------------------------------- */
 function renderHero() {
   const nameEl = document.getElementById('heroName');
@@ -104,13 +100,12 @@ function renderHero() {
   if (bioEl) bioEl.textContent = portfolioData.personal.bio;
 
   if (portraitInnerEl) {
-    const avatarSrc = portfolioData.personal.avatar;
     portraitInnerEl.innerHTML = `
-      <img src="${avatarSrc}" alt="${portfolioData.personal.name}" class="portrait-img" id="portraitImg" onerror="handleImageError(this)">
+      <img src="${portfolioData.personal.avatar}" alt="${portfolioData.personal.name}" class="portrait-img" id="portraitImg" onerror="handleImageError(this)">
     `;
   }
 
-  // Consolidated Social System Component
+  // Consolidated Social System
   if (heroSocialGroupEl && portfolioData.socials) {
     heroSocialGroupEl.innerHTML = `
       <a href="${portfolioData.socials.github}" target="_blank" rel="noopener noreferrer" class="social-btn-pill" aria-label="GitHub Profile">
@@ -132,15 +127,15 @@ function handleImageError(imgEl) {
   
   if (imgEl.classList.contains('portrait-img')) {
     parent.innerHTML = `
-      <div class="portrait-fallback" style="padding:20px; text-align:center; color:var(--text-muted);">
-        <i class="fa-solid fa-user-astronaut" style="font-size:3rem; color:var(--accent-cyan);"></i>
+      <div style="padding:20px; text-align:center; color:var(--text-muted);">
+        <i class="fa-solid fa-user-astronaut" style="font-size:2.5rem; color:var(--accent-cyan);"></i>
         <div>${portfolioData.personal.name}</div>
       </div>
     `;
   } else if (imgEl.classList.contains('cert-preview-img')) {
     parent.innerHTML = `
-      <div class="cert-preview-placeholder" style="padding:20px; text-align:center; color:var(--text-subtle);">
-        <i class="fa-solid fa-award" style="font-size:2rem; color:var(--accent-cyan);"></i>
+      <div style="padding:20px; text-align:center; color:var(--text-subtle);">
+        <i class="fa-solid fa-award" style="font-size:1.8rem; color:var(--accent-cyan);"></i>
         <div>Verified Credential</div>
       </div>
     `;
@@ -152,26 +147,13 @@ function handleImageError(imgEl) {
    -------------------------------------------------------------------------- */
 function renderAbout() {
   const summaryEl = document.getElementById('aboutSummary');
-  const focusGridEl = document.getElementById('aboutFocusGrid');
   const quickInfoEl = document.getElementById('aboutQuickInfo');
 
-  if (summaryEl) {
-    summaryEl.innerHTML = portfolioData.about.summary.map(paragraph => `<p>${paragraph}</p>`).join('');
+  if (summaryEl && portfolioData.about) {
+    summaryEl.innerHTML = portfolioData.about.summary.map(p => `<p>${p}</p>`).join('');
   }
 
-  if (focusGridEl) {
-    focusGridEl.innerHTML = portfolioData.about.coreFocus.map(item => `
-      <div class="focus-item">
-        <div class="focus-header">
-          <i class="fa-solid ${item.icon}"></i>
-          <h4>${item.title}</h4>
-        </div>
-        <p>${item.description}</p>
-      </div>
-    `).join('');
-  }
-
-  if (quickInfoEl) {
+  if (quickInfoEl && portfolioData.about) {
     quickInfoEl.innerHTML = portfolioData.about.quickInfo.map(info => `
       <li class="quick-info-item">
         <span class="info-lbl">${info.label}</span>
@@ -182,63 +164,34 @@ function renderAbout() {
 }
 
 /* --------------------------------------------------------------------------
-   4. EXPERIENCE VERTICAL TIMELINE & ANIMATED SVG PATH DRAWING
+   4. COMPACT EXPERIENCE RENDERER (SINGLE EXPERIENCE ITEM)
    -------------------------------------------------------------------------- */
-function renderExperienceTimeline() {
-  const timelineContainer = document.getElementById('experienceTimelineContainer');
-  if (!timelineContainer || !portfolioData.experience) return;
+function renderExperience() {
+  const container = document.getElementById('experienceContainer');
+  if (!container || !portfolioData.experience) return;
 
-  timelineContainer.innerHTML = portfolioData.experience.map(exp => `
-    <div class="timeline-item reveal">
-      <div class="timeline-node" title="Milestone"></div>
+  const exp = portfolioData.experience[0]; // Real single experience item
+  if (!exp) return;
+
+  container.innerHTML = `
+    <div class="timeline-single-item">
+      <div class="timeline-dot"></div>
       <div class="glass-card timeline-card">
-        <div class="exp-header">
-          <div>
-            <h3 class="exp-role">${exp.title}</h3>
-            <div class="exp-company">${exp.company}</div>
-          </div>
-          <div class="exp-badge-group">
-            <span class="exp-pill">${exp.duration}</span>
-            <span class="exp-location"><i class="fa-solid fa-location-dot"></i> ${exp.location}</span>
-          </div>
-        </div>
-        <div class="exp-project-name">
-          <i class="fa-solid fa-folder-open"></i> ${exp.projectTitle}
-        </div>
+        <span class="exp-date-badge">${exp.duration}</span>
+        <h3 class="exp-role">${exp.title}</h3>
+        <div class="exp-company"><i class="fa-solid fa-building-columns"></i> ${exp.company} (${exp.location})</div>
         <p class="exp-description">${exp.description}</p>
-
-        <div class="exp-highlights-title">Key Learnings & Engineering Highlights</div>
+        
         <ul class="exp-highlights-list">
           ${exp.highlights.map(h => `<li>${h}</li>`).join('')}
         </ul>
 
         <div class="exp-tags-wrapper">
-          ${exp.skills.map(skill => `<span class="tech-tag">${skill}</span>`).join('')}
+          ${exp.skills.map(s => `<span class="tech-tag">${s}</span>`).join('')}
         </div>
       </div>
     </div>
-  `).join('');
-}
-
-function setupTimelineSvgAnimation() {
-  const pathActive = document.getElementById('timelinePathActive');
-  const wrapper = document.querySelector('.experience-timeline-wrapper');
-  if (!pathActive || !wrapper) return;
-
-  window.addEventListener('scroll', () => {
-    const rect = wrapper.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-    
-    // Calculate how far user has scrolled through timeline
-    if (rect.top < windowHeight && rect.bottom > 0) {
-      const totalHeight = rect.height;
-      const visibleScrolled = windowHeight - rect.top;
-      const progress = Math.min(Math.max(visibleScrolled / (totalHeight + windowHeight * 0.3), 0), 1);
-      
-      const dashoffset = 100 - (progress * 100);
-      pathActive.style.strokeDashoffset = `${dashoffset}`;
-    }
-  });
+  `;
 }
 
 /* --------------------------------------------------------------------------
@@ -249,7 +202,7 @@ function renderSkills() {
   if (!skillsGrid || !portfolioData.skills) return;
 
   skillsGrid.innerHTML = portfolioData.skills.map(group => `
-    <div class="glass-card skill-card reveal">
+    <div class="glass-card skill-card">
       <div class="skill-card-header">
         <i class="fa-solid ${group.icon}"></i>
         <h3>${group.category}</h3>
@@ -267,14 +220,14 @@ function renderSkills() {
 }
 
 /* --------------------------------------------------------------------------
-   6. BENTO PROJECTS RENDERER & FILTERING ENGINE
+   6. BENTO PROJECTS RENDERER & FILTER ENGINE
    -------------------------------------------------------------------------- */
 function renderProjects() {
   const projectsGrid = document.getElementById('projectsGrid');
   if (!projectsGrid || !portfolioData.projects) return;
 
   projectsGrid.innerHTML = portfolioData.projects.map(proj => `
-    <div class="glass-card project-card reveal" data-category="${proj.category || 'all'}">
+    <div class="glass-card project-card" data-category="${proj.category || 'all'}">
       <div class="project-top">
         <div class="project-icon-box">
           <i class="fa-solid ${proj.icon}"></i>
@@ -292,7 +245,7 @@ function renderProjects() {
         <a href="${proj.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
           <i class="fa-solid fa-arrow-up-right-from-square"></i> View Project
         </a>
-        <a href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" title="View Source Code" aria-label="View Source Code">
+        <a href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" title="View Source Code" aria-label="View Source Code">
           <i class="fa-brands fa-github"></i>
         </a>
       </div>
@@ -321,11 +274,11 @@ function setupProjectFilters() {
         const cardCategory = card.getAttribute('data-category');
         if (filterValue === 'all' || cardCategory === filterValue) {
           card.style.display = 'flex';
-          setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 40);
+          setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 30);
         } else {
           card.style.opacity = '0';
-          card.style.transform = 'translateY(16px)';
-          setTimeout(() => { card.style.display = 'none'; }, 250);
+          card.style.transform = 'translateY(12px)';
+          setTimeout(() => { card.style.display = 'none'; }, 200);
         }
       });
     });
@@ -333,7 +286,7 @@ function setupProjectFilters() {
 }
 
 /* --------------------------------------------------------------------------
-   7. CERTIFICATIONS SECTION RENDERER
+   7. CERTIFICATIONS RENDERER
    -------------------------------------------------------------------------- */
 function renderCertifications() {
   const certsGrid = document.getElementById('certsGrid');
@@ -344,17 +297,15 @@ function renderCertifications() {
     const imageHtml = hasImage 
       ? `<img src="${cert.imageUrl}" alt="${cert.title}" class="cert-preview-img" onerror="handleImageError(this)">`
       : `
-        <div class="cert-preview-placeholder">
-          <i class="fa-solid ${cert.icon || 'fa-award'}"></i>
-          <span>${cert.badge}</span>
+        <div style="padding:16px; text-align:center; color:var(--text-subtle);">
+          <i class="fa-solid ${cert.icon || 'fa-award'}" style="font-size:1.8rem; color:var(--accent-cyan);"></i>
+          <div style="font-size:0.78rem; margin-top:4px;">${cert.badge}</div>
         </div>
       `;
 
     return `
-      <div class="glass-card cert-card reveal">
-        <div class="cert-preview-box">
-          ${imageHtml}
-        </div>
+      <div class="glass-card cert-card">
+        <div class="cert-preview-box">${imageHtml}</div>
         <span class="cert-badge">${cert.badge}</span>
         <h3 class="cert-title">${cert.title}</h3>
         <div class="cert-issuer"><i class="fa-solid fa-building-columns"></i> ${cert.issuer}</div>
@@ -366,14 +317,14 @@ function renderCertifications() {
 }
 
 /* --------------------------------------------------------------------------
-   8. DOCUMENTS SECTION RENDERER
+   8. DOCUMENTS RENDERER
    -------------------------------------------------------------------------- */
 function renderDocuments() {
   const docsGrid = document.getElementById('docsGrid');
   if (!docsGrid || !portfolioData.documents) return;
 
   docsGrid.innerHTML = portfolioData.documents.map(doc => `
-    <div class="glass-card doc-card reveal">
+    <div class="glass-card doc-card">
       <div class="doc-top">
         <div class="doc-icon-box">
           <i class="fa-solid ${doc.icon || 'fa-file-pdf'}"></i>
@@ -412,21 +363,21 @@ function renderDocuments() {
 }
 
 /* --------------------------------------------------------------------------
-   9. EDUCATION SECTION RENDERER
+   9. EDUCATION RENDERER
    -------------------------------------------------------------------------- */
 function renderEducation() {
-  const eduContainer = document.getElementById('educationContainer');
-  if (!eduContainer || !portfolioData.education) return;
+  const container = document.getElementById('educationContainer');
+  if (!container || !portfolioData.education) return;
 
   const edu = portfolioData.education;
-  eduContainer.innerHTML = `
-    <div class="glass-card edu-card reveal">
+  container.innerHTML = `
+    <div class="glass-card edu-card">
       <div class="edu-header-flex">
         <div>
           <h3 class="edu-degree">${edu.degree} in ${edu.branch}</h3>
           <div class="edu-institution"><i class="fa-solid fa-graduation-cap"></i> ${edu.institution}</div>
         </div>
-        <span class="exp-pill">${edu.duration}</span>
+        <span class="exp-date-badge">${edu.duration}</span>
       </div>
 
       <div class="edu-meta-tags">
@@ -442,45 +393,39 @@ function renderEducation() {
 }
 
 /* --------------------------------------------------------------------------
-   10. CONTACT SECTION & MINIMAL UNDERLINE FORM SUBMISSION
+   10. CONTACT SECTION & MINIMAL FORM
    -------------------------------------------------------------------------- */
 function renderContact() {
-  const contactCard = document.getElementById('contactCard');
-  if (!contactCard) return;
+  const card = document.getElementById('contactCard');
+  if (!card) return;
 
-  contactCard.innerHTML = `
-    <h3 class="contact-card-heading"><i class="fa-solid fa-address-book"></i> Direct Info</h3>
+  card.innerHTML = `
+    <h3 class="about-card-title"><i class="fa-solid fa-address-book"></i> Direct Info</h3>
     
     <div class="contact-info-list">
       <div class="contact-info-row">
         <i class="fa-solid fa-envelope info-icon"></i>
         <div>
-          <span class="info-label">Inbox</span>
-          <a href="mailto:${portfolioData.socials.email}" class="info-value">${portfolioData.socials.email}</a>
+          <span class="info-lbl">Inbox</span>
+          <a href="mailto:${portfolioData.socials.email}" class="info-val" style="text-decoration:none;">${portfolioData.socials.email}</a>
         </div>
       </div>
       
       <div class="contact-info-row">
         <i class="fa-solid fa-location-dot info-icon"></i>
         <div>
-          <span class="info-label">Location</span>
-          <span class="info-value">${portfolioData.personal.location}</span>
+          <span class="info-lbl">Location</span>
+          <span class="info-val">${portfolioData.personal.location}</span>
         </div>
       </div>
 
       <div class="contact-info-row">
         <i class="fa-solid fa-user-graduate info-icon"></i>
         <div>
-          <span class="info-label">Status</span>
-          <span class="info-value">B.Tech Computer Engineering</span>
+          <span class="info-lbl">Status</span>
+          <span class="info-val">B.Tech Computer Engineering</span>
         </div>
       </div>
-    </div>
-
-    <div class="contact-social-row">
-      <button class="btn btn-primary copy-email-btn" id="copyEmailBtn">
-        <i class="fa-solid fa-copy"></i> Copy Email
-      </button>
     </div>
   `;
 }
@@ -503,7 +448,7 @@ function setupContactForm() {
     if (accessKey === 'YOUR_FREE_ACCESS_KEY' || !accessKey) {
       const mailtoUrl = `mailto:${portfolioData.socials.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
       window.location.href = mailtoUrl;
-      showToast(`Opening your email client to send to ${portfolioData.socials.email}...`);
+      showToast(`Opening email client to send to ${portfolioData.socials.email}...`);
       return;
     }
 
@@ -543,7 +488,7 @@ function setupContactForm() {
 }
 
 /* --------------------------------------------------------------------------
-   11. FOOTER RENDERER (CONSOLIDATED SOCIAL SYSTEM REPEATED)
+   11. FOOTER
    -------------------------------------------------------------------------- */
 function renderFooter() {
   const footerContent = document.getElementById('footerContent');
@@ -568,7 +513,7 @@ function renderFooter() {
 }
 
 /* --------------------------------------------------------------------------
-   12. INTERACTIVE ENGINE & EVENTS
+   12. INTERACTION MECHANICS & REVEAL
    -------------------------------------------------------------------------- */
 function setupInteractions() {
   const mobileToggle = document.getElementById('mobileNavToggle');
@@ -589,7 +534,7 @@ function setupInteractions() {
   const sections = document.querySelectorAll('section[id]');
   window.addEventListener('scroll', () => {
     let currentSectionId = '';
-    const scrollPos = window.scrollY + 180;
+    const scrollPos = window.scrollY + 140;
 
     sections.forEach(sec => {
       if (scrollPos >= sec.offsetTop) {
@@ -606,27 +551,10 @@ function setupInteractions() {
       });
     }
   });
-
-  const copyBtn = document.getElementById('copyEmailBtn');
-  if (copyBtn) {
-    copyBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText(portfolioData.socials.email)
-        .then(() => {
-          showToast('✓ Email address copied to clipboard!');
-        })
-        .catch(err => {
-          console.error('Failed to copy email:', err);
-          showToast(`Email: ${portfolioData.socials.email}`);
-        });
-    });
-  }
 }
 
-/* --------------------------------------------------------------------------
-   13. SCROLL REVEAL ANIMATION ENGINE (INTERSECTION OBSERVER)
-   -------------------------------------------------------------------------- */
 function setupScrollReveal() {
-  const revealElements = document.querySelectorAll('.reveal, section.section-padding');
+  const revealElements = document.querySelectorAll('.reveal');
   
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
@@ -636,56 +564,14 @@ function setupScrollReveal() {
         }
       });
     }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -30px 0px'
+      threshold: 0.08,
+      rootMargin: '0px 0px -20px 0px'
     });
 
     revealElements.forEach(el => observer.observe(el));
   } else {
     revealElements.forEach(el => el.classList.add('active'));
   }
-}
-
-/* --------------------------------------------------------------------------
-   14. ULTRA-FAST APPLE GLASS MOUSE CURSOR RING ENGINE
-   -------------------------------------------------------------------------- */
-function setupCustomCursor() {
-  if (window.innerWidth <= 768) return;
-
-  let cursor = document.getElementById('cursorRing');
-  if (!cursor) {
-    cursor = document.createElement('div');
-    cursor.id = 'cursorRing';
-    cursor.className = 'cursor-ring';
-    document.body.appendChild(cursor);
-  }
-
-  let mouseX = window.innerWidth / 2;
-  let mouseY = window.innerHeight / 2;
-  let cursorX = mouseX;
-  let cursorY = mouseY;
-
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
-
-  document.addEventListener('mousedown', () => cursor.classList.add('clicking'));
-  document.addEventListener('mouseup', () => cursor.classList.remove('clicking'));
-
-  const hoverables = 'a, button, .glass-card, .btn, .tech-tag, .skill-pill-box, .focus-item, .filter-tab, .social-btn-pill';
-  document.querySelectorAll(hoverables).forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
-  });
-
-  function renderCursor() {
-    cursorX += (mouseX - cursorX) * 0.85;
-    cursorY += (mouseY - cursorY) * 0.85;
-    cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
-    requestAnimationFrame(renderCursor);
-  }
-  requestAnimationFrame(renderCursor);
 }
 
 function showToast(message) {
