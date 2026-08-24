@@ -3,6 +3,7 @@
    Author: Neel Kore
    Palette: Background (#07090D), Secondary (#0D1118), Surface (#121722)
    Accents: Primary Cyan (#22D3EE), Secondary Violet (#8B5CF6)
+   Mobile & Android Optimized for 100% Touch & Fluid Layout Compatibility
    ========================================================================== */
 
 /* 1. UNIFIED COLOR SYSTEM & CONSTANTS */
@@ -26,8 +27,8 @@
   --accent-gradient: linear-gradient(135deg, #22D3EE 0%, #8B5CF6 100%);
   --live-pulse: #10B981;
 
-  --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   --radius-sm: 8px;
   --radius-md: 14px;
@@ -60,7 +61,7 @@
   --shadow-glass: 0 16px 40px -10px rgba(15, 23, 42, 0.08);
 }
 
-/* 2. BASE RESETS & SETUP */
+/* 2. BASE RESETS & MOBILE TOUCH FIXES */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -70,6 +71,9 @@
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -79,6 +83,7 @@ body {
   font-size: 16px;
   line-height: 1.6;
   overflow-x: hidden;
+  width: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.4s ease, color 0.4s ease;
@@ -113,7 +118,7 @@ body {
   top: -15%;
   left: 50%;
   transform: translateX(-50%);
-  width: 900px;
+  width: min(900px, 100vw);
   height: 550px;
   background: radial-gradient(circle, rgba(34, 211, 238, 0.12) 0%, rgba(139, 92, 246, 0.06) 50%, transparent 75%);
   filter: blur(100px);
@@ -123,7 +128,7 @@ body {
   position: absolute;
   bottom: 10%;
   right: -5%;
-  width: 700px;
+  width: min(700px, 100vw);
   height: 500px;
   background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
   filter: blur(110px);
@@ -139,9 +144,6 @@ body {
 ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.16);
   border-radius: 999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(34, 211, 238, 0.4);
 }
 
 /* 3. REUSABLE COMPONENTS & BENTO CARDS */
@@ -213,7 +215,7 @@ body {
 
 .section-heading {
   font-family: var(--font-heading);
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--text-main);
@@ -226,13 +228,14 @@ body {
   margin: 12px auto 0;
 }
 
-/* Button System */
+/* Button System (Mobile Touch Ready) */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   padding: 12px 24px;
+  min-height: 44px;
   border-radius: var(--radius-pill);
   font-family: var(--font-body);
   font-size: 0.95rem;
@@ -241,6 +244,7 @@ body {
   cursor: pointer;
   transition: var(--transition-smooth);
   border: 1px solid transparent;
+  touch-action: manipulation;
 }
 
 .btn-primary {
@@ -249,7 +253,7 @@ body {
   box-shadow: 0 4px 20px rgba(255, 255, 255, 0.18);
 }
 
-.btn-primary:hover {
+.btn-primary:hover, .btn-primary:active {
   background: var(--accent-cyan);
   color: #040507;
   transform: translateY(-2px);
@@ -262,7 +266,7 @@ body {
   border-color: var(--border-glass);
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover, .btn-secondary:active {
   background: rgba(255, 255, 255, 0.1);
   border-color: var(--border-glass-hover);
   transform: translateY(-2px);
@@ -276,7 +280,7 @@ body {
   font-size: 1.1rem;
 }
 
-/* 4. CENTERED FLOATING PILL NAVIGATION BAR (DESKTOP & MOBILE) */
+/* 4. CENTERED FLOATING PILL NAVIGATION BAR */
 header.navbar-wrapper {
   position: fixed;
   top: 20px;
@@ -295,7 +299,7 @@ nav.navbar-sticky {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(13, 17, 24, 0.78);
+  background: rgba(13, 17, 24, 0.88);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--border-glass);
@@ -316,7 +320,7 @@ nav.navbar-sticky {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
   list-style: none;
 }
 
@@ -359,8 +363,8 @@ nav.navbar-sticky {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--border-glass);
   color: var(--text-main);
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
@@ -368,6 +372,7 @@ nav.navbar-sticky {
   justify-content: center;
   font-size: 0.95rem;
   transition: var(--transition-smooth);
+  touch-action: manipulation;
 }
 
 .theme-toggle-btn:hover {
@@ -384,6 +389,8 @@ nav.navbar-sticky {
   color: var(--text-main);
   font-size: 1.25rem;
   cursor: pointer;
+  padding: 8px;
+  touch-action: manipulation;
 }
 
 /* 5. HERO SECTION */
@@ -404,18 +411,19 @@ nav.navbar-sticky {
 
 .hero-name {
   font-family: var(--font-heading);
-  font-size: 4.5rem;
+  font-size: clamp(2.5rem, 6.5vw, 4.5rem);
   font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.04em;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
   margin-bottom: 12px;
   color: var(--text-main);
   display: block;
+  word-break: break-word;
 }
 
 .hero-role {
   font-family: var(--font-heading);
-  font-size: 1.35rem;
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
   font-weight: 600;
   color: var(--accent-cyan);
   margin-bottom: 16px;
@@ -469,12 +477,12 @@ nav.navbar-sticky {
   margin-bottom: 32px;
 }
 
-/* CONSOLIDATED SOCIAL SYSTEM COMPONENT (MAJOR REQUIREMENT) */
+/* CONSOLIDATED SOCIAL SYSTEM COMPONENT */
 .social-consolidated-wrapper {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding-top: 12px;
+  padding-top: 16px;
   border-top: 1px solid var(--border-glass);
 }
 
@@ -498,6 +506,7 @@ nav.navbar-sticky {
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
+  min-height: 42px;
   background: var(--bg-surface);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-pill);
@@ -506,9 +515,10 @@ nav.navbar-sticky {
   font-weight: 500;
   text-decoration: none;
   transition: var(--transition-smooth);
+  touch-action: manipulation;
 }
 
-.social-btn-pill:hover {
+.social-btn-pill:hover, .social-btn-pill:active {
   background: rgba(34, 211, 238, 0.12);
   border-color: var(--accent-cyan);
   color: var(--accent-cyan);
@@ -516,7 +526,7 @@ nav.navbar-sticky {
   box-shadow: 0 4px 16px rgba(34, 211, 238, 0.25);
 }
 
-/* Hero Portrait Frame & Gradient Backdrop Glow */
+/* Hero Portrait Frame */
 .hero-portrait-wrapper {
   position: relative;
   display: flex;
@@ -526,8 +536,8 @@ nav.navbar-sticky {
 
 .portrait-glow-ring {
   position: absolute;
-  width: 270px;
-  height: 270px;
+  width: clamp(200px, 60vw, 270px);
+  height: clamp(200px, 60vw, 270px);
   border-radius: 50%;
   background: var(--accent-gradient);
   opacity: 0.3;
@@ -569,11 +579,6 @@ nav.navbar-sticky {
   object-position: center 15%;
   filter: grayscale(8%) contrast(105%) brightness(98%);
   transition: var(--transition-smooth);
-}
-
-.hero-portrait-frame:hover .portrait-img {
-  filter: grayscale(0%) contrast(100%) brightness(100%);
-  transform: scale(1.04);
 }
 
 /* 6. ABOUT SECTION (BENTO EDITORIAL) */
@@ -715,7 +720,7 @@ nav.navbar-sticky {
   font-weight: 500;
 }
 
-/* 7. EXPERIENCE TIMELINE (VERTICAL DOTTED/SOLID TIMELINE WITH SVG SCROLL DRAWING) */
+/* 7. EXPERIENCE TIMELINE */
 .experience-timeline-wrapper {
   position: relative;
   max-width: 960px;
@@ -723,7 +728,6 @@ nav.navbar-sticky {
   padding: 20px 0;
 }
 
-/* SVG Line Container */
 .timeline-svg-line {
   position: absolute;
   left: 28px;
@@ -773,12 +777,6 @@ nav.navbar-sticky {
   box-shadow: 0 0 14px rgba(34, 211, 238, 0.4);
   position: relative;
   transition: var(--transition-smooth);
-}
-
-.timeline-item:hover .timeline-node {
-  background: var(--accent-cyan);
-  transform: scale(1.25);
-  box-shadow: 0 0 20px rgba(34, 211, 238, 0.7);
 }
 
 .timeline-card {
@@ -901,12 +899,6 @@ nav.navbar-sticky {
   transition: var(--transition-smooth);
 }
 
-.tech-tag:hover {
-  border-color: var(--border-accent);
-  color: var(--text-main);
-  background: rgba(34, 211, 238, 0.08);
-}
-
 /* 8. TECHNICAL SKILLS SECTION */
 .skills-bento-grid {
   display: grid;
@@ -956,12 +948,6 @@ nav.navbar-sticky {
   transition: var(--transition-smooth);
 }
 
-.skill-pill-box:hover {
-  background: rgba(34, 211, 238, 0.08);
-  border-color: var(--accent-cyan);
-  transform: translateY(-2px);
-}
-
 .skill-pill-name {
   font-size: 0.88rem;
   font-weight: 500;
@@ -979,7 +965,7 @@ nav.navbar-sticky {
   text-transform: uppercase;
 }
 
-/* 9. BENTO PROJECTS GRID & CATEGORY FILTER TABS */
+/* 9. BENTO PROJECTS GRID & FILTER TABS */
 .project-filter-tabs {
   display: flex;
   align-items: center;
@@ -991,6 +977,7 @@ nav.navbar-sticky {
 
 .filter-tab {
   padding: 8px 20px;
+  min-height: 40px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-pill);
@@ -999,6 +986,7 @@ nav.navbar-sticky {
   font-weight: 600;
   cursor: pointer;
   transition: var(--transition-smooth);
+  touch-action: manipulation;
 }
 
 .filter-tab:hover,
@@ -1024,12 +1012,6 @@ nav.navbar-sticky {
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
   transition: var(--transition-smooth);
-}
-
-.project-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--accent-cyan);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(34, 211, 238, 0.2);
 }
 
 .project-top {
@@ -1093,11 +1075,6 @@ nav.navbar-sticky {
   margin-top: auto;
 }
 
-.project-actions .btn {
-  font-size: 0.85rem;
-  padding: 9px 18px;
-}
-
 /* 10. CERTIFICATIONS SECTION */
 .certs-grid {
   display: grid;
@@ -1130,19 +1107,6 @@ nav.navbar-sticky {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.cert-preview-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  color: var(--text-subtle);
-}
-
-.cert-preview-placeholder i {
-  font-size: 2.2rem;
-  color: var(--accent-cyan);
 }
 
 .cert-badge {
@@ -1326,7 +1290,7 @@ nav.navbar-sticky {
   flex-shrink: 0;
 }
 
-/* 13. CONTACT SECTION (MINIMAL UNDERLINE INPUT FORM & GLOW ORB) */
+/* 13. CONTACT SECTION */
 .contact-grid {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
@@ -1339,7 +1303,6 @@ nav.navbar-sticky {
   overflow: hidden;
 }
 
-/* Decorative Cyan/Violet Glow Orb */
 .contact-glow-orb {
   position: absolute;
   bottom: -40px;
@@ -1366,7 +1329,6 @@ nav.navbar-sticky {
 
 .contact-card-heading i { color: var(--accent-cyan); }
 
-/* Minimal Underline Input Form */
 .contact-form-minimal {
   display: flex;
   flex-direction: column;
@@ -1468,9 +1430,8 @@ nav.navbar-sticky {
   font-weight: 500;
   text-decoration: none;
 }
-.info-value:hover { color: var(--accent-cyan); }
 
-/* Copy Toast Notification */
+/* Toast */
 .toast-notification {
   position: fixed;
   bottom: 32px;
@@ -1514,8 +1475,10 @@ footer.footer-minimal {
   color: var(--text-muted);
 }
 
-/* 15. RESPONSIVE ARCHITECTURE */
-@media (max-width: 992px) {
+/* ==========================================================================
+   15. RESPONSIVE ARCHITECTURE (STRICT DESKTOP & ANDROID / MOBILE FIT)
+   ========================================================================== */
+@media (max-width: 1024px) {
   .hero-grid {
     grid-template-columns: 1fr;
     gap: 36px;
@@ -1530,48 +1493,160 @@ footer.footer-minimal {
 }
 
 @media (max-width: 768px) {
-  .container { width: 92%; }
-  .section-padding { padding: 56px 0; }
-  .section-heading { font-size: 1.95rem; }
+  .container {
+    width: 92%;
+  }
+
+  .section-padding {
+    padding: 56px 0;
+  }
+
+  .section-header {
+    margin-bottom: 36px;
+  }
+
+  /* Fixed Floating Mobile Navbar */
+  header.navbar-wrapper {
+    top: 10px;
+    padding: 0 8px;
+  }
 
   nav.navbar-sticky {
-    top: 12px;
-    width: 94%;
+    width: 100%;
     padding: 8px 16px;
   }
 
-  .mobile-nav-toggle { display: block; }
+  .mobile-nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   .nav-links {
-    position: absolute;
-    top: 55px;
-    left: 0;
-    width: 100%;
-    background: rgba(13, 17, 24, 0.96);
+    position: fixed;
+    top: 68px;
+    left: 4%;
+    width: 92%;
+    background: rgba(13, 17, 24, 0.98);
     backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
     border: 1px solid var(--border-glass);
     border-radius: var(--radius-lg);
-    padding: 20px;
+    padding: 24px 20px;
     flex-direction: column;
     gap: 16px;
     align-items: center;
     display: none;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95);
+    pointer-events: auto;
+    z-index: 10001;
   }
 
-  .nav-links.active { display: flex; }
+  .nav-links.active {
+    display: flex !important;
+  }
 
-  .hero-section { padding-top: 110px; padding-bottom: 60px; min-height: auto; }
-  .hero-name { font-size: 2.8rem; line-height: 1.1; }
-  .hero-ctas { flex-direction: column; align-items: center; }
-  .hero-ctas .btn { width: 100%; max-width: 280px; }
+  .hero-section {
+    padding-top: 120px;
+    padding-bottom: 50px;
+    min-height: auto;
+  }
 
-  .timeline-item { grid-template-columns: 36px 1fr; gap: 12px; }
-  .timeline-node { margin-left: 6px; width: 18px; height: 18px; margin-top: 28px; }
-  .timeline-svg-line { left: 14px; }
+  .hero-name {
+    font-size: clamp(2.2rem, 8vw, 3.2rem);
+    line-height: 1.1;
+  }
 
-  .form-row-underline { grid-template-columns: 1fr; }
-  .bento-card, .timeline-card, .skill-card, .project-card, .cert-card, .doc-card, .edu-card, .contact-form-card, .contact-info-card { padding: 24px 20px; }
-  .skills-bento-grid, .projects-grid, .certs-grid, .docs-grid { grid-template-columns: 1fr; gap: 18px; }
-  .footer-content { flex-direction: column; text-align: center; gap: 16px; }
+  .hero-ctas {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .hero-ctas .btn {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .social-pill-group {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .social-btn-pill {
+    flex: 1 1 auto;
+    justify-content: center;
+    max-width: 160px;
+  }
+
+  /* Mobile Experience Timeline Alignment */
+  .experience-timeline-wrapper {
+    padding: 10px 0;
+  }
+
+  .timeline-svg-line {
+    left: 15px;
+    width: 3px;
+  }
+
+  .timeline-item {
+    grid-template-columns: 32px 1fr;
+    gap: 12px;
+  }
+
+  .timeline-node {
+    margin-left: 4px;
+    width: 18px;
+    height: 18px;
+    margin-top: 24px;
+  }
+
+  .exp-badge-group {
+    align-items: flex-start;
+  }
+
+  .exp-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Mobile Form & Bento Overrides */
+  .form-row-underline {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .contact-submit-btn {
+    width: 100%;
+  }
+
+  .bento-card, .timeline-card, .skill-card, .project-card, .cert-card, .doc-card, .edu-card, .contact-form-card, .contact-info-card {
+    padding: 24px 18px;
+  }
+
+  .skills-bento-grid, .projects-grid, .certs-grid, .docs-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .focus-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .coursework-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .course-item {
+    font-size: 0.78rem;
+    padding: 8px 10px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
 }
