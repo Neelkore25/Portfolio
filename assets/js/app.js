@@ -1,28 +1,24 @@
 /**
  * Portfolio Dynamic Rendering & Interactive Application Engine
  * Author: Neel Kore
- * Description: Reads single-source portfolioData object and dynamically populates
- * all portfolio sections. Manages theme toggle, animated count-up stats, category filter tabs,
- * scroll-reveal animations, ultra-fast Apple glass cursor ring, email clipboard toast,
- * document downloads, image fallbacks, and mobile drawer toggles.
+ * Specification: Obsidian Aurora Design System & Vertical Timeline SVG Animation
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Ensure portfolioData is loaded
   if (typeof portfolioData === 'undefined') {
     console.error('Error: portfolioData is not loaded. Please ensure assets/js/data.js is linked prior to app.js');
     return;
   }
 
-  // Initialize Theme (Dark/Light mode)
+  // Initialize Theme & Scroll Progress
   initTheme();
+  setupScrollProgress();
 
   // Execute Section Renderers
   renderNavigation();
   renderHero();
-  renderStats();
   renderAbout();
-  renderExperience();
+  renderExperienceTimeline();
   renderSkills();
   renderProjects();
   renderCertifications();
@@ -35,13 +31,13 @@ document.addEventListener('DOMContentLoaded', () => {
   setupInteractions();
   setupProjectFilters();
   setupScrollReveal();
-  setupStatsCounter();
+  setupTimelineSvgAnimation();
   setupCustomCursor();
   setupContactForm();
 });
 
 /* --------------------------------------------------------------------------
-   0. THEME TOGGLE ENGINE (LIGHT / DARK MODE)
+   0. THEME TOGGLE ENGINE & SCROLL PROGRESS BAR
    -------------------------------------------------------------------------- */
 function initTheme() {
   const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
@@ -64,11 +60,19 @@ function initTheme() {
 function updateThemeIcon(theme) {
   const icon = document.querySelector('#themeToggleBtn i');
   if (!icon) return;
-  if (theme === 'light') {
-    icon.className = 'fa-solid fa-sun';
-  } else {
-    icon.className = 'fa-solid fa-moon';
-  }
+  icon.className = theme === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+}
+
+function setupScrollProgress() {
+  const bar = document.getElementById('scrollProgressBar');
+  if (!bar) return;
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / docHeight) * 100;
+    bar.style.width = `${progress}%`;
+  });
 }
 
 /* --------------------------------------------------------------------------
@@ -76,54 +80,48 @@ function updateThemeIcon(theme) {
    -------------------------------------------------------------------------- */
 function renderNavigation() {
   const brandEl = document.getElementById('navBrand');
-  const navCtaEl = document.getElementById('navCta');
-  
   if (brandEl) {
     brandEl.textContent = portfolioData.personal.logoName;
-  }
-  if (navCtaEl) {
-    navCtaEl.href = portfolioData.socials.github;
   }
 }
 
 /* --------------------------------------------------------------------------
-   2. HERO SECTION RENDERER
+   2. HERO SECTION & CONSOLIDATED SOCIAL SYSTEM
    -------------------------------------------------------------------------- */
 function renderHero() {
-  const statusBadgeEl = document.getElementById('heroStatusBadge');
   const nameEl = document.getElementById('heroName');
   const roleEl = document.getElementById('heroRole');
+  const statusBadgeEl = document.getElementById('heroStatusBadge');
   const bioEl = document.getElementById('heroBio');
-  const ctaGroupEl = document.getElementById('heroCtas');
   const portraitInnerEl = document.getElementById('portraitInner');
+  const heroSocialGroupEl = document.getElementById('heroSocialGroup');
 
+  if (nameEl) nameEl.textContent = portfolioData.personal.name;
+  if (roleEl) roleEl.textContent = portfolioData.personal.role;
   if (statusBadgeEl) {
     statusBadgeEl.innerHTML = `<span class="status-dot"></span>${portfolioData.personal.statusBadge}`;
   }
-
-  if (roleEl) {
-    roleEl.innerHTML = `<span>${portfolioData.personal.role} | ${portfolioData.personal.subRole}</span><span class="cursor-blink"></span>`;
-  }
   if (bioEl) bioEl.textContent = portfolioData.personal.bio;
-
-  if (ctaGroupEl) {
-    ctaGroupEl.innerHTML = `
-      <a href="#documents" class="btn btn-primary">
-        <i class="fa-solid fa-file-arrow-down"></i> Download Resume
-      </a>
-      <a href="#contact" class="btn btn-secondary">
-        <i class="fa-solid fa-envelope"></i> Contact Me
-      </a>
-      <a href="${portfolioData.socials.github}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" title="GitHub Profile">
-        <i class="fa-brands fa-github"></i>
-      </a>
-    `;
-  }
 
   if (portraitInnerEl) {
     const avatarSrc = portfolioData.personal.avatar;
     portraitInnerEl.innerHTML = `
       <img src="${avatarSrc}" alt="${portfolioData.personal.name}" class="portrait-img" id="portraitImg" onerror="handleImageError(this)">
+    `;
+  }
+
+  // Consolidated Social System Component
+  if (heroSocialGroupEl && portfolioData.socials) {
+    heroSocialGroupEl.innerHTML = `
+      <a href="${portfolioData.socials.github}" target="_blank" rel="noopener noreferrer" class="social-btn-pill" aria-label="GitHub Profile">
+        <i class="fa-brands fa-github"></i> GitHub
+      </a>
+      <a href="${portfolioData.socials.linkedin}" target="_blank" rel="noopener noreferrer" class="social-btn-pill" aria-label="LinkedIn Profile">
+        <i class="fa-brands fa-linkedin-in"></i> LinkedIn
+      </a>
+      <a href="${portfolioData.socials.instagram}" target="_blank" rel="noopener noreferrer" class="social-btn-pill" aria-label="Instagram Profile">
+        <i class="fa-brands fa-instagram"></i> Instagram
+      </a>
     `;
   }
 }
@@ -134,80 +132,23 @@ function handleImageError(imgEl) {
   
   if (imgEl.classList.contains('portrait-img')) {
     parent.innerHTML = `
-      <div class="portrait-fallback">
-        <i class="fa-solid fa-user-astronaut"></i>
-        <span>${portfolioData.personal.name}</span>
-        <span class="portrait-status-sub">Photo Pending Upload</span>
+      <div class="portrait-fallback" style="padding:20px; text-align:center; color:var(--text-muted);">
+        <i class="fa-solid fa-user-astronaut" style="font-size:3rem; color:var(--accent-cyan);"></i>
+        <div>${portfolioData.personal.name}</div>
       </div>
     `;
   } else if (imgEl.classList.contains('cert-preview-img')) {
     parent.innerHTML = `
-      <div class="cert-preview-placeholder">
-        <i class="fa-solid fa-award"></i>
-        <span>Verified Credential</span>
+      <div class="cert-preview-placeholder" style="padding:20px; text-align:center; color:var(--text-subtle);">
+        <i class="fa-solid fa-award" style="font-size:2rem; color:var(--accent-cyan);"></i>
+        <div>Verified Credential</div>
       </div>
     `;
   }
 }
 
 /* --------------------------------------------------------------------------
-   3. ANIMATED STATS ROW RENDERER & COUNTER ENGINE
-   -------------------------------------------------------------------------- */
-function renderStats() {
-  const statsGrid = document.getElementById('statsGrid');
-  if (!statsGrid || !portfolioData.stats) return;
-
-  statsGrid.innerHTML = portfolioData.stats.map(stat => `
-    <div class="stat-card glass-card">
-      <div class="stat-number-wrapper">
-        <span class="stat-number" data-target="${stat.number}">0</span>
-        <span class="stat-suffix">${stat.suffix}</span>
-      </div>
-      <div class="stat-label">${stat.label}</div>
-    </div>
-  `).join('');
-}
-
-function setupStatsCounter() {
-  const statNumbers = document.querySelectorAll('.stat-number');
-  if (statNumbers.length === 0) return;
-
-  let counted = false;
-
-  const countUp = () => {
-    statNumbers.forEach(num => {
-      const target = parseInt(num.getAttribute('data-target'), 10);
-      const duration = 1600;
-      const step = Math.ceil(target / (duration / 30));
-      let current = 0;
-
-      const timer = setInterval(() => {
-        current += step;
-        if (current >= target) {
-          num.textContent = target;
-          clearInterval(timer);
-        } else {
-          num.textContent = current;
-        }
-      }, 30);
-    });
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !counted) {
-        countUp();
-        counted = true;
-      }
-    });
-  }, { threshold: 0.5 });
-
-  const statsSection = document.getElementById('stats');
-  if (statsSection) observer.observe(statsSection);
-}
-
-/* --------------------------------------------------------------------------
-   4. ABOUT SECTION RENDERER
+   3. ABOUT SECTION RENDERER
    -------------------------------------------------------------------------- */
 function renderAbout() {
   const summaryEl = document.getElementById('aboutSummary');
@@ -241,47 +182,71 @@ function renderAbout() {
 }
 
 /* --------------------------------------------------------------------------
-   5. EXPERIENCE SECTION RENDERER
+   4. EXPERIENCE VERTICAL TIMELINE & ANIMATED SVG PATH DRAWING
    -------------------------------------------------------------------------- */
-function renderExperience() {
-  const expContainer = document.getElementById('experienceContainer');
-  if (!expContainer) return;
+function renderExperienceTimeline() {
+  const timelineContainer = document.getElementById('experienceTimelineContainer');
+  if (!timelineContainer || !portfolioData.experience) return;
 
-  expContainer.innerHTML = portfolioData.experience.map(exp => `
-    <div class="glass-card exp-card reveal">
-      <div class="exp-header">
-        <div>
-          <h3 class="exp-role">${exp.title}</h3>
-          <div class="exp-company">${exp.company}</div>
+  timelineContainer.innerHTML = portfolioData.experience.map(exp => `
+    <div class="timeline-item reveal">
+      <div class="timeline-node" title="Milestone"></div>
+      <div class="glass-card timeline-card">
+        <div class="exp-header">
+          <div>
+            <h3 class="exp-role">${exp.title}</h3>
+            <div class="exp-company">${exp.company}</div>
+          </div>
+          <div class="exp-badge-group">
+            <span class="exp-pill">${exp.duration}</span>
+            <span class="exp-location"><i class="fa-solid fa-location-dot"></i> ${exp.location}</span>
+          </div>
         </div>
-        <div class="exp-badge-group">
-          <span class="exp-pill">${exp.duration}</span>
-          <span class="exp-location"><i class="fa-solid fa-location-dot"></i> ${exp.location}</span>
+        <div class="exp-project-name">
+          <i class="fa-solid fa-folder-open"></i> ${exp.projectTitle}
         </div>
-      </div>
-      <div class="exp-project-name">
-        <i class="fa-solid fa-folder-open"></i> ${exp.projectTitle}
-      </div>
-      <p class="exp-description">${exp.description}</p>
+        <p class="exp-description">${exp.description}</p>
 
-      <div class="exp-highlights-title">Key Engineering Highlights & Learnings</div>
-      <ul class="exp-highlights-list">
-        ${exp.highlights.map(h => `<li>${h}</li>`).join('')}
-      </ul>
+        <div class="exp-highlights-title">Key Learnings & Engineering Highlights</div>
+        <ul class="exp-highlights-list">
+          ${exp.highlights.map(h => `<li>${h}</li>`).join('')}
+        </ul>
 
-      <div class="exp-tags-wrapper">
-        ${exp.skills.map(skill => `<span class="tech-tag">${skill}</span>`).join('')}
+        <div class="exp-tags-wrapper">
+          ${exp.skills.map(skill => `<span class="tech-tag">${skill}</span>`).join('')}
+        </div>
       </div>
     </div>
   `).join('');
 }
 
+function setupTimelineSvgAnimation() {
+  const pathActive = document.getElementById('timelinePathActive');
+  const wrapper = document.querySelector('.experience-timeline-wrapper');
+  if (!pathActive || !wrapper) return;
+
+  window.addEventListener('scroll', () => {
+    const rect = wrapper.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    
+    // Calculate how far user has scrolled through timeline
+    if (rect.top < windowHeight && rect.bottom > 0) {
+      const totalHeight = rect.height;
+      const visibleScrolled = windowHeight - rect.top;
+      const progress = Math.min(Math.max(visibleScrolled / (totalHeight + windowHeight * 0.3), 0), 1);
+      
+      const dashoffset = 100 - (progress * 100);
+      pathActive.style.strokeDashoffset = `${dashoffset}`;
+    }
+  });
+}
+
 /* --------------------------------------------------------------------------
-   6. SKILLS SECTION RENDERER (WITH PROFICIENCY LEVEL BADGES)
+   5. SKILLS SECTION RENDERER
    -------------------------------------------------------------------------- */
 function renderSkills() {
   const skillsGrid = document.getElementById('skillsGrid');
-  if (!skillsGrid) return;
+  if (!skillsGrid || !portfolioData.skills) return;
 
   skillsGrid.innerHTML = portfolioData.skills.map(group => `
     <div class="glass-card skill-card reveal">
@@ -302,11 +267,11 @@ function renderSkills() {
 }
 
 /* --------------------------------------------------------------------------
-   7. FEATURED PROJECTS RENDERER & INTERACTIVE CATEGORY FILTERING
+   6. BENTO PROJECTS RENDERER & FILTERING ENGINE
    -------------------------------------------------------------------------- */
 function renderProjects() {
   const projectsGrid = document.getElementById('projectsGrid');
-  if (!projectsGrid) return;
+  if (!projectsGrid || !portfolioData.projects) return;
 
   projectsGrid.innerHTML = portfolioData.projects.map(proj => `
     <div class="glass-card project-card reveal" data-category="${proj.category || 'all'}">
@@ -327,7 +292,7 @@ function renderProjects() {
         <a href="${proj.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
           <i class="fa-solid fa-arrow-up-right-from-square"></i> View Project
         </a>
-        <a href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" title="View Source Code">
+        <a href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" title="View Source Code" aria-label="View Source Code">
           <i class="fa-brands fa-github"></i>
         </a>
       </div>
@@ -343,8 +308,12 @@ function setupProjectFilters() {
 
   filterTabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      filterTabs.forEach(t => t.classList.remove('active'));
+      filterTabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
       tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
 
       const filterValue = tab.getAttribute('data-filter');
 
@@ -352,11 +321,11 @@ function setupProjectFilters() {
         const cardCategory = card.getAttribute('data-category');
         if (filterValue === 'all' || cardCategory === filterValue) {
           card.style.display = 'flex';
-          setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 50);
+          setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 40);
         } else {
           card.style.opacity = '0';
-          card.style.transform = 'translateY(20px)';
-          setTimeout(() => { card.style.display = 'none'; }, 300);
+          card.style.transform = 'translateY(16px)';
+          setTimeout(() => { card.style.display = 'none'; }, 250);
         }
       });
     });
@@ -364,11 +333,11 @@ function setupProjectFilters() {
 }
 
 /* --------------------------------------------------------------------------
-   8. CERTIFICATIONS SECTION RENDERER
+   7. CERTIFICATIONS SECTION RENDERER
    -------------------------------------------------------------------------- */
 function renderCertifications() {
   const certsGrid = document.getElementById('certsGrid');
-  if (!certsGrid) return;
+  if (!certsGrid || !portfolioData.certifications) return;
 
   certsGrid.innerHTML = portfolioData.certifications.map(cert => {
     const hasImage = cert.imageUrl && cert.imageUrl.trim() !== "";
@@ -397,11 +366,11 @@ function renderCertifications() {
 }
 
 /* --------------------------------------------------------------------------
-   9. DOCUMENTS SECTION RENDERER
+   8. DOCUMENTS SECTION RENDERER
    -------------------------------------------------------------------------- */
 function renderDocuments() {
   const docsGrid = document.getElementById('docsGrid');
-  if (!docsGrid) return;
+  if (!docsGrid || !portfolioData.documents) return;
 
   docsGrid.innerHTML = portfolioData.documents.map(doc => `
     <div class="glass-card doc-card reveal">
@@ -443,11 +412,11 @@ function renderDocuments() {
 }
 
 /* --------------------------------------------------------------------------
-   10. EDUCATION SECTION RENDERER
+   9. EDUCATION SECTION RENDERER
    -------------------------------------------------------------------------- */
 function renderEducation() {
   const eduContainer = document.getElementById('educationContainer');
-  if (!eduContainer) return;
+  if (!eduContainer || !portfolioData.education) return;
 
   const edu = portfolioData.education;
   eduContainer.innerHTML = `
@@ -473,20 +442,20 @@ function renderEducation() {
 }
 
 /* --------------------------------------------------------------------------
-   11. CONTACT SECTION RENDERER & DIRECT INBOX EMAIL SUBMISSION
+   10. CONTACT SECTION & MINIMAL UNDERLINE FORM SUBMISSION
    -------------------------------------------------------------------------- */
 function renderContact() {
   const contactCard = document.getElementById('contactCard');
   if (!contactCard) return;
 
   contactCard.innerHTML = `
-    <h3 class="contact-card-heading"><i class="fa-solid fa-address-book"></i> Direct Contact Info</h3>
+    <h3 class="contact-card-heading"><i class="fa-solid fa-address-book"></i> Direct Info</h3>
     
     <div class="contact-info-list">
       <div class="contact-info-row">
         <i class="fa-solid fa-envelope info-icon"></i>
         <div>
-          <span class="info-label">Direct Inbox</span>
+          <span class="info-label">Inbox</span>
           <a href="mailto:${portfolioData.socials.email}" class="info-value">${portfolioData.socials.email}</a>
         </div>
       </div>
@@ -502,7 +471,7 @@ function renderContact() {
       <div class="contact-info-row">
         <i class="fa-solid fa-user-graduate info-icon"></i>
         <div>
-          <span class="info-label">Academic Status</span>
+          <span class="info-label">Status</span>
           <span class="info-value">B.Tech Computer Engineering</span>
         </div>
       </div>
@@ -510,17 +479,8 @@ function renderContact() {
 
     <div class="contact-social-row">
       <button class="btn btn-primary copy-email-btn" id="copyEmailBtn">
-        <i class="fa-solid fa-copy"></i> Copy Email Address
+        <i class="fa-solid fa-copy"></i> Copy Email
       </button>
-      <a href="${portfolioData.socials.linkedin}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" title="LinkedIn Profile">
-        <i class="fa-brands fa-linkedin-in"></i>
-      </a>
-      <a href="${portfolioData.socials.github}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" title="GitHub Profile">
-        <i class="fa-brands fa-github"></i>
-      </a>
-      <a href="${portfolioData.socials.instagram}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" title="Instagram Profile">
-        <i class="fa-brands fa-instagram"></i>
-      </a>
     </div>
   `;
 }
@@ -540,16 +500,13 @@ function setupContactForm() {
     const subject = document.getElementById('contactSubject').value;
     const message = document.getElementById('contactMessage').value;
 
-    // Check if user has set their Web3Forms key
     if (accessKey === 'YOUR_FREE_ACCESS_KEY' || !accessKey) {
-      // Fallback: Open mailto link directly in user's email client
       const mailtoUrl = `mailto:${portfolioData.socials.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
       window.location.href = mailtoUrl;
       showToast(`Opening your email client to send to ${portfolioData.socials.email}...`);
       return;
     }
 
-    // Submit via Web3Forms API asynchronously
     submitBtn.disabled = true;
     submitBtn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Sending...`;
 
@@ -575,7 +532,6 @@ function setupContactForm() {
       }
     } catch (err) {
       console.error('Contact Form Error:', err);
-      // Fallback to mailto
       const mailtoUrl = `mailto:${portfolioData.socials.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
       window.location.href = mailtoUrl;
       showToast(`Opening email client to send to ${portfolioData.socials.email}...`);
@@ -587,7 +543,7 @@ function setupContactForm() {
 }
 
 /* --------------------------------------------------------------------------
-   12. FOOTER RENDERER
+   11. FOOTER RENDERER (CONSOLIDATED SOCIAL SYSTEM REPEATED)
    -------------------------------------------------------------------------- */
 function renderFooter() {
   const footerContent = document.getElementById('footerContent');
@@ -597,17 +553,22 @@ function renderFooter() {
     <div class="footer-copy">
       © ${new Date().getFullYear()} ${portfolioData.personal.name}. All rights reserved.
     </div>
-    <div class="footer-socials">
-      <a href="${portfolioData.socials.github}" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fa-brands fa-github"></i></a>
-      <a href="${portfolioData.socials.linkedin}" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-      <a href="${portfolioData.socials.instagram}" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-      <a href="mailto:${portfolioData.socials.email}" title="Email"><i class="fa-solid fa-envelope"></i></a>
+    <div class="social-pill-group">
+      <a href="${portfolioData.socials.github}" target="_blank" rel="noopener noreferrer" class="social-btn-pill" aria-label="GitHub Profile">
+        <i class="fa-brands fa-github"></i> GitHub
+      </a>
+      <a href="${portfolioData.socials.linkedin}" target="_blank" rel="noopener noreferrer" class="social-btn-pill" aria-label="LinkedIn Profile">
+        <i class="fa-brands fa-linkedin-in"></i> LinkedIn
+      </a>
+      <a href="${portfolioData.socials.instagram}" target="_blank" rel="noopener noreferrer" class="social-btn-pill" aria-label="Instagram Profile">
+        <i class="fa-brands fa-instagram"></i> Instagram
+      </a>
     </div>
   `;
 }
 
 /* --------------------------------------------------------------------------
-   13. INTERACTIVE ENGINE & EVENTS
+   12. INTERACTIVE ENGINE & EVENTS
    -------------------------------------------------------------------------- */
 function setupInteractions() {
   const mobileToggle = document.getElementById('mobileNavToggle');
@@ -616,21 +577,11 @@ function setupInteractions() {
   if (mobileToggle && navLinks) {
     mobileToggle.addEventListener('click', () => {
       navLinks.classList.toggle('active');
-      const icon = mobileToggle.querySelector('i');
-      if (icon) {
-        icon.classList.toggle('fa-bars');
-        icon.classList.toggle('fa-xmark');
-      }
     });
 
     navLinks.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         navLinks.classList.remove('active');
-        const icon = mobileToggle.querySelector('i');
-        if (icon) {
-          icon.classList.add('fa-bars');
-          icon.classList.remove('fa-xmark');
-        }
       });
     });
   }
@@ -672,7 +623,7 @@ function setupInteractions() {
 }
 
 /* --------------------------------------------------------------------------
-   14. SCROLL REVEAL ANIMATION ENGINE (INTERSECTION OBSERVER)
+   13. SCROLL REVEAL ANIMATION ENGINE (INTERSECTION OBSERVER)
    -------------------------------------------------------------------------- */
 function setupScrollReveal() {
   const revealElements = document.querySelectorAll('.reveal, section.section-padding');
@@ -685,8 +636,8 @@ function setupScrollReveal() {
         }
       });
     }, {
-      threshold: 0.12,
-      rootMargin: '0px 0px -40px 0px'
+      threshold: 0.1,
+      rootMargin: '0px 0px -30px 0px'
     });
 
     revealElements.forEach(el => observer.observe(el));
@@ -696,7 +647,7 @@ function setupScrollReveal() {
 }
 
 /* --------------------------------------------------------------------------
-   15. ULTRA-FAST APPLE GLASS MOUSE CURSOR RING ENGINE
+   14. ULTRA-FAST APPLE GLASS MOUSE CURSOR RING ENGINE
    -------------------------------------------------------------------------- */
 function setupCustomCursor() {
   if (window.innerWidth <= 768) return;
@@ -722,7 +673,7 @@ function setupCustomCursor() {
   document.addEventListener('mousedown', () => cursor.classList.add('clicking'));
   document.addEventListener('mouseup', () => cursor.classList.remove('clicking'));
 
-  const hoverables = 'a, button, .glass-card, .btn, .tech-tag, .skill-pill-box, .focus-item, .filter-tab';
+  const hoverables = 'a, button, .glass-card, .btn, .tech-tag, .skill-pill-box, .focus-item, .filter-tab, .social-btn-pill';
   document.querySelectorAll(hoverables).forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
