@@ -201,6 +201,7 @@ function renderExperience() {
   if (!container || !portfolioData.experience || portfolioData.experience.length === 0) return;
 
   const exp = portfolioData.experience[0];
+  const hasDoc = exp.documentUrl && exp.documentUrl.trim() !== '';
 
   container.innerHTML = `
     <div class="glass-card timeline-card">
@@ -215,6 +216,14 @@ function renderExperience() {
       <div class="exp-tags-wrapper">
         ${exp.technologies.map(t => `<span class="tech-tag">${t}</span>`).join('')}
       </div>
+
+      ${hasDoc ? `
+        <div style="margin-top: 16px;">
+          <a href="${exp.documentUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+            <i class="fa-solid fa-file-pdf"></i> View Certificate →
+          </a>
+        </div>
+      ` : ''}
     </div>
   `;
 }
