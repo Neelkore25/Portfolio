@@ -95,16 +95,23 @@ const portfolioData = {
 
   experience: [
     {
-      role: "Project Trainee",
-      organization: "Nuclear Power Corporation of India Limited (NPCIL)",
-      location: "Tarapur, Maharashtra",
-      duration: "1 Month Industrial Exposure",
+      role: "Vocational Trainee – Data Storage, Backup & Cybersecurity Systems",
+      organization: "Nuclear Power Corporation of India Limited (NPCIL) – Tarapur Atomic Power Station",
+      location: "",
+      duration: "May 2026",
       highlights: [
-        "Studied enterprise data resilience architectures, automated storage redundancy, and backup system operations.",
-        "Observed secure server infrastructure functioning within air-gapped, high-security network environments.",
-        "Analyzed disaster recovery matrices, business continuity planning, and strict facility security protocols."
+        "Completed vocational training in data storage, backup, and disaster recovery management systems at Tarapur Atomic Power Station, NPCIL, as part of a 5-member team under the guidance of the plant’s IT & Communications department.",
+        "Studied RAID architectures (RAID 0/1/5/10), enterprise backup strategies (full, incremental, differential, and hybrid), Commvault backup architecture including CommServe, Media Agents, and Deduplication Database, LTO tape storage systems, and disaster recovery planning based on RTO/RPO and the 3-2-1 backup rule.",
+        "Also studied enterprise cybersecurity through the Defense-in-Depth model, including firewalls, IDS/IPS, SIEM/SOAR systems, and air-gapped network design used to protect critical infrastructure such as nuclear facilities."
       ],
-      technologies: ["Enterprise Backup", "Cybersecurity", "Disaster Recovery", "Infrastructure Resilience"]
+      technologies: [
+        "Data Backup",
+        "Disaster Recovery",
+        "RAID",
+        "Commvault",
+        "Network Security",
+        "Cybersecurity Fundamentals"
+      ]
     }
   ],
 

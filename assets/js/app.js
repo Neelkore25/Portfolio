@@ -206,7 +206,7 @@ function renderExperience() {
     <div class="glass-card timeline-card">
       <span class="exp-date-badge">${exp.duration}</span>
       <h3 class="exp-role">${exp.role}</h3>
-      <div class="exp-company"><i class="fa-solid fa-building-columns"></i> ${exp.organization} (${exp.location})</div>
+      <div class="exp-company"><i class="fa-solid fa-building-columns"></i> ${exp.organization}${exp.location ? ` (${exp.location})` : ''}</div>
       
       <ul class="exp-highlights-list">
         ${exp.highlights.map(h => `<li>${h}</li>`).join('')}
